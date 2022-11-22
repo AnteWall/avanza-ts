@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `onSessionChange` callback to `AvanzaClient` constructor to be able to listen to session changes if you want to persist the session
+- `search` method to `AvanzaClient.market` to search for stocks, funds, bonds, etc.
 
 ### Fixed
 

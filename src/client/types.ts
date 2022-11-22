@@ -110,6 +110,7 @@ export enum InstrumentType {
   STOCK = "STOCK",
   FUND = "FUND",
   CERTIFICATE = "CERTIFICATE",
+  WARRANT = "WARRANT",
   UNKNOWN = "UNKNOWN",
 }
 

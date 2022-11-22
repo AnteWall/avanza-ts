@@ -6,6 +6,7 @@ import type {
 import { sanitizeUrlPath } from "../utils/url";
 import { AccountClient } from "./AccountClient";
 import { AuthClient, Session } from "./AuthClient";
+import { MarketClient } from "./MarketClient";
 import { AuthenticateBankIDStatusResponseComplete } from "./types";
 
 export const AVANZA_URL = "https://www.avanza.se";
@@ -21,6 +22,7 @@ export class AvanzaClient {
   readonly fetch: Fetcher;
   readonly auth: AuthClient;
   readonly account: AccountClient;
+  readonly market: MarketClient;
   private session?: Session;
   onSessionChange: (session?: Session) => void;
 
@@ -29,6 +31,7 @@ export class AvanzaClient {
     this.fetch = options.fetch;
     this.auth = new AuthClient(this);
     this.account = new AccountClient(this);
+    this.market = new MarketClient(this);
     this.onSessionChange = options.onSessionChange || (() => {});
   }
 
@@ -72,7 +75,6 @@ export class AvanzaClient {
     args: Omit<FetcherRequestInit, "body"> & { params?: Record<string, string> }
   ): Promise<FetcherResponse> {
     const { params, headers, ...otherArgs } = args;
-
     const response = await this.fetch(
       sanitizeUrlPath(this.baseUrl, path, params),
       {
