@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "avanza-ts": "link:../../avanza-ts",
+        "node-fetch": "2.6.7",
         "qrcode": "1.5.1",
         "ts-node": "10.9.1"
     },

@@ -1,7 +1,11 @@
 import { AvanzaClient } from "avanza-ts";
 import { toString } from "qrcode";
-import { readFileSync, writeFileSync } from "fs";
-const client = new AvanzaClient();
+import fetch from "node-fetch";
+import { writeFileSync } from "fs";
+
+const client = new AvanzaClient({
+  fetch,
+});
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

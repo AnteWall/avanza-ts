@@ -30,9 +30,10 @@ BankID
 ```javascript
 import { AvanzaClient } from "avanza-ts";
 import { toString } from "qrcode";
+import fetch from "node-fetch";
 
 async function main() {
-  const client = new AvanzaClient();
+  const client = new AvanzaClient({ fetch });
   console.log("Signin with BankID");
   const res = await client.authenticateWithBankID(
     "19900101-1000",
