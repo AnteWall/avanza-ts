@@ -156,3 +156,10 @@ export interface PositionResponse {
   totalBalance: number;
   totalProfitPercent: number;
 }
+
+export interface ErrorMessage {
+  timestamp: string;
+  status: number;
+  error: string;
+  path?: string;
+}

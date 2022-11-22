@@ -12,6 +12,7 @@ import type {
   InstrumentType,
   Position,
   PositionResponse,
+  ErrorMessage,
 } from "./client/types";
 import type {
   SearchResponse,
@@ -19,11 +20,20 @@ import type {
   TopHit,
   Link,
   PageSearchResults,
+  Dividend,
+  HistoricalClosingPrices,
+  InstrumentResponse,
+  KeyIndicators,
+  Listing,
+  PreviousReport,
+  PriceValue,
+  Sector,
 } from "./client/market_types";
 
 export { AvanzaClient };
 export type { AvanzaClientOptions };
 export type {
+  ErrorMessage,
   AccountType,
   AccountsOverviewResponse,
   AuthenticateBankIDResponse,
@@ -41,4 +51,12 @@ export type {
   TopHit,
   Link,
   PageSearchResults,
+  Dividend,
+  HistoricalClosingPrices,
+  InstrumentResponse,
+  KeyIndicators,
+  Listing,
+  PreviousReport,
+  PriceValue,
+  Sector,
 };
