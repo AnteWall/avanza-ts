@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Correctly rename `getAccountOverview` to `getOverview` in `Account` class and remove accountId parameter
 - Made fetch mandatory to fix require crashing if node-fetch is not installed
 
 ## 0.2.0 - 2022-11-20

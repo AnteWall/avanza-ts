@@ -1,7 +1,11 @@
 import nock from "nock";
 import { AccountClient } from "./AccountClient";
 import { AvanzaClient, AVANZA_URL } from "./AvanzaClient";
-import { AccountOverview, InstrumentType, PositionResponse } from "./types";
+import {
+  AccountsOverviewResponse,
+  InstrumentType,
+  PositionResponse,
+} from "./types";
 import fetch from "node-fetch";
 
 describe("AccountClient", () => {
@@ -52,26 +56,21 @@ describe("AccountClient", () => {
       const client = new AccountClient(new AvanzaClient({ fetch }));
       nock(AVANZA_URL)
         .get("/_mobile/account/overview")
-        .query({ accountId: "accountId-123" })
         .once()
         .reply(200, {
           accountId: "accountId-123",
-        } as AccountOverview);
-      const accountOverview = await client.getAccountOverview("accountId-123");
+        } as AccountsOverviewResponse);
+      const accountOverview = await client.getOverview();
       expect(accountOverview).toEqual({
         accountId: "accountId-123",
-      } as AccountOverview);
+      } as AccountsOverviewResponse);
     });
     it("returns error", async () => {
       const client = new AccountClient(new AvanzaClient({ fetch }));
-      nock(AVANZA_URL)
-        .get("/_mobile/account/overview")
-        .query({ accountId: "accountId-123" })
-        .once()
-        .reply(404, {
-          error: "error-123",
-        });
-      await expect(client.getAccountOverview("accountId-123")).rejects.toThrow(
+      nock(AVANZA_URL).get("/_mobile/account/overview").once().reply(404, {
+        error: "error-123",
+      });
+      await expect(client.getOverview()).rejects.toThrow(
         '"{\\"error\\":\\"error-123\\"}"'
       );
     });

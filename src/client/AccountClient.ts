@@ -1,5 +1,5 @@
 import { AvanzaClient } from "./AvanzaClient";
-import { AccountOverview, Position, PositionResponse } from "./types";
+import { AccountsOverviewResponse, PositionResponse } from "./types";
 
 const ACCOUNT_PATH = {
   OVERVIEW: "/_mobile/account/overview",
@@ -13,15 +13,13 @@ export class AccountClient {
     this.client = client;
   }
 
-  async getAccountOverview(accountId: string): Promise<AccountOverview[]> {
-    const response = await this.client.get(ACCOUNT_PATH.OVERVIEW, {
-      params: { accountId },
-    });
+  async getOverview(): Promise<AccountsOverviewResponse[]> {
+    const response = await this.client.get(ACCOUNT_PATH.OVERVIEW, {});
     if (!response.ok) {
       const errorMessage = await response.text();
       throw new Error(JSON.stringify(errorMessage));
     }
-    const data = (await response.json()) as AccountOverview[];
+    const data = (await response.json()) as AccountsOverviewResponse[];
     return data;
   }
 

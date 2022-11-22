@@ -52,7 +52,7 @@ export type AuthenticateBankIDStatusResponse =
   | AuthenticateBankIDStatusResponseActive
   | AuthenticateBankIDStatusResponseComplete;
 
-export interface AccountOverview {
+export interface AccountsOverviewResponse {
   courtageClass: string;
   depositable: boolean;
   accountType: string;
