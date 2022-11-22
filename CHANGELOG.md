@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `onSessionChange` callback to `AvanzaClient` constructor to be able to listen to session changes if you want to persist the session
+
 ### Fixed
 
 - Made fetch mandatory to fix require crashing if node-fetch is not installed

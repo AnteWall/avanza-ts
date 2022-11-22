@@ -45,6 +45,46 @@ describe("AvanzaClient", () => {
     });
   });
 
+  describe("setSession", () => {
+    it("sets session", () => {
+      const client = new AvanzaClient({ fetch });
+      client.setSession({
+        authenticationSession: "authenticationSession-123",
+        customerId: "123",
+        pushSubscriptionId: "123",
+        registrationComplete: true,
+        securityToken: "security",
+      });
+      // @ts-expect-error
+      expect(client.session).toEqual({
+        authenticationSession: "authenticationSession-123",
+        customerId: "123",
+        pushSubscriptionId: "123",
+        registrationComplete: true,
+        securityToken: "security",
+      });
+    });
+
+    it("calls onSessionChange", () => {
+      const onSessionChange = jest.fn();
+      const client = new AvanzaClient({ fetch, onSessionChange });
+      client.setSession({
+        authenticationSession: "authenticationSession-123",
+        customerId: "123",
+        pushSubscriptionId: "123",
+        registrationComplete: true,
+        securityToken: "security",
+      });
+      expect(onSessionChange).toHaveBeenCalledWith({
+        authenticationSession: "authenticationSession-123",
+        customerId: "123",
+        pushSubscriptionId: "123",
+        registrationComplete: true,
+        securityToken: "security",
+      });
+    });
+  });
+
   describe("disconnect", () => {
     it("clears session", () => {
       const client = new AvanzaClient({ fetch });
@@ -58,6 +98,14 @@ describe("AvanzaClient", () => {
       client.disconnect();
       // @ts-expect-error
       expect(client.session).toBeUndefined();
+    });
+
+    it("calls onSessionChange", () => {
+      const onSessionChange = jest.fn();
+      const client = new AvanzaClient({ fetch, onSessionChange });
+
+      client.disconnect();
+      expect(onSessionChange).toHaveBeenCalledWith(undefined);
     });
   });
 });

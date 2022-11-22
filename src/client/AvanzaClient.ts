@@ -13,6 +13,7 @@ export const AVANZA_URL = "https://www.avanza.se";
 export interface AvanzaClientOptions {
   baseUrl?: string;
   fetch: Fetcher;
+  onSessionChange?: (session: Session) => void;
 }
 
 export class AvanzaClient {
@@ -21,12 +22,14 @@ export class AvanzaClient {
   readonly auth: AuthClient;
   readonly account: AccountClient;
   private session?: Session;
+  onSessionChange: (session?: Session) => void;
 
   constructor(options?: AvanzaClientOptions) {
     this.baseUrl = options?.baseUrl || AVANZA_URL;
     this.fetch = options.fetch;
     this.auth = new AuthClient(this);
     this.account = new AccountClient(this);
+    this.onSessionChange = options.onSessionChange || (() => {});
   }
 
   /**
@@ -96,9 +99,11 @@ export class AvanzaClient {
 
   setSession(session: Session) {
     this.session = session;
+    this.onSessionChange(this.session);
   }
 
   disconnect() {
     this.session = undefined;
+    this.onSessionChange(undefined);
   }
 }
