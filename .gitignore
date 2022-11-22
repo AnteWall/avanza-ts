@@ -13,6 +13,8 @@
 .idea/**/shelf
 
 examples/*.json
+!examples/package.json
+!examples/tsconfig.json
 # AWS User-specific
 .idea/**/aws.xml
 
