@@ -9,6 +9,7 @@ import {
   BankIDAuthState,
 } from "./types";
 import nock from "nock";
+import fetch from "node-fetch";
 
 describe("AuthClient", () => {
   describe("authenticateWithBankID", () => {
@@ -70,7 +71,7 @@ describe("AuthClient", () => {
           }
         );
       let qrCode = "";
-      const client = new AuthClient(new AvanzaClient());
+      const client = new AuthClient(new AvanzaClient({ fetch }));
       const res = await client.authenticateWithBankID("123456789", (q) => {
         qrCode = q;
       });
@@ -110,7 +111,7 @@ describe("AuthClient", () => {
           recommendedTargetCustomers: [],
         } as AuthenticateBankIDStatusResponseComplete);
 
-      const client = new AuthClient(new AvanzaClient());
+      const client = new AuthClient(new AvanzaClient({ fetch }));
       await expect(
         client.authenticateWithBankID("123456789", () => {})
       ).rejects.toThrow("No logins found");
@@ -169,7 +170,7 @@ describe("AuthClient", () => {
           recommendedTargetCustomers: [],
         } as AuthenticateBankIDStatusResponseComplete);
 
-      const client = new AuthClient(new AvanzaClient());
+      const client = new AuthClient(new AvanzaClient({ fetch }));
       await expect(
         client.authenticateWithBankID("123456789", () => {})
       ).rejects.toThrow("Multiple logins not supported");

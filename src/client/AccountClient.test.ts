@@ -2,6 +2,7 @@ import nock from "nock";
 import { AccountClient } from "./AccountClient";
 import { AvanzaClient, AVANZA_URL } from "./AvanzaClient";
 import { AccountOverview, InstrumentType, PositionResponse } from "./types";
+import fetch from "node-fetch";
 
 describe("AccountClient", () => {
   describe("getPositions", () => {
@@ -23,7 +24,7 @@ describe("AccountClient", () => {
         totalProfit: 0,
         totalProfitPercent: 0,
       };
-      const client = new AvanzaClient();
+      const client = new AvanzaClient({ fetch });
       const accountClient = new AccountClient(client);
       nock(AVANZA_URL)
         .get("/_mobile/account/positions")
@@ -34,7 +35,7 @@ describe("AccountClient", () => {
     });
 
     it("should throw error if request fails", async () => {
-      const client = new AvanzaClient();
+      const client = new AvanzaClient({ fetch });
       const accountClient = new AccountClient(client);
       nock(AVANZA_URL)
         .get("/_mobile/account/positions")
@@ -48,7 +49,7 @@ describe("AccountClient", () => {
 
   describe("getAccountOverview", () => {
     it("returns account overview", async () => {
-      const client = new AccountClient(new AvanzaClient());
+      const client = new AccountClient(new AvanzaClient({ fetch }));
       nock(AVANZA_URL)
         .get("/_mobile/account/overview")
         .query({ accountId: "accountId-123" })
@@ -62,7 +63,7 @@ describe("AccountClient", () => {
       } as AccountOverview);
     });
     it("returns error", async () => {
-      const client = new AccountClient(new AvanzaClient());
+      const client = new AccountClient(new AvanzaClient({ fetch }));
       nock(AVANZA_URL)
         .get("/_mobile/account/overview")
         .query({ accountId: "accountId-123" })

@@ -1,20 +1,16 @@
 import { Fetcher } from "@apollo/utils.fetcher";
 import { AvanzaClient, AVANZA_URL } from "./AvanzaClient";
+import fetch from "node-fetch";
 
 describe("AvanzaClient", () => {
   it("can set baseUrl with options", () => {
     const url = "https://www.myurl.se";
-    const client = new AvanzaClient({ baseUrl: url });
+    const client = new AvanzaClient({ baseUrl: url, fetch });
     expect(client.baseUrl).toEqual(url);
   });
   it("default baseUrl to AVANZA_URL", () => {
-    const client = new AvanzaClient();
+    const client = new AvanzaClient({ fetch });
     expect(client.baseUrl).toEqual(AVANZA_URL);
-  });
-
-  it("default fetch to node-fetch", () => {
-    const client = new AvanzaClient();
-    expect(client.fetch).toEqual(require("node-fetch"));
   });
 
   it("can set fetch to other clients", () => {
@@ -27,13 +23,13 @@ describe("AvanzaClient", () => {
 
   describe("getDefaultHeaders", () => {
     it("returns default headers", () => {
-      const client = new AvanzaClient();
+      const client = new AvanzaClient({ fetch });
       expect(client.getDefaultHeaders()).toEqual({
         "Content-Type": "application/json",
       });
     });
     it("returns default headers with session", () => {
-      const client = new AvanzaClient();
+      const client = new AvanzaClient({ fetch });
       client.setSession({
         authenticationSession: "authenticationSession-123",
         customerId: "123",
@@ -51,7 +47,7 @@ describe("AvanzaClient", () => {
 
   describe("disconnect", () => {
     it("clears session", () => {
-      const client = new AvanzaClient();
+      const client = new AvanzaClient({ fetch });
       client.setSession({
         authenticationSession: "authenticationSession-123",
         customerId: "123",
