@@ -99,13 +99,17 @@ export class AvanzaClient {
     };
   }
 
-  setSession(session: Session) {
+  setSession(session: Session): void {
     this.session = session;
     this.onSessionChange(this.session);
   }
 
-  disconnect() {
+  disconnect(): void {
     this.session = undefined;
     this.onSessionChange(undefined);
+  }
+
+  isConnected(): boolean {
+    return !!this.session;
   }
 }

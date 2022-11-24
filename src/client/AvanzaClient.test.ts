@@ -3,6 +3,31 @@ import { AvanzaClient, AVANZA_URL } from "./AvanzaClient";
 import fetch from "node-fetch";
 
 describe("AvanzaClient", () => {
+  describe("isConnected", () => {
+    it("should return true if session is set", () => {
+      const client = new AvanzaClient({
+        fetch,
+      });
+
+      client.setSession({
+        authenticationSession: "authenticationSession-123",
+        customerId: "123",
+        pushSubscriptionId: "123",
+        registrationComplete: true,
+        securityToken: "security",
+      });
+      expect(client.isConnected()).toBe(true);
+    });
+
+    it("should return false if session is not set", () => {
+      const client = new AvanzaClient({
+        fetch,
+      });
+
+      expect(client.isConnected()).toBe(false);
+    });
+  });
+
   it("can set baseUrl with options", () => {
     const url = "https://www.myurl.se";
     const client = new AvanzaClient({ baseUrl: url, fetch });
