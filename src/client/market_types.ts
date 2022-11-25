@@ -50,6 +50,15 @@ export interface SearchResponse {
   searchQuery: string;
   urlEncodedSearchQuery: string;
   configurationResponse: any;
+  resultGroups: ResultGroup[];
+}
+
+export interface ResultGroup {
+  instrumentType: string;
+  numberOfHits: number;
+  hits: Hit[];
+  instrumentName: string;
+  instrumentDisplayName: string;
 }
 
 export interface InstrumentResponse {

@@ -13,6 +13,7 @@ describe("MarketClient", () => {
         urlEncodedSearchQuery: "aaple",
         numberOfHits: 1,
         totalNumberOfHits: 1,
+        resultGroups: [],
         pageSearchResults: {
           hits: [
             {
