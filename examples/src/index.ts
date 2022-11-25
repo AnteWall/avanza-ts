@@ -2,6 +2,7 @@ import { AvanzaClient } from "avanza-ts";
 import { toString } from "qrcode";
 import fetch from "node-fetch";
 import { writeFileSync } from "fs";
+import { InstrumentType } from "../../dist/client/types";
 
 const client = new AvanzaClient({
   fetch,
@@ -24,16 +25,13 @@ async function main() {
     }
   );
 
-  const response = await client.account.getAccountOverview(
-    res.logins[0].accounts[0].accountName
+  const positions = await client.market.getInstrument(
+    InstrumentType.STOCK,
+    "3323"
   );
 
-  console.log(response);
-
-  const positions = await client.account.getPositions();
-
   const jsonString = JSON.stringify(positions);
-  writeFileSync("./positions.json", jsonString);
+  writeFileSync("./instrument.json", jsonString);
 }
 
 main()
