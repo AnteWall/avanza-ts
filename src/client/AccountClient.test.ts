@@ -58,11 +58,11 @@ describe("AccountClient", () => {
         .get("/_mobile/account/overview")
         .once()
         .reply(200, {
-          accountId: "accountId-123",
+          numberOfDeals: 2,
         } as AccountsOverviewResponse);
       const accountOverview = await client.getOverview();
       expect(accountOverview).toEqual({
-        accountId: "accountId-123",
+        numberOfDeals: 2,
       } as AccountsOverviewResponse);
     });
     it("returns error", async () => {

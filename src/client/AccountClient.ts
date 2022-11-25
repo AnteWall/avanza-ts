@@ -13,13 +13,13 @@ export class AccountClient {
     this.client = client;
   }
 
-  async getOverview(): Promise<AccountsOverviewResponse[]> {
+  async getOverview(): Promise<AccountsOverviewResponse> {
     const response = await this.client.get(ACCOUNT_PATH.OVERVIEW, {});
     if (!response.ok) {
       const errorMessage = await response.text();
       throw new Error(errorMessage);
     }
-    const data = (await response.json()) as AccountsOverviewResponse[];
+    const data = (await response.json()) as AccountsOverviewResponse;
     return data;
   }
 
