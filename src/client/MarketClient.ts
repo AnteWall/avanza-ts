@@ -19,7 +19,7 @@ export class MarketClient {
     });
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(JSON.stringify(errorMessage));
+      throw new Error(errorMessage);
     }
     const data = (await response.json()) as SearchResponse;
     return data;
@@ -38,7 +38,7 @@ export class MarketClient {
     );
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(JSON.stringify(errorMessage));
+      throw new Error(errorMessage);
     }
     const data = (await response.json()) as InstrumentResponse;
     return data;

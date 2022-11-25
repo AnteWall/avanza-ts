@@ -51,7 +51,7 @@ describe("AccountClient", () => {
     });
   });
 
-  describe("getAccountOverview", () => {
+  describe("getOverview", () => {
     it("returns account overview", async () => {
       const client = new AccountClient(new AvanzaClient({ fetch }));
       nock(AVANZA_URL)
@@ -67,12 +67,19 @@ describe("AccountClient", () => {
     });
     it("returns error", async () => {
       const client = new AccountClient(new AvanzaClient({ fetch }));
-      nock(AVANZA_URL).get("/_mobile/account/overview").once().reply(404, {
+      nock(AVANZA_URL).get("/_mobile/account/overview").twice().reply(404, {
         error: "error-123",
       });
       await expect(client.getOverview()).rejects.toThrow(
-        '"{\\"error\\":\\"error-123\\"}"'
+        '{"error":"error-123"}'
       );
+      try {
+        await client.getOverview();
+      } catch (e) {
+        expect(JSON.parse(e.message)).toEqual({
+          error: "error-123",
+        });
+      }
     });
   });
 });

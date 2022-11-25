@@ -45,7 +45,7 @@ export class AuthClient {
 
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(JSON.stringify(errorMessage));
+      throw new Error(errorMessage);
     }
     const data = (await response.json()) as AuthenticateBankIDResponse;
     onQRCode(`bankid:///?autostarttoken=${data.autostartToken}`);
@@ -75,7 +75,7 @@ export class AuthClient {
     const response = await this.client.get(login, {});
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(JSON.stringify(errorMessage));
+      throw new Error(errorMessage);
     }
     const securityToken = response.headers.get("x-securitytoken");
     if (!securityToken) {
@@ -117,7 +117,7 @@ export class AuthClient {
     );
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(JSON.stringify(errorMessage));
+      throw new Error(errorMessage);
     }
     const data = (await response.json()) as AuthenticateBankIDStatusResponse;
     if (data.state === BankIDAuthState.COMPLETE) {
