@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - add `isConnected` method to `AvanzaClient` to check if the client is connected to the Avanza API
 
-### Fixes
+### Fixed
 
 - fix errors to return json object as string instead of stringified string json object
 
