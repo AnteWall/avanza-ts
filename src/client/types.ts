@@ -52,58 +52,38 @@ export type AuthenticateBankIDStatusResponse =
   | AuthenticateBankIDStatusResponseActive
   | AuthenticateBankIDStatusResponseComplete;
 
-export interface AccountsOverviewResponse {
-  courtageClass: string;
-  depositable: boolean;
+export interface Account {
   accountType: string;
-  withdrawable: boolean;
-  clearingNumber: string;
-  instrumentTransferPossible: boolean;
-  internalTransferPossible: boolean;
-  jointlyOwned: boolean;
-  accountId: string;
-  accountTypeName: string;
   interestRate: number;
-  numberOfOrders: number;
-  numberOfDeals: number;
-  performanceSinceOneWeek: number;
-  performanceSinceOneMonth: number;
-  performanceSinceThreeMonths: number;
-  performanceSinceSixMonths: number;
-  performanceSinceOneYear: number;
-  performanceSinceThreeYears: number;
-  performanceSinceOneWeekPercent: number;
-  performanceSinceOneMonthPercent: number;
-  performanceSinceThreeMonthsPercent: number;
-  performanceSinceSixMonthsPercent: number;
-  performanceSinceOneYearPercent: number;
-  performanceSinceThreeYearsPercent: number;
-  availableSuperLoanAmount: number;
-  allowMonthlySaving: boolean;
-  totalProfit: number;
-  currencyAccounts: {
-    currency: string;
-    balance: number;
-  }[];
-  creditLimit: number;
-  forwardBalance: number;
-  reservedAmount: number;
-  totalCollateralValue: number;
-  totalPositionsValue: number;
+  depositable: boolean;
+  active: boolean;
+  accountId: string;
+  tradable: boolean;
+  accountPartlyOwned: boolean;
+  totalBalance: number;
+  totalBalanceDue: number;
+  ownCapital: number;
   buyingPower: number;
   totalProfitPercent: number;
-  overdrawn: boolean;
+  attorney: boolean;
   performance: number;
-  accruedInterest: number;
-  creditAfterInterest: number;
+  totalProfit: number;
   performancePercent: number;
-  overMortgaged: boolean;
+  name: string;
+  sparkontoPlusType: string;
+}
+
+export interface AccountsOverviewResponse {
+  accounts: Account[];
+  numberOfOrders: number;
+  numberOfDeals: number;
   totalBalance: number;
-  ownCapital: number;
+  totalBuyingPower: number;
+  totalOwnCapital: number;
+  totalPerformancePercent: number;
+  totalPerformance: number;
   numberOfTransfers: number;
   numberOfIntradayTransfers: number;
-  standardDeviation: number;
-  sharpeRatio: number;
 }
 
 export enum InstrumentType {
