@@ -1,3 +1,4 @@
+import { AvanzaSession } from "./auth_types";
 import { AvanzaClient } from "./AvanzaClient";
 import {
   AuthenticateBankIDResponse,
@@ -20,6 +21,16 @@ export class AuthClient {
 
   constructor(client: AvanzaClient) {
     this.client = client;
+  }
+
+  async getSession(): Promise<AvanzaSession> {
+    const response = await this.client.get("/_cqbe/authentication/session", {});
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(errorMessage);
+    }
+    const data = (await response.json()) as AvanzaSession;
+    return data;
   }
 
   /**
