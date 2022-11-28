@@ -145,3 +145,106 @@ export interface Sector {
   sectorId: string;
   sectorName: string;
 }
+
+export interface CompanyEvents {
+  events: Event[];
+}
+
+export interface Event {
+  date: string;
+  type: string;
+}
+
+export interface InstrumentDetailsResponse {
+  stock: Stock;
+  company: Company;
+  companyEvents: CompanyEvents;
+  companyOwners: CompanyOwners;
+  brokerTradeSummaries: BrokerTradeSummary[];
+  dividends: Dividends;
+  tradingTerms: TradingTerms;
+  fundExposures: FundExposure[];
+  trades: Trade[];
+  orderDepthLevels: OrderDepthLevel[];
+}
+
+export interface Stock {
+  preferred: boolean;
+  depositaryReceipt: boolean;
+  numberOfShares: number;
+}
+
+export interface Company {
+  companyId: string;
+  description: string;
+  ceo: string;
+  chairman: string;
+  totalNumberOfShares: number;
+  homepage: string;
+}
+export interface CompanyOwners {
+  owners: any[];
+}
+
+export interface BrokerTradeSummary {
+  brokerCode: string;
+  sellVolume: number;
+  buyVolume: number;
+  netBuyVolume: number;
+  brokerName: string;
+}
+
+export interface Dividends {
+  events: any[];
+  pastEvents: PastEvent[];
+}
+
+export interface PastEvent {
+  exDate: string;
+  paymentDate: string;
+  amount: number;
+  currencyCode: string;
+  dividendType: string;
+}
+
+export interface TradingTerms {
+  collateralValue: number;
+  marginRequirement: number;
+  shortSellable: boolean;
+  superInterestApproved: boolean;
+}
+
+export interface FundExposure {
+  orderbookId: string;
+  name: string;
+  exposure: number;
+  countryCode: string;
+  hasPosition: boolean;
+}
+
+export interface Trade {
+  buyer: string;
+  seller: string;
+  dealTime: number;
+  price: number;
+  volume: number;
+  matchedOnMarket: boolean;
+  cancelled: boolean;
+}
+
+export interface OrderDepthLevel {
+  buySide: BuySide;
+  sellSide: SellSide;
+}
+
+export interface BuySide {
+  price: number;
+  priceString: string;
+  volume: number;
+}
+
+export interface SellSide {
+  price: number;
+  priceString: string;
+  volume: number;
+}

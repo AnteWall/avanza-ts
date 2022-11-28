@@ -1,10 +1,15 @@
 import { AvanzaClient } from "./AvanzaClient";
-import { InstrumentResponse, SearchResponse } from "./market_types";
+import {
+  InstrumentDetailsResponse,
+  InstrumentResponse,
+  SearchResponse,
+} from "./market_types";
 import { InstrumentType } from "./types";
 
 const MARKET_PATHS = {
   SEARCH: "/_cqbe/search/global-search/global-search-template",
   GET_INSTRUMENT: "/_api/market-guide/{instrument}/{id}",
+  GET_INSTRUMENT_DETAILS: "/_api/market-guide/{instrument}/{id}/details",
 };
 
 export class MarketClient {
@@ -41,6 +46,25 @@ export class MarketClient {
       throw new Error(errorMessage);
     }
     const data = (await response.json()) as InstrumentResponse;
+    return data;
+  }
+
+  async getInstrumentDetails(
+    instrumentType: InstrumentType,
+    instrumentId: string
+  ): Promise<InstrumentDetailsResponse> {
+    const response = await this.client.get(
+      MARKET_PATHS.GET_INSTRUMENT_DETAILS.replace(
+        "{instrument}",
+        instrumentType.toLowerCase()
+      ).replace("{id}", instrumentId),
+      {}
+    );
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(errorMessage);
+    }
+    const data = (await response.json()) as InstrumentDetailsResponse;
     return data;
   }
 }

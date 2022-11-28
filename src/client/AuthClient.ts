@@ -71,7 +71,6 @@ export class AuthClient {
       throw Error("Multiple logins not supported");
     }
     const login = success.logins[0].loginPath;
-
     const response = await this.client.get(login, {});
     if (!response.ok) {
       const errorMessage = await response.text();
