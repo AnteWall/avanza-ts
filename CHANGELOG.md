@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `getSession` retrives active session from backend. Includes `session` and `user` objects.
+- `priceChart.getPriceChart` returns price chart data for instruments.
+- `auth.getSession` retrives active session from backend. Includes `session` and `user` objects.
 
 ## 0.6.0 - 2022-11-28
 

@@ -7,6 +7,7 @@ import { sanitizeUrlPath } from "../utils/url";
 import { AccountClient } from "./AccountClient";
 import { AuthClient, Session } from "./AuthClient";
 import { MarketClient } from "./MarketClient";
+import { PriceChartClient } from "./PriceChartClient";
 import { AuthenticateBankIDStatusResponseComplete } from "./types";
 
 export const AVANZA_URL = "https://www.avanza.se";
@@ -23,6 +24,7 @@ export class AvanzaClient {
   readonly auth: AuthClient;
   readonly account: AccountClient;
   readonly market: MarketClient;
+  readonly priceChart: PriceChartClient;
   private session?: Session;
   onSessionChange: (session?: Session) => void;
 
@@ -32,6 +34,7 @@ export class AvanzaClient {
     this.auth = new AuthClient(this);
     this.account = new AccountClient(this);
     this.market = new MarketClient(this);
+    this.priceChart = new PriceChartClient(this);
     this.onSessionChange = options.onSessionChange || (() => {});
   }
 
