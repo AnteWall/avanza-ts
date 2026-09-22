@@ -143,6 +143,21 @@ describe('auth session', () => {
     expect(info.user.securityToken).toBe('secret-token');
   });
 
+  it('selects session fields after redaction', async () => {
+    const log = vi.spyOn(Session.prototype, 'log').mockImplementation(() => undefined);
+    mocks.getSessionInfo.mockResolvedValue({
+      user: { greetingName: 'Anna', securityToken: 'secret-token', loggedIn: true },
+    });
+
+    await Session.run(['--json', '--fields', 'user.greetingName,user.securityToken'], {
+      root: packageRoot,
+    });
+
+    expect(JSON.parse(log.mock.calls[0]![0]!)).toEqual({
+      user: { greetingName: 'Anna', securityToken: '<redacted>' },
+    });
+  });
+
   it('prints only the final raw HTTP exchange as a fixture', async () => {
     const log = vi.spyOn(Session.prototype, 'log').mockImplementation(() => undefined);
     const fetch = vi.spyOn(globalThis, 'fetch').mockImplementation(
@@ -200,6 +215,7 @@ describe('auth session', () => {
     await expect(
       Session.run(['--output', 'capture.json'], { root: packageRoot }),
     ).rejects.toThrow();
+    await expect(Session.run(['--fields', 'user'], { root: packageRoot })).rejects.toThrow();
   });
 
   it('does not print a fixture without a valid session', async () => {

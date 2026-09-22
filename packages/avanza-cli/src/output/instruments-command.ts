@@ -6,7 +6,12 @@ import { recordFixture } from './http-fixture.js';
 
 export abstract class InstrumentsCommand extends ApiCommand {
   protected async request(
-    flags: { fixture: boolean; json: boolean | undefined; output: string | undefined },
+    flags: {
+      fields: string | undefined;
+      fixture: boolean;
+      json: boolean | undefined;
+      output: string | undefined;
+    },
     operation: (client: AvanzaClient) => Promise<unknown>,
     authenticated = false,
   ): Promise<void> {

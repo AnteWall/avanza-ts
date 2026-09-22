@@ -10,6 +10,18 @@ Commands supporting structured output accept `--json` for the response body:
 avanza auth session --json
 ```
 
+Add `--fields` to print only selected comma-separated JSON fields.
+Use dotted paths to select properties from nested objects or every item in an array:
+
+```sh
+avanza auth session --json --fields user.greetingName,user.loggedIn
+avanza instruments stocks --json --fields stocks.name,stocks.lastPrice,totalNumberOfOrderbooks
+avanza instruments sectors --json --fields sector.sectorName
+```
+
+`--json` alone keeps the full response. Unknown fields are rejected. Field selection happens after
+JSON redaction and never changes `--fixture` output.
+
 `--fixture` prints the HTTP request and response as JSON. Use `--output` to write to a new temporary
 file instead of stdout:
 
