@@ -1,0 +1,4 @@
+{
+  "files": [],
+  "references": [{ "path": "./packages/avanza-ts" }, { "path": "./packages/avanza-cli" }]
+}

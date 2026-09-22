@@ -1,0 +1,41 @@
+{
+  "name": "avanza-cli",
+  "version": "0.0.0",
+  "description": "Command-line interface for Avanza",
+  "bin": {
+    "avanza": "./bin/run.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "dev": "tsc --build --watch --preserveWatchOutput",
+    "prepack": "pnpm build",
+    "start": "node ./bin/run.js",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --build"
+  },
+  "dependencies": {
+    "@oclif/core": "^5.0.0",
+    "avanza-ts": "workspace:^"
+  },
+  "oclif": {
+    "bin": "avanza",
+    "commands": "./dist/commands",
+    "dirname": "avanza",
+    "topicSeparator": " "
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

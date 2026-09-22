@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "perf": "warn",
+    "suspicious": "warn"
+  },
+  "ignorePatterns": ["**/dist/**", "**/coverage/**", ".direnv/**"],
+  "rules": {
+    "unicorn/no-empty-file": "off",
+    "unicorn/require-module-specifiers": "off"
+  }
+}
