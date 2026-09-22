@@ -2,6 +2,27 @@
 
 Command-line interface for `avanza-ts`.
 
+## Output formats
+
+Commands supporting structured output accept `--json` for the response body:
+
+```sh
+avanza auth session --json
+```
+
+`--fixture` prints the HTTP request and response as JSON. Use `--output` to write to a new temporary
+file instead of stdout:
+
+```sh
+avanza auth session --fixture
+capture_dir=$(mktemp -d)
+avanza auth session --fixture --output "$capture_dir/raw.json"
+```
+
+`--json` and `--fixture` cannot be combined. `--output` requires `--fixture` and never overwrites a
+file. Anonymize captured data before adding it to tracked fixtures, and remove temporary captures
+after use.
+
 ## Authentication
 
 ### TOTP
@@ -39,8 +60,7 @@ avanza auth session
 ```
 
 This validates the stored session with Avanza and prints a redacted summary. Missing, expired, or
-invalid sessions are reported as normal status results. Session credentials, cookies, and security
-tokens are never printed.
+invalid sessions are reported as normal status results.
 
 ### Logout
 

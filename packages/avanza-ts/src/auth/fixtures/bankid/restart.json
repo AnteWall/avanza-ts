@@ -8,7 +8,6 @@
     "body": {
       "qrToken": "bankid.<qr-start-token>.0.<qr-auth-code>"
     },
-    "originalJsonBytes": 125,
     "status": 200
   }
 }

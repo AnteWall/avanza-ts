@@ -13,7 +13,6 @@
       "expires": "2026-01-01T00:00:00.000Z",
       "qrToken": "bankid.<qr-start-token>.0.<qr-auth-code>"
     },
-    "originalJsonBytes": 221,
     "status": 202
   }
 }

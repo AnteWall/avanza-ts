@@ -8,7 +8,6 @@ export interface HttpFixture<ResponseBody = unknown> {
   };
   readonly response: {
     readonly body: ResponseBody;
-    readonly originalJsonBytes: number;
     readonly status: number;
   };
 }
@@ -32,7 +31,6 @@ export function loadHttpFixture<ResponseBody>(path: string): HttpFixture<Respons
     typeof fixture.request.method !== 'string' ||
     typeof fixture.request.path !== 'string' ||
     !('body' in fixture.response) ||
-    typeof fixture.response.originalJsonBytes !== 'number' ||
     typeof fixture.response.status !== 'number'
   ) {
     throw new TypeError(`Invalid HTTP fixture: ${path}`);
