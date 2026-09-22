@@ -3,6 +3,7 @@ export type { AuthClient } from './auth/auth-client.js';
 export type {
   BankIdChallenge,
   BankIdPollResult,
+  SessionInfoResponse,
   StartBankIdOptions,
   TotpCodeLoginOptions,
   TotpLoginOptions,

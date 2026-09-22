@@ -24,6 +24,23 @@ export interface StartBankIdOptions {
   readonly signal?: AbortSignal;
 }
 
+export interface SessionInfoResponse {
+  readonly invalidSessionId: string;
+  readonly isContextVerifiedWithBackend?: boolean;
+  readonly user: {
+    readonly company: boolean;
+    readonly customerGroup: string;
+    readonly greetingName: string;
+    readonly id: string;
+    readonly loggedIn: boolean;
+    readonly minor: boolean;
+    readonly pushBaseUrl: string;
+    readonly pushSubscriptionId: string;
+    readonly securityToken: string;
+    readonly start: boolean;
+  };
+}
+
 export interface BankIdChallenge {
   readonly autostartToken: string;
   readonly autostartUrl: string;

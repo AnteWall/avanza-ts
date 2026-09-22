@@ -2,7 +2,7 @@ import { AvanzaAuthenticationError, AvanzaHttpError } from '../errors.js';
 import type { ClientContext } from '../internal/client-context.js';
 import type { HttpSession } from '../internal/http-client.js';
 import { asObject, optionalString, requiredString, toAuthenticationError } from './auth-helpers.js';
-import type { StartBankIdOptions, TotpLoginOptions } from './auth-types.js';
+import type { SessionInfoResponse, StartBankIdOptions, TotpLoginOptions } from './auth-types.js';
 import { BankIdAuthAttempt, parseSessionInfo } from './bankid-auth-attempt.js';
 import type { AvanzaCookie, AvanzaSession, TotpSession } from './session.js';
 import { generateTotpCode } from './totp.js';
@@ -22,6 +22,16 @@ export class AuthClient {
     return BankIdAuthAttempt.start(this.context, options);
   }
 
+  public getSessionInfo(signal?: AbortSignal): Promise<SessionInfoResponse> {
+    return this.context.http.request<SessionInfoResponse>({
+      access: 'optional',
+      method: 'GET',
+      path: SESSION_INFO_PATH,
+      redirect: 'error',
+      signal,
+    });
+  }
+
   public async validateSession(signal?: AbortSignal): Promise<boolean> {
     const session = this.context.session.get();
     if (session === undefined) {
@@ -36,7 +46,7 @@ export class AuthClient {
           method: 'GET',
           path: SESSION_INFO_PATH,
           redirect: 'error',
-          ...(signal === undefined ? {} : { signal }),
+          signal,
         },
         { includeCookies: session.mode === 'bankid', session },
       );
@@ -79,7 +89,7 @@ export class AuthClient {
           method: 'DELETE',
           path: LOGOUT_PATH,
           redirect: 'error',
-          ...(signal === undefined ? {} : { signal }),
+          signal,
         },
         { includeCookies: session.mode === 'bankid', session },
       );
@@ -149,7 +159,7 @@ export class AuthClient {
       method: 'POST',
       path: USER_CREDENTIALS_PATH,
       redirect: 'error',
-      ...(options.signal === undefined ? {} : { signal: options.signal }),
+      signal: options.signal,
     });
     const initialBody = asObject(initial.body);
     const secondFactor = initialBody.twoFactorLogin;
@@ -183,7 +193,7 @@ export class AuthClient {
       method: 'POST',
       path: TOTP_PATH,
       redirect: 'error',
-      ...(signal === undefined ? {} : { signal }),
+      signal,
     });
   }
 

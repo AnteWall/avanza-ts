@@ -7,6 +7,66 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
+describe('AuthClient session info', () => {
+  it('uses the installed session when available', async () => {
+    const body = {
+      invalidSessionId: '-',
+      user: {
+        company: false,
+        customerGroup: '-',
+        greetingName: '-',
+        id: '-',
+        loggedIn: false,
+        minor: false,
+        pushBaseUrl: 'https://push.avanza.se',
+        pushSubscriptionId: '-',
+        securityToken: '-',
+        start: false,
+      },
+    };
+    const authenticatedBody = {
+      ...body,
+      user: {
+        ...body.user,
+        customerGroup: 'PLATINA',
+        greetingName: 'Authenticated user',
+        id: 'customer-id',
+        loggedIn: true,
+        pushSubscriptionId: '',
+        securityToken: 'security-token',
+      },
+    };
+    const fetch = vi.fn<typeof globalThis.fetch>();
+    fetch.mockResolvedValueOnce(jsonResponse(body));
+    fetch.mockResolvedValueOnce(jsonResponse(authenticatedBody));
+
+    const anonymous = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+    await expect(anonymous.auth.getSessionInfo()).resolves.toEqual(body);
+
+    const authenticated = new AvanzaClient({
+      baseUrl: 'https://example.test',
+      fetch,
+      session: {
+        authenticationSession: 'authentication-session',
+        mode: 'totp',
+        securityToken: 'security-token',
+      },
+    });
+    await expect(authenticated.auth.getSessionInfo()).resolves.toEqual(authenticatedBody);
+
+    expect(new Headers(fetch.mock.calls[0]![1]?.headers).has('X-AuthenticationSession')).toBe(
+      false,
+    );
+    expect(new Headers(fetch.mock.calls[1]![1]?.headers).get('X-AuthenticationSession')).toBe(
+      'authentication-session',
+    );
+    expect(fetch.mock.calls.map(([input]) => new URL(input.toString()).pathname)).toEqual([
+      '/_api/authentication/session/info/session',
+      '/_api/authentication/session/info/session',
+    ]);
+  });
+});
+
 describe('AuthClient TOTP login', () => {
   it('completes a two-step login with a supplied code', async () => {
     const fetch = vi.fn<typeof globalThis.fetch>();

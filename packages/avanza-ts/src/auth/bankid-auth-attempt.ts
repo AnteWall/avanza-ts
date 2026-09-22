@@ -37,7 +37,7 @@ export class BankIdAuthAttempt {
     context: ClientContext;
     deadline: number;
     http: HttpSession;
-    signal?: AbortSignal;
+    signal: AbortSignal | undefined;
     transactionId: string;
   }) {
     this.#challenge = options.challenge;
@@ -84,7 +84,7 @@ export class BankIdAuthAttempt {
         context,
         deadline,
         http,
-        ...(options.signal === undefined ? {} : { signal: options.signal }),
+        signal: options.signal,
         transactionId,
       });
     } catch (error) {

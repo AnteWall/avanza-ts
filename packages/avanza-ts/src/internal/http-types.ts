@@ -14,7 +14,7 @@ export interface HttpRequest {
   readonly path: string;
   readonly query?: Readonly<Record<string, QueryValue>>;
   readonly redirect?: RequestRedirect;
-  readonly signal?: AbortSignal;
+  readonly signal?: AbortSignal | undefined;
 }
 
 export interface HttpResponse<Response> {

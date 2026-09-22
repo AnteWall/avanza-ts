@@ -110,6 +110,13 @@ if (valid) {
 }
 ```
 
+`getSessionInfo()` returns the raw session-info response. It sends the installed session when one is
+available and otherwise makes the same request anonymously:
+
+```ts
+const info = await client.auth.getSessionInfo();
+```
+
 ## Configuration
 
 The client uses `https://www.avanza.se` and the Node.js global `fetch` implementation by default. Both
