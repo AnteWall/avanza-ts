@@ -30,9 +30,11 @@ export class AvanzaClient {
       ...(options.baseUrl === undefined ? {} : { baseUrl: options.baseUrl }),
       ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
       getSession: () => this.#session,
+      updateSession: (session) => this.setSession(session),
     });
 
     const context = {
+      createHttpSession: (cookies = []) => this.#http.createIsolatedSession(cookies),
       http: this.#http,
       session: {
         clear: () => this.clearSession(),

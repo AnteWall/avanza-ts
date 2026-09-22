@@ -16,6 +16,7 @@ import { AvanzaClient, type AvanzaSession } from 'avanza-ts';
 
 const session: AvanzaSession = {
   authenticationSession: process.env.AVANZA_AUTHENTICATION_SESSION!,
+  mode: 'totp',
   securityToken: process.env.AVANZA_SECURITY_TOKEN!,
 };
 
@@ -41,10 +42,73 @@ client.setSession(session);
 client.clearSession();
 ```
 
-The request layer classifies endpoints as public, optionally authenticated, or authentication
-required. Whenever the client has a session, its `X-AuthenticationSession` and `X-SecurityToken`
-headers are sent for every request, including public requests. Authentication-required requests fail
-before making a network call when no session is available.
+Sessions are discriminated by `mode`. TOTP sessions contain authentication headers, while BankID
+sessions contain an RFC-compliant, JSON-serializable cookie snapshot and may contain a security
+token. Authentication-required requests fail before making a network call when no session is
+available.
+
+Sessions contain sensitive credentials. Persist them only in a suitable credential store; do not log
+them or commit them to source control.
+
+## TOTP authentication
+
+Log in with either the current six-digit code or the base32 secret used to generate it:
+
+```ts
+const session = await client.auth.loginWithTotp({
+  username: process.env.AVANZA_USERNAME!,
+  password: process.env.AVANZA_PASSWORD!,
+  totpSecret: process.env.AVANZA_TOTP_SECRET!,
+});
+```
+
+Use `totpCode` instead of `totpSecret` when code generation happens outside the SDK. The completed
+session is returned and installed on `client.session`.
+
+## BankID authentication
+
+Starting BankID returns an attempt with the current QR payload and a same-device autostart URL:
+
+```ts
+const attempt = await client.auth.startBankId();
+
+renderQr(attempt.challenge.qrPayload);
+
+while (true) {
+  await new Promise((resolve) => setTimeout(resolve, attempt.challenge.refreshAfterMs));
+  const result = await attempt.poll();
+
+  if (result.status === 'pending') {
+    renderQr(result.challenge.qrPayload);
+    continue;
+  }
+  if (result.status === 'complete') {
+    console.log('Authenticated');
+  }
+  break;
+}
+```
+
+`qrPayload` is the text to encode in a QR image; it is not an image URL. Avanza rotates it while the
+attempt is pending, so callers must rerender the QR returned by each poll. The SDK deliberately does
+not choose an SVG, PNG, terminal, or browser renderer. `autostartUrl` uses the `bankid://` scheme for
+same-device login.
+
+Call `attempt.cancel()` when abandoning an in-progress login. Attempts default to a 120-second
+overall timeout and suggest polling every 1.5 seconds.
+
+## Session lifecycle
+
+Restored sessions can be checked before use, and logout clears the local session even when remote
+cleanup fails:
+
+```ts
+const valid = await client.auth.validateSession();
+
+if (valid) {
+  await client.auth.logout();
+}
+```
 
 ## Configuration
 

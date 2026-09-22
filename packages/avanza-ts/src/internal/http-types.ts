@@ -1,4 +1,4 @@
-export type AccessMode = 'public' | 'optional' | 'required';
+export type AccessMode = 'anonymous' | 'optional' | 'public' | 'required';
 
 export type HttpMethod = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 
@@ -13,7 +13,15 @@ export interface HttpRequest {
   readonly method: HttpMethod;
   readonly path: string;
   readonly query?: Readonly<Record<string, QueryValue>>;
+  readonly redirect?: RequestRedirect;
   readonly signal?: AbortSignal;
+}
+
+export interface HttpResponse<Response> {
+  readonly body: Response;
+  readonly headers: Headers;
+  readonly status: number;
+  readonly statusText: string;
 }
 
 export interface HttpTransport {

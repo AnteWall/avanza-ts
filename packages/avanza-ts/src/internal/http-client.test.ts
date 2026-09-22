@@ -8,12 +8,15 @@ import type { AccessMode } from './http-types.js';
 const session: AvanzaSession = {
   authenticationSession: 'authentication-session',
   customerId: 'customer-id',
+  mode: 'totp',
   pushSubscriptionId: 'push-subscription-id',
   securityToken: 'security-token',
 };
 
 describe('HttpClient access policy', () => {
   it.each<[AccessMode, boolean]>([
+    ['anonymous', false],
+    ['anonymous', true],
     ['public', false],
     ['public', true],
     ['optional', false],
@@ -39,10 +42,39 @@ describe('HttpClient access policy', () => {
     const [, init] = fetch.mock.calls[0]!;
     const headers = new Headers(init?.headers);
 
+    const sendsSession = hasSession && access !== 'anonymous';
     expect(headers.get('X-AuthenticationSession')).toBe(
-      hasSession ? session.authenticationSession : null,
+      sendsSession ? session.authenticationSession : null,
     );
-    expect(headers.get('X-SecurityToken')).toBe(hasSession ? session.securityToken : null);
+    expect(headers.get('X-SecurityToken')).toBe(sendsSession ? session.securityToken : null);
+  });
+
+  it('persists and sends rotated BankID cookies', async () => {
+    let activeSession: AvanzaSession = { cookies: [], mode: 'bankid' };
+    const fetch = vi.fn<typeof globalThis.fetch>();
+    fetch.mockResolvedValueOnce(
+      jsonResponse(
+        { ok: true },
+        { headers: { 'Set-Cookie': 'session=first; Path=/; HttpOnly; Secure' } },
+      ),
+    );
+    fetch.mockResolvedValueOnce(jsonResponse({ ok: true }));
+    const client = new HttpClient({
+      baseUrl: 'https://example.test',
+      fetch,
+      getSession: () => activeSession,
+      updateSession: (updated) => {
+        activeSession = updated;
+      },
+    });
+
+    await client.request({ access: 'optional', method: 'GET', path: '/first' });
+    await client.request({ access: 'required', method: 'GET', path: '/second' });
+
+    expect(activeSession.mode).toBe('bankid');
+    expect(activeSession.mode === 'bankid' ? activeSession.cookies : []).toHaveLength(1);
+    const secondHeaders = new Headers(fetch.mock.calls[1]![1]?.headers);
+    expect(secondHeaders.get('Cookie')).toBe('session=first');
   });
 
   it('reads session state for every request and protects its headers', async () => {

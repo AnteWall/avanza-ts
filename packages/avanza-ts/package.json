@@ -27,6 +27,9 @@
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc --build"
   },
+  "dependencies": {
+    "tough-cookie": "^6.0.2"
+  },
   "engines": {
     "node": ">=22.12.0"
   }

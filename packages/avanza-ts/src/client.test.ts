@@ -11,6 +11,7 @@ import { WebSocketClient } from './websocket/websocket-client.js';
 
 const session: AvanzaSession = {
   authenticationSession: 'authentication-session',
+  mode: 'totp',
   securityToken: 'security-token',
 };
 
@@ -34,6 +35,7 @@ describe('AvanzaClient', () => {
 
     const replacement: AvanzaSession = {
       authenticationSession: 'replacement-authentication-session',
+      mode: 'totp',
       securityToken: 'replacement-security-token',
     };
     client.setSession(replacement);

@@ -11,6 +11,35 @@ export class AvanzaAuthenticationRequiredError extends AvanzaError {
   }
 }
 
+export type AvanzaAuthenticationErrorCode =
+  | 'cancelled'
+  | 'customer_selection'
+  | 'denied'
+  | 'invalid_credentials'
+  | 'malformed_response'
+  | 'network'
+  | 'protocol'
+  | 'session_unverified'
+  | 'timeout'
+  | 'unsupported_method';
+
+export interface AvanzaAuthenticationErrorOptions {
+  readonly code: AvanzaAuthenticationErrorCode;
+  readonly upstreamStatus?: number;
+}
+
+export class AvanzaAuthenticationError extends AvanzaError {
+  public readonly code: AvanzaAuthenticationErrorCode;
+  public readonly upstreamStatus: number | undefined;
+
+  public constructor(options: AvanzaAuthenticationErrorOptions) {
+    const suffix = options.upstreamStatus === undefined ? '' : ` (HTTP ${options.upstreamStatus})`;
+    super(`Avanza authentication failed: ${options.code}${suffix}.`);
+    this.code = options.code;
+    this.upstreamStatus = options.upstreamStatus;
+  }
+}
+
 export interface AvanzaHttpErrorOptions {
   readonly body: unknown;
   readonly headers: Readonly<Record<string, string>>;
