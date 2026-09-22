@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/_api/market-stock-filter/stocks",
+    "body": {
+      "filter": { "sectors": [], "marketPlaces": [] },
+      "offset": 0,
+      "limit": 20,
+      "sortBy": { "field": "numberOfOwners", "order": "desc" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "stocks": [
+        {
+          "orderbookId": "10001",
+          "companyId": "20001",
+          "type": "STOCK",
+          "name": "Example AB",
+          "shortName": "EXAM B",
+          "currency": "SEK",
+          "countryCode": "SE",
+          "marketPlaceCode": "XSTO",
+          "lastPrice": 125.5,
+          "numberOfOwners": 1234,
+          "oneDayChangePercent": 0.012,
+          "hasPosition": false,
+          "hasAnalysis": true
+        }
+      ],
+      "filter": { "countryCodes": [], "marketPlaceCodes": [], "marketPlaces": [], "sectors": [] },
+      "pagination": { "offset": 0, "limit": 20 },
+      "sortBy": { "field": "numberOfOwners", "order": "desc" },
+      "totalNumberOfOrderbooks": 1,
+      "filterOptions": { "countryCodes": [], "marketPlaces": [], "sectors": [] }
+    }
+  }
+}

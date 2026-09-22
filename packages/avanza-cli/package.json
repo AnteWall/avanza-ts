@@ -43,6 +43,9 @@
     "topics": {
       "auth": {
         "description": "Manage authentication and the stored session"
+      },
+      "instruments": {
+        "description": "Screen stocks and manage stock settings"
       }
     }
   },

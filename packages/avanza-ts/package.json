@@ -28,7 +28,8 @@
     "typecheck": "tsc --build"
   },
   "dependencies": {
-    "tough-cookie": "^6.0.2"
+    "tough-cookie": "^6.0.2",
+    "zod": "^4.6.5"
   },
   "engines": {
     "node": ">=22.12.0"

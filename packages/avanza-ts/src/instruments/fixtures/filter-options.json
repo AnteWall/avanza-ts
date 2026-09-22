@@ -1,0 +1,20 @@
+{
+  "request": { "method": "GET", "path": "/_api/market-stock-filter/stocks/filter-options" },
+  "response": {
+    "status": 200,
+    "body": {
+      "countryCodes": [{ "value": "SE", "displayName": "Sverige", "numberOfOrderbooks": "1" }],
+      "marketPlaces": [
+        {
+          "value": "se",
+          "displayName": "Sverige",
+          "numberOfOrderbooks": "1",
+          "children": [
+            { "value": "se.xsto", "displayName": "Stockholmsbörsen", "numberOfOrderbooks": "1" }
+          ]
+        }
+      ],
+      "sectors": [{ "value": "38", "displayName": "Teknologi", "numberOfOrderbooks": "1" }]
+    }
+  }
+}

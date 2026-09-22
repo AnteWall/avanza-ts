@@ -20,6 +20,30 @@ export {
   AvanzaHttpError,
 } from './errors.js';
 export type { InstrumentsClient } from './instruments/instruments-client.js';
+export {
+  savedFiltersSchema,
+  screenerTabsSchema,
+  stockFilterSchema,
+} from './instruments/stock-screener-schemas.js';
+export type {
+  PopularStockSector,
+  SavedStockFilter,
+  SavedStockFiltersResponse,
+  ScreenedStock,
+  ScreenStocksOptions,
+  ScreenStocksResponse,
+  StockFilter,
+  StockFilterOption,
+  StockFilterOptions,
+  StockFilterRange,
+  StockMetric,
+  StockScreenerMetadataResponse,
+  StockScreenerTab,
+  StockScreenerTabsResponse,
+  StockSector,
+  StockSectorGroup,
+  StockSort,
+} from './instruments/stock-screener-types.js';
 export type { MarketClient } from './market/market-client.js';
 export type { OrdersClient } from './orders/orders-client.js';
 export type { WebSocketClient } from './websocket/websocket-client.js';

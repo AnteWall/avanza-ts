@@ -23,6 +23,32 @@ avanza auth session --fixture --output "$capture_dir/raw.json"
 file. Anonymize captured data before adding it to tracked fixtures, and remove temporary captures
 after use.
 
+## Stock screener
+
+```sh
+avanza instruments stocks --limit 10 --sort-field numberOfOwners --order desc --json
+avanza instruments stocks --filter '{"marketPlaces":["se"],"sectors":["38"]}' --offset 20
+avanza instruments stock-options --json
+avanza instruments sectors --popular --json
+avanza instruments sectors --json
+```
+
+These public commands also support `--fixture --output <new-temporary-file>`. Fixture output contains
+the raw HTTP response: anonymize it before adding it to the repository.
+
+After signing in, the following settings commands use the stored session:
+
+```sh
+avanza instruments metadata --json
+avanza instruments tabs list --json
+avanza instruments tabs save --data '[{"name":"My tab","columns":["NUMBER_OF_OWNERS"]}]'
+avanza instruments tabs delete
+avanza instruments filters list --json
+avanza instruments filters save --data '[{"name":"Sweden","filter":{"marketPlaces":["se"]}}]'
+```
+
+Save commands replace the complete collection; `tabs delete` deletes all custom tabs.
+
 ## Authentication
 
 ### TOTP

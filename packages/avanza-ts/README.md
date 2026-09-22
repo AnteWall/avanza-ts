@@ -30,7 +30,30 @@ client.orders;
 client.websocket;
 ```
 
-The domain clients currently establish the SDK structure; endpoint methods will be added separately.
+The stock screener and authentication endpoints are available; other domain clients establish the
+SDK structure for future operations.
+
+## Stock screener
+
+```ts
+const { stocks, totalNumberOfOrderbooks } = await client.instruments.screenStocks({
+  filter: { marketPlaces: ['se'], sectors: ['38'], numberOfOwners: { minValue: 100 } },
+  offset: 0,
+  limit: 20,
+  sortBy: { field: 'numberOfOwners', order: 'desc' },
+});
+
+const options = await client.instruments.getStockFilterOptions();
+```
+
+The response includes pagination, filter options, and per-stock prices, performance, ownership,
+fundamentals, and technical indicators. Requests and responses are validated with Zod. Stock sector
+lists are available through `getPopularStockSectors()` and `getAllStockSectors()`.
+
+With an authenticated session, `getStockScreenerMetadata()`, `getStockScreenerTabs()`, and
+`getSavedStockFilters()` read personal settings. `saveStockScreenerTabs(tabs)` and
+`saveStockFilters(filters)` replace their respective complete collections;
+`deleteStockScreenerTabs()` deletes all custom tabs.
 
 ## Sessions
 
