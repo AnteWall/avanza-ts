@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationError } from '../errors.js';
+import { jsonResponse } from '../test-utils/http.js';
 
 afterEach(() => {
   vi.useRealTimers();
@@ -349,10 +350,4 @@ function loginBody() {
     customerId: 'customer-id',
     pushSubscriptionId: 'push-subscription-id',
   };
-}
-
-function jsonResponse(body: unknown, init?: ResponseInit): Response {
-  const headers = new Headers(init?.headers);
-  headers.set('Content-Type', 'application/json');
-  return new Response(JSON.stringify(body), { ...init, headers });
 }

@@ -1,0 +1,19 @@
+{
+  "request": {
+    "body": {
+      "method": "QR_START",
+      "returnScheme": "NOP"
+    },
+    "method": "POST",
+    "path": "/_api/authentication/v2/sessions/bankid"
+  },
+  "response": {
+    "body": {
+      "transactionId": "00000000-0000-4000-8000-000000000000",
+      "expires": "2026-01-01T00:00:00.000Z",
+      "qrToken": "bankid.<qr-start-token>.0.<qr-auth-code>"
+    },
+    "originalJsonBytes": 221,
+    "status": 202
+  }
+}

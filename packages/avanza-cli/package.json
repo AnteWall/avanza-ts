@@ -26,14 +26,25 @@
     "typecheck": "tsc --build"
   },
   "dependencies": {
+    "@clack/prompts": "^1.8.1",
+    "@napi-rs/keyring": "^2.1.0",
     "@oclif/core": "^5.0.0",
-    "avanza-ts": "workspace:^"
+    "avanza-ts": "workspace:^",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6"
   },
   "oclif": {
     "bin": "avanza",
     "commands": "./dist/commands",
     "dirname": "avanza",
-    "topicSeparator": " "
+    "topicSeparator": " ",
+    "topics": {
+      "auth": {
+        "description": "Manage authentication and the stored session"
+      }
+    }
   },
   "engines": {
     "node": ">=22.12.0"

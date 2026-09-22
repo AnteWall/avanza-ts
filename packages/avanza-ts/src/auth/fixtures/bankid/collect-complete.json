@@ -1,0 +1,51 @@
+{
+  "request": {
+    "body": {},
+    "method": "POST",
+    "path": "/_api/authentication/v2/sessions/bankid/collect"
+  },
+  "response": {
+    "body": {
+      "name": "<redacted:12>",
+      "logins": [
+        {
+          "customerId": "<customer-id>",
+          "username": "<redacted:8>",
+          "accounts": [
+            {
+              "accountName": "<redacted:7>",
+              "accountType": "<redacted:21>"
+            },
+            {
+              "accountName": "<redacted:7>",
+              "accountType": "<redacted:15>"
+            },
+            {
+              "accountName": "<redacted:7>",
+              "accountType": "<redacted:18>"
+            },
+            {
+              "accountName": "<redacted:7>",
+              "accountType": "<redacted:21>"
+            },
+            {
+              "accountName": "<redacted:8>",
+              "accountType": "<redacted:9>"
+            }
+          ],
+          "loginPath": "<redacted:84>"
+        }
+      ],
+      "transactionId": "00000000-0000-4000-8000-000000000000",
+      "recommendedTargetCustomers": [],
+      "identificationNumber": "<redacted:12>",
+      "state": "COMPLETE",
+      "hintCode": "<redacted:8>",
+      "poa": {
+        "letters": []
+      }
+    },
+    "originalJsonBytes": 680,
+    "status": 200
+  }
+}

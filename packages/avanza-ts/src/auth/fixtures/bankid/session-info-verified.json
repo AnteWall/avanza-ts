@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/authentication/session/info/session"
+  },
+  "response": {
+    "body": {
+      "invalidSessionId": "<redacted:1>",
+      "user": {
+        "loggedIn": true,
+        "greetingName": "<redacted:4>",
+        "pushSubscriptionId": "<redacted:0>",
+        "pushBaseUrl": "<redacted:22>",
+        "securityToken": "<security-token>",
+        "company": false,
+        "minor": false,
+        "customerGroup": "<redacted:7>",
+        "start": false,
+        "id": "<redacted:7>"
+      }
+    },
+    "originalJsonBytes": 274,
+    "status": 200
+  }
+}

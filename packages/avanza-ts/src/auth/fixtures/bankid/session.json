@@ -1,0 +1,58 @@
+{
+  "originalJsonBytes": 1123,
+  "session": {
+    "cookies": [
+      {
+        "key": "AZABANKIDTRANSID",
+        "expires": "2026-01-01T00:00:00.000Z",
+        "maxAge": 0,
+        "domain": "www.avanza.se",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": true,
+        "creation": "2026-01-01T00:00:00.000Z",
+        "lastAccessed": "2026-01-01T00:00:00.000Z",
+        "sameSite": "lax"
+      },
+      {
+        "key": "csid",
+        "value": "<cookie-value:36>",
+        "domain": "www.avanza.se",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2026-01-01T00:00:00.000Z",
+        "lastAccessed": "2026-01-01T00:00:00.000Z",
+        "sameSite": "strict"
+      },
+      {
+        "key": "cstoken",
+        "value": "<cookie-value:36>",
+        "domain": "www.avanza.se",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2026-01-01T00:00:00.000Z",
+        "lastAccessed": "2026-01-01T00:00:00.000Z",
+        "sameSite": "strict"
+      },
+      {
+        "key": "AZACSRF",
+        "value": "<cookie-value:36>",
+        "domain": "www.avanza.se",
+        "path": "/",
+        "secure": true,
+        "hostOnly": true,
+        "creation": "2026-01-01T00:00:00.000Z",
+        "lastAccessed": "2026-01-01T00:00:00.000Z",
+        "sameSite": "strict"
+      }
+    ],
+    "customerId": "<customer-id>",
+    "mode": "bankid",
+    "securityToken": "<security-token>"
+  }
+}

@@ -2,7 +2,7 @@ import { AvanzaAuthenticationError, AvanzaHttpError } from '../errors.js';
 import type { ClientContext } from '../internal/client-context.js';
 import type { HttpSession, HttpSessionResponse } from '../internal/http-client.js';
 import type { HttpRequest } from '../internal/http-types.js';
-import { asObject, requiredString, toAuthenticationError } from './auth-helpers.js';
+import { asObject, optionalString, requiredString, toAuthenticationError } from './auth-helpers.js';
 import type { BankIdChallenge, BankIdPollResult, StartBankIdOptions } from './auth-types.js';
 import type { BankIdSession } from './session.js';
 
@@ -74,7 +74,7 @@ export class BankIdAuthAttempt {
         options.signal,
       );
       const body = asObject(response.body);
-      const autostartToken = requiredString(body, 'autostartToken', 4096);
+      const autostartToken = optionalString(body, 'autostartToken', 4096);
       const qrPayload = requiredString(body, 'qrToken', 4096);
       const transactionId = requiredString(body, 'transactionId', 512);
       const challenge = createChallenge(autostartToken, qrPayload);
@@ -242,10 +242,14 @@ export class BankIdAuthAttempt {
   }
 }
 
-function createChallenge(autostartToken: string, qrPayload: string): BankIdChallenge {
+function createChallenge(autostartToken: string | undefined, qrPayload: string): BankIdChallenge {
   return {
-    autostartToken,
-    autostartUrl: `bankid:///?autostarttoken=${encodeURIComponent(autostartToken)}&redirect=null`,
+    ...(autostartToken === undefined
+      ? {}
+      : {
+          autostartToken,
+          autostartUrl: `bankid:///?autostarttoken=${encodeURIComponent(autostartToken)}&redirect=null`,
+        }),
     qrPayload,
     refreshAfterMs: REFRESH_AFTER_MS,
   };

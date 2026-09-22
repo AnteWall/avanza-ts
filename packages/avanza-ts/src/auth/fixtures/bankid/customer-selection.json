@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/authentication/v2/sessions/bankid/collect/<customer-id>"
+  },
+  "response": {
+    "body": {
+      "pushSubscriptionId": "<redacted:0>",
+      "customerSessionToken": "<redacted:36>",
+      "authenticationSession": "<authentication-session>",
+      "customerId": "<customer-id>",
+      "registrationComplete": true
+    },
+    "originalJsonBytes": 201,
+    "status": 200
+  }
+}

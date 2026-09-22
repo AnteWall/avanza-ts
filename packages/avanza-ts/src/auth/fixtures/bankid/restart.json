@@ -1,0 +1,14 @@
+{
+  "request": {
+    "body": {},
+    "method": "POST",
+    "path": "/_api/authentication/v2/sessions/bankid/restart"
+  },
+  "response": {
+    "body": {
+      "qrToken": "bankid.<qr-start-token>.0.<qr-auth-code>"
+    },
+    "originalJsonBytes": 125,
+    "status": 200
+  }
+}

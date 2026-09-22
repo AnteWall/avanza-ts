@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { AvanzaSession } from '../auth/session.js';
 import { AvanzaAuthenticationRequiredError, AvanzaHttpError } from '../errors.js';
+import { jsonResponse } from '../test-utils/http.js';
 import { HttpClient } from './http-client.js';
 import type { AccessMode } from './http-types.js';
 
@@ -185,10 +186,3 @@ describe('HttpClient requests', () => {
     });
   });
 });
-
-function jsonResponse(body: unknown, init?: ResponseInit): Response {
-  const headers = new Headers(init?.headers);
-  headers.set('Content-Type', 'application/json');
-
-  return new Response(JSON.stringify(body), { ...init, headers });
-}

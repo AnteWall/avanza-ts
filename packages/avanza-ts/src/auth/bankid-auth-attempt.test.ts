@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationError } from '../errors.js';
+import { httpFixtureResponse, jsonResponse } from '../test-utils/http.js';
 
 const START = '/_api/authentication/v2/sessions/bankid';
 const RESTART = `${START}/restart`;
@@ -45,6 +46,29 @@ describe('BankIdAuthAttempt', () => {
     expect(paths).toEqual([START, COLLECT, RESTART]);
   });
 
+  it('starts when Avanza omits same-device autostart metadata', async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>(async (input) => {
+      const path = new URL(input.toString()).pathname;
+      if (path === START) {
+        return jsonResponse({
+          qrToken: 'qr-payload-1',
+          transactionId: 'transaction-id',
+        });
+      }
+      expect(path).toBe(CANCEL);
+      return new Response(null, { status: 204 });
+    });
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    const attempt = await client.auth.startBankId();
+
+    expect(attempt.challenge).toEqual({
+      qrPayload: 'qr-payload-1',
+      refreshAfterMs: 1500,
+    });
+    await attempt.cancel();
+  });
+
   it('selects one customer, verifies the session, and installs it', async () => {
     let infoCalls = 0;
     const paths: string[] = [];
@@ -83,6 +107,48 @@ describe('BankIdAuthAttempt', () => {
     });
     expect(client.session).toEqual(result.status === 'complete' ? result.session : undefined);
     expect(paths).toEqual([START, COLLECT, INFO, `${COLLECT}/customer%2Fid`, INFO]);
+  });
+
+  it('replays the recorded BankID response flow', async () => {
+    let collectCalls = 0;
+    let infoCalls = 0;
+    const fetch = vi.fn<typeof globalThis.fetch>(async (input) => {
+      const path = new URL(input.toString()).pathname;
+      if (path === START) {
+        return bankIdFixtureResponse('start', [
+          'AZABANKIDTRANSID=attempt; Path=/; Secure; HttpOnly',
+        ]);
+      }
+      if (path === COLLECT) {
+        collectCalls += 1;
+        return bankIdFixtureResponse(collectCalls === 1 ? 'collect-pending' : 'collect-complete');
+      }
+      if (path === RESTART) return bankIdFixtureResponse('restart');
+      if (path === INFO) {
+        infoCalls += 1;
+        return bankIdFixtureResponse(
+          infoCalls === 1 ? 'session-info-unverified' : 'session-info-verified',
+        );
+      }
+      expect(path).toBe(`${COLLECT}/%3Ccustomer-id%3E`);
+      return bankIdFixtureResponse('customer-selection', [
+        'AZABANKIDTRANSID=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax',
+        'csid=credential; Path=/; Secure; HttpOnly; SameSite=Strict',
+      ]);
+    });
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+    const attempt = await client.auth.startBankId();
+
+    await expect(attempt.poll()).resolves.toMatchObject({ status: 'pending' });
+    const result = await attempt.poll();
+
+    expect(result.status).toBe('complete');
+    if (result.status !== 'complete') return;
+    expect(result.session.customerId).toBe('<customer-id>');
+    expect(result.session.cookies).toEqual([
+      expect.objectContaining({ key: 'csid', value: 'credential' }),
+    ]);
+    expect(client.session).toEqual(result.session);
   });
 
   it.each([
@@ -195,8 +261,8 @@ function sessionInfo(loggedIn: boolean) {
   };
 }
 
-function jsonResponse(body: unknown, init?: ResponseInit): Response {
-  const headers = new Headers(init?.headers);
-  headers.set('Content-Type', 'application/json');
-  return new Response(JSON.stringify(body), { ...init, headers });
+function bankIdFixtureResponse(name: string, setCookies: readonly string[] = []): Response {
+  return httpFixtureResponse(`auth/fixtures/bankid/${name}.json`, {
+    setCookies,
+  });
 }

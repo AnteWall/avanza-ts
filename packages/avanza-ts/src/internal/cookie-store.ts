@@ -28,13 +28,14 @@ export class CookieStore {
   }
 
   public replace(cookies: readonly AvanzaCookie[]): void {
-    if (cookies.length === 0) {
+    const activeCookies = cookies.filter(isActiveCookie);
+    if (activeCookies.length === 0) {
       this.#jar = new CookieJar();
       return;
     }
 
     const serialized: SerializedCookieJar = {
-      cookies: structuredClone(cookies) as SerializedCookie[],
+      cookies: structuredClone(activeCookies) as SerializedCookie[],
       rejectPublicSuffixes: true,
       storeType: 'MemoryCookieStore',
       version: 'tough-cookie@6',
@@ -44,6 +45,17 @@ export class CookieStore {
 
   public serialize(): readonly AvanzaCookie[] {
     const serialized = this.#jar.serializeSync();
-    return serialized === undefined ? [] : (structuredClone(serialized.cookies) as AvanzaCookie[]);
+    return serialized === undefined
+      ? []
+      : (structuredClone(serialized.cookies.filter(isActiveCookie)) as AvanzaCookie[]);
   }
+}
+
+function isActiveCookie(cookie: AvanzaCookie | SerializedCookie): boolean {
+  return (
+    typeof cookie.key === 'string' &&
+    typeof cookie.value === 'string' &&
+    cookie.maxAge !== 0 &&
+    cookie.maxAge !== '0'
+  );
 }

@@ -91,8 +91,8 @@ while (true) {
 
 `qrPayload` is the text to encode in a QR image; it is not an image URL. Avanza rotates it while the
 attempt is pending, so callers must rerender the QR returned by each poll. The SDK deliberately does
-not choose an SVG, PNG, terminal, or browser renderer. `autostartUrl` uses the `bankid://` scheme for
-same-device login.
+not choose an SVG, PNG, terminal, or browser renderer. When Avanza supplies same-device autostart
+metadata, `autostartUrl` uses the `bankid://` scheme.
 
 Call `attempt.cancel()` when abandoning an in-progress login. Attempts default to a 120-second
 overall timeout and suggest polling every 1.5 seconds.

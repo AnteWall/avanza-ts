@@ -42,8 +42,8 @@ export interface SessionInfoResponse {
 }
 
 export interface BankIdChallenge {
-  readonly autostartToken: string;
-  readonly autostartUrl: string;
+  readonly autostartToken?: string;
+  readonly autostartUrl?: string;
   readonly qrPayload: string;
   readonly refreshAfterMs: number;
 }

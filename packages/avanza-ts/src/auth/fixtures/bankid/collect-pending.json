@@ -1,0 +1,17 @@
+{
+  "request": {
+    "body": {},
+    "method": "POST",
+    "path": "/_api/authentication/v2/sessions/bankid/collect"
+  },
+  "response": {
+    "body": {
+      "transactionId": "00000000-0000-4000-8000-000000000000",
+      "hint": "<redacted:9>",
+      "rfa": "<redacted:4>",
+      "state": "OUTSTANDING_TRANSACTION"
+    },
+    "originalJsonBytes": 122,
+    "status": 200
+  }
+}
