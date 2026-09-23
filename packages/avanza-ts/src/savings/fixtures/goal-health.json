@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/savings-goals/insights/get-goal-health-status/synthetic-22"
+  },
+  "response": {
+    "body": {
+      "averageMonthlySavings": 1000,
+      "averageMonthlySavingsTarget": 1000,
+      "averageYearlyPerformance": 5,
+      "averageYearlyPerformanceTarget": 5,
+      "totalPerformanceTarget": 5
+    },
+    "status": 200
+  }
+}

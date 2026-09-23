@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/savings-goals/savings-category/get-accounts-categorized"
+  },
+  "response": {
+    "body": [
+      {
+        "categoryId": "synthetic-22",
+        "name": "Synthetic goal",
+        "categoryType": "SAVINGS_GOAL",
+        "accounts": [
+          {
+            "id": 1,
+            "totalValue": 1000,
+            "accountType": "INVESTERINGSSPARKONTO",
+            "name": "Synthetic account",
+            "accountDomain": "AVANZA",
+            "isValidForSharedGoal": true,
+            "externalAccountNumber": {
+              "value": "0000000000"
+            },
+            "isHidden": false,
+            "validForSharedGoal": true
+          }
+        ],
+        "sortOrder": 999,
+        "totalValue": 1000
+      }
+    ],
+    "status": 200
+  }
+}

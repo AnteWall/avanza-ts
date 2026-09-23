@@ -1,0 +1,57 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-reference/reference/41567"
+  },
+  "response": {
+    "body": {
+      "rating": 5,
+      "managementFee": 0,
+      "riskLevel": {
+        "riskNumber": 4,
+        "riskText": "Medel"
+      },
+      "isin": "SE0001718388",
+      "name": "Avanza Zero",
+      "description": "Fonden är en passivt förvaltad indexfond vars mål är att ge andelsägarna en värdeutveckling i linje med utvecklingen för SIX30 Return Index (SIX30RX) genom att placera i de i index ingående aktierna. SIX30RX är uppbyggt kring de 30 värdemässigt mest omsatta aktierna på Stockholmsbörsen och inkluderar utdelningar. I SIX30RX tillämpas en screening som innebär att företag, som bedöms bryta mot internationella normer och konventioner såsom FN Global Compacts principer, kan komma att exkluderas från index. Även företag som är involverade i kontroversiella vapen exkluderas från SIX30RX. Förutom överlåtbara värdepapper får fonden placera i fondandelar där SIX30RX är den underliggande tillgången och i derivatinstrument. Fonden får använda derivatinstrument i syfte att effektivisera förvaltningen. Högsta engångsinsättning är 25 000 SEK.",
+      "nav": 576.86,
+      "navDate": "2026-09-22T00:00:00",
+      "currency": "SEK",
+      "indexFund": true,
+      "sharpeRatio": 1.19,
+      "standardDeviation": 12.36,
+      "capital": 70579348916,
+      "startDate": "2006-05-22",
+      "fundManagers": [
+        {
+          "name": "Emilie Chawala",
+          "startDate": "2013-01-01"
+        }
+      ],
+      "adminCompany": {
+        "name": "Avanza",
+        "country": "Sverige",
+        "url": "http://www.avanzafonder.se"
+      },
+      "pricingFrequency": "Dagligen",
+      "categories": ["Sverige"],
+      "fundTypeName": "Aktiefond",
+      "fundType": "EQUITY_FUND",
+      "primaryBenchmark": "SIX30RX",
+      "hedgeFund": false,
+      "ucitsFund": true,
+      "recommendedHoldingPeriod": "Minst 5 år",
+      "ppmCode": "734491",
+      "managedType": "INDEX",
+      "fundRatings": [
+        {
+          "date": "2026-08-31T00:00:00",
+          "fundRatingType": "THREE_YEARS",
+          "fundRating": 5
+        }
+      ],
+      "excludedFromPromotion": false
+    },
+    "status": 200
+  }
+}

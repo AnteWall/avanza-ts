@@ -2,7 +2,7 @@ import { expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { expectFixtureReplay, jsonResponse } from '../test-utils/http.js';
 
 const session = { mode: 'totp', authenticationSession: 'session', securityToken: 'token' } as const;
 
@@ -72,3 +72,20 @@ it('posts watchlist data and news queries', async () => {
   ]);
   expect(() => collections.watchlistNews([])).toThrow(TypeError);
 });
+
+it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
+  ['watchlists', (c) => c.collections.watchlists()],
+  [
+    'watchlist-data',
+    (c) =>
+      c.collections.watchlistData(
+        'synthetic-13',
+        ['synthetic-14'],
+        ['LAST_PRICE', 'ONE_YEAR_PERFORMANCE', 'NUMBER_OF_OWNERS'],
+      ),
+  ],
+  ['watchlist-news', (c) => c.collections.watchlistNews(['synthetic-14'])],
+  ['notes', (c) => c.collections.notes()],
+])('replays an anonymized %s capture', (name, call) =>
+  expectFixtureReplay(`collections/fixtures/${name}.json`, call),
+);

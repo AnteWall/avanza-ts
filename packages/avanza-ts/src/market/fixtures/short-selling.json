@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/market-guide/short-selling/5269"
+  },
+  "response": {
+    "body": {
+      "shortSellingHistory": [
+        {
+          "timestamp": 1696543200000,
+          "ratio": 0.011
+        },
+        {
+          "timestamp": 1696629600000,
+          "ratio": 0.011
+        },
+        {
+          "timestamp": 1696802400000,
+          "ratio": 0.011
+        }
+      ]
+    },
+    "status": 200
+  }
+}

@@ -1,5 +1,9 @@
 import { readFileSync } from 'node:fs';
 
+import { expect, vi } from 'vitest';
+
+import { AvanzaClient } from '../client.js';
+
 export interface HttpFixture<ResponseBody = unknown> {
   readonly request: {
     readonly body?: unknown;
@@ -50,4 +54,26 @@ export function httpFixtureResponse(
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/** Replays a recorded fixture through `call` and checks the response and outgoing request. */
+export async function expectFixtureReplay(
+  path: string,
+  call: (client: AvanzaClient) => Promise<unknown>,
+): Promise<void> {
+  const fixture = loadHttpFixture(path);
+  const fetch = vi.fn<typeof globalThis.fetch>().mockResolvedValue(httpFixtureResponse(path));
+  const client = new AvanzaClient({
+    baseUrl: 'https://example.test',
+    fetch,
+    session: { mode: 'totp', authenticationSession: 'session', securityToken: 'token' },
+  });
+  await expect(call(client)).resolves.toEqual(fixture.response.body);
+  const [url, init] = fetch.mock.calls[0]!;
+  const { pathname, search } = new URL(url.toString());
+  expect({
+    method: init?.method,
+    path: pathname + search,
+    body: init?.body === undefined ? undefined : (JSON.parse(String(init.body)) as unknown),
+  }).toEqual(fixture.request);
 }

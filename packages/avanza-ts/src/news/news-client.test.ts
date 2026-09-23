@@ -2,7 +2,7 @@ import { expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { expectFixtureReplay, jsonResponse, loadHttpFixture } from '../test-utils/http.js';
 
 const session = { mode: 'totp', authenticationSession: 'session', securityToken: 'token' } as const;
 
@@ -48,4 +48,19 @@ it('requires a session for the feed', async () => {
   const { client, fetch } = setup();
   await expect(client.news.feed()).rejects.toBeInstanceOf(AvanzaAuthenticationRequiredError);
   expect(fetch).not.toHaveBeenCalled();
+});
+
+it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
+  ['article', (c) => c.news.article('https://www.placera.se/telegram/avanza/13_synthetic')],
+  ['feed', (c) => c.news.feed({ count: 2 })],
+  ['calendar', (c) => c.news.calendar()],
+])('replays an anonymized %s capture', (name, call) =>
+  expectFixtureReplay(`news/fixtures/${name}.json`, call),
+);
+
+it('links feed items to fetchable article URLs', async () => {
+  const { response } = loadHttpFixture<{ news: { url: string }[] }>('news/fixtures/feed.json');
+  await expectFixtureReplay('news/fixtures/article.json', (c) =>
+    c.news.article(response.body.news[0]!.url),
+  );
 });

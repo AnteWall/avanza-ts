@@ -1,0 +1,52 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-reference/sustainability/41567"
+  },
+  "response": {
+    "body": {
+      "lowCarbon": true,
+      "esgScore": 19,
+      "environmentalScore": 5.38,
+      "socialScore": 8.06,
+      "governanceScore": 5.56,
+      "controversyScore": null,
+      "carbonSolutionsInvolvement": null,
+      "productInvolvements": [
+        {
+          "product": "tobacco",
+          "productDescription": "Tobak",
+          "value": 0,
+          "name": "TOBACCO"
+        }
+      ],
+      "sustainabilityRating": 2,
+      "sustainabilityRatingCategoryName": "Aktier, Europa stora bolag",
+      "oilSandsExtractionInvolvement": 0,
+      "arcticOilAndGasExplorationInvolvement": 0,
+      "thermalCoalPowerGenerationInvolvement": null,
+      "thermalCoalInvolvement": 0,
+      "oilAndGasProductionInvolvement": null,
+      "environmentalRating": 0,
+      "socialRating": 0,
+      "governanceRating": 0,
+      "svanen": false,
+      "euArticleType": {
+        "value": "ARTICLE_TYPE_SIX",
+        "name": "Artikel 6"
+      },
+      "aumCoveredCarbon": null,
+      "fossilFuelInvolvement": null,
+      "carbonRiskScore": 8.65,
+      "sustainabilityDevelopmentGoals": [
+        {
+          "value": "NO_POVERTY",
+          "name": "Ingen fattigdom",
+          "type": "SOCIAL",
+          "status": "NOT_REPORTED"
+        }
+      ]
+    },
+    "status": 200
+  }
+}

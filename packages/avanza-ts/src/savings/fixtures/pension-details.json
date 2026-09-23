@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/insurance/details/pension-details/synthetic-23"
+  },
+  "response": {
+    "body": {
+      "accountType": "TJP",
+      "status": "PAYED_FOR",
+      "insured": {
+        "name": "Synthetic Person",
+        "insuranceCustomerId": "synthetic-24",
+        "type": "PERSON"
+      },
+      "policyOwner": {
+        "name": "Synthetic Person",
+        "insuranceCustomerId": "synthetic-25",
+        "type": "COMPANY"
+      },
+      "startDate": "2020-01-01",
+      "managementForm": "DEPOT",
+      "repaymentProtection": "YES",
+      "beneficiaries": {
+        "text": ["Synthetic beneficiary clause"],
+        "type": "STANDARD",
+        "beneficiaryType": "PARTNER",
+        "beneficiaries": [],
+        "privateProperty": false,
+        "irrevocable": false
+      },
+      "tax": null,
+      "companyOwnedDetails": null,
+      "childControlDetails": null,
+      "paymentPlan": {
+        "status": "NONE",
+        "start": null,
+        "guaranteedMinAmount": false,
+        "startMonth": null
+      },
+      "isOwner": true,
+      "accountName": "Synthetic pension",
+      "encryptedAccountId": "synthetic-26"
+    },
+    "status": 200
+  }
+}

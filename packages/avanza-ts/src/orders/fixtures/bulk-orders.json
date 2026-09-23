@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/trading/bulk/order/fetch"
+  },
+  "response": {
+    "body": {
+      "tradingBulkOrders": [
+        {
+          "id": "synthetic-11",
+          "created": "2026-01-01T12:00:00",
+          "side": "BUY",
+          "accountId": "synthetic-3",
+          "tradingBulkOrderEntities": [
+            {
+              "orderBookId": "synthetic-12",
+              "volume": 0,
+              "amount": "1000"
+            }
+          ],
+          "totalSum": "1000",
+          "createdFrom": ""
+        }
+      ]
+    },
+    "status": 200
+  }
+}

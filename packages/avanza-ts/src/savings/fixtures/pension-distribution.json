@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/insurance/pension/distribution/v1/synthetic-23/with-future"
+  },
+  "response": {
+    "body": {
+      "currentAllocation": [
+        {
+          "orderbookId": "synthetic-27",
+          "allocation": 100
+        }
+      ],
+      "nextAutoDistribution": null
+    },
+    "status": 200
+  }
+}

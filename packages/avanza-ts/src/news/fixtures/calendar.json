@@ -1,0 +1,47 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/customer-calendar/calendar"
+  },
+  "response": {
+    "body": [
+      {
+        "yearMonth": "2026-09",
+        "upcomingDividends": {
+          "upcomingDividends": [
+            {
+              "orderbook": {
+                "name": "Synthetic-8",
+                "id": "synthetic-7",
+                "instrumentType": "STOCK",
+                "flagCode": "US"
+              },
+              "price": 5,
+              "volume": 10,
+              "amount": 50,
+              "currency": "USD",
+              "exclusiveDividendDate": "2026-10-01",
+              "paymentDate": "2026-10-15",
+              "established": true
+            }
+          ],
+          "totalAmountSek": 50
+        },
+        "reports": [
+          {
+            "orderbook": {
+              "name": "Synthetic-10",
+              "id": "synthetic-9",
+              "instrumentType": "STOCK",
+              "flagCode": "US"
+            },
+            "date": "2026-10-20",
+            "reportType": "ANNUAL",
+            "companyName": "Synthetic company"
+          }
+        ]
+      }
+    ],
+    "status": 200
+  }
+}

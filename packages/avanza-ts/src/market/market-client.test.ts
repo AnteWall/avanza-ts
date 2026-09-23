@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { expectFixtureReplay, jsonResponse } from '../test-utils/http.js';
 import type { MarketClient } from './market-client.js';
 
 function setup(body: unknown = {}, session = false) {
@@ -135,3 +135,8 @@ describe('MarketClient', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 });
+
+it('replays a recorded short-selling response', () =>
+  expectFixtureReplay('market/fixtures/short-selling.json', (client) =>
+    client.market.shortSelling('5269'),
+  ));

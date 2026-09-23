@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-guide/top-ten?fundInstrumentType=FUND"
+  },
+  "response": {
+    "body": {
+      "fundTopListViews": [
+        {
+          "isin": "LU0270814014",
+          "name": "Schroder ISF Taiwanese Equity A Acc USD",
+          "orderbookId": "259168",
+          "rating": 3,
+          "risk": 5,
+          "developmentThreeMonths": 2.447673,
+          "developmentOneYear": 127.366407,
+          "developmentThreeYears": 195.458009,
+          "developmentFiveYears": 224.056635,
+          "managementFee": 1.5,
+          "totalFee": 2.6,
+          "nrOfOwners": 3374,
+          "nrOfBuyOrders": 126,
+          "nrOfSellOrders": 10,
+          "esgScore": 17.82,
+          "fundRatingViews": [
+            {
+              "date": "2026-08-31T00:00:00",
+              "fundRatingType": "THREE_YEARS",
+              "fundRating": 3
+            }
+          ],
+          "type": "FUND"
+        }
+      ]
+    },
+    "status": 200
+  }
+}

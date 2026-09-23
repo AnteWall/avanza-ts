@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/savings-goals/insights/get-goal-performance-time-series/synthetic-22?timePeriod=ONE_WEEK"
+  },
+  "response": {
+    "body": {
+      "graphResolution": "DAY",
+      "goalTotalPerformance": 1.5,
+      "goalTotalPerformanceCash": 15,
+      "goalAggregatedPerformance": [
+        {
+          "value": 1.5,
+          "timestamp": 1789509600000,
+          "totalValue": 1000
+        },
+        {
+          "value": 1.5,
+          "timestamp": 1789596000000,
+          "totalValue": 1000
+        }
+      ],
+      "goalAggregatedPerformanceCash": [
+        {
+          "value": 1.5,
+          "timestamp": 1789509600000,
+          "totalValue": 1000
+        },
+        {
+          "value": 1.5,
+          "timestamp": 1789596000000,
+          "totalValue": 1000
+        }
+      ],
+      "memberPerformanceDataPoints": []
+    },
+    "status": 200
+  }
+}

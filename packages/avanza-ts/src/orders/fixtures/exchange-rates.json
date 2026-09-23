@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/trading/rest/exchangerates"
+  },
+  "response": {
+    "body": [
+      {
+        "orderbookId": "68307",
+        "buyPrice": "7.0205",
+        "sellPrice": "7.0342",
+        "updated": "2026-09-23T16:20:13.713",
+        "currency": "CAD",
+        "flagCode": "CA"
+      },
+      {
+        "orderbookId": "466139",
+        "buyPrice": "11.9981",
+        "sellPrice": "12.0226",
+        "updated": "2026-09-23T16:20:13.713",
+        "currency": "CHF",
+        "flagCode": "CH"
+      }
+    ],
+    "status": 200
+  }
+}

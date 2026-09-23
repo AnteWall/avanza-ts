@@ -1,0 +1,32 @@
+{
+  "request": {
+    "body": {
+      "name": "zero"
+    },
+    "method": "POST",
+    "path": "/_api/fund-guide/search"
+  },
+  "response": {
+    "body": {
+      "fundSearchViews": [
+        {
+          "isin": "SE0001718388",
+          "name": "Avanza Zero",
+          "orderbookId": "41567",
+          "rating": 5,
+          "risk": 4,
+          "developmentOneYear": 27.57027,
+          "developmentThreeYears": 67.26398,
+          "developmentFiveYears": 67.852921,
+          "managementFee": 0,
+          "totalFee": 0,
+          "prospectusLink": "/_api/fund-reference/reference/41567/prospectus",
+          "minimumBuy": 1,
+          "foreignExchange": false,
+          "buyable": true
+        }
+      ]
+    },
+    "status": 200
+  }
+}

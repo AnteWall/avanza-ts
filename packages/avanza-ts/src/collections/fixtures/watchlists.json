@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/watchlist/watchlist"
+  },
+  "response": {
+    "body": [
+      {
+        "watchListId": "synthetic-13",
+        "customerId": {
+          "id": 1
+        },
+        "name": "Synthetic watchlist",
+        "watchListItems": [
+          {
+            "orderbookId": "synthetic-14"
+          },
+          {
+            "orderbookId": "synthetic-15"
+          }
+        ],
+        "created": "2026-01-01T12:00:00",
+        "modified": "2026-01-01T12:00:00",
+        "orderbookIds": ["synthetic-14", "synthetic-15"]
+      }
+    ],
+    "status": 200
+  }
+}

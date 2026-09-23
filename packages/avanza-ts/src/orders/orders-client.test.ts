@@ -2,7 +2,7 @@ import { expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { expectFixtureReplay, jsonResponse } from '../test-utils/http.js';
 
 const session = { mode: 'totp', authenticationSession: 'session', securityToken: 'token' } as const;
 
@@ -48,3 +48,12 @@ it('sends only GET requests with encoded IDs and filters', async () => {
     }),
   ).toEqual(calls.map(([, path]) => [path, 'GET']));
 });
+
+it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
+  ['orderbook', (c) => c.orders.orderbook('5269')],
+  ['exchange-rates', (c) => c.orders.exchangeRates()],
+  ['market-status', (c) => c.orders.marketStatus('SE', '2026-09-23')],
+  ['bulk-orders', (c) => c.orders.bulkOrders()],
+])('replays a recorded %s response', (name, call) =>
+  expectFixtureReplay(`orders/fixtures/${name}.json`, call),
+);

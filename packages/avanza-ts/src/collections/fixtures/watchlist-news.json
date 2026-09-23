@@ -1,0 +1,41 @@
+{
+  "request": {
+    "body": {
+      "orderbookIds": ["synthetic-14"]
+    },
+    "method": "POST",
+    "path": "/_api/watchlist/news"
+  },
+  "response": {
+    "body": {
+      "news": [
+        {
+          "vignette": "Synthetic vignette",
+          "sourceName": "MFN",
+          "url": "https://www.placera.se/nyheter/synthetic",
+          "teaser": "Synthetic teaser",
+          "orderbooks": [
+            {
+              "id": "synthetic-15",
+              "flagCode": "SE",
+              "name": "Synthetic-17",
+              "shortName": "Synthetic-18",
+              "isin": "SE0000000003",
+              "instrumentId": "synthetic-16",
+              "currency": "SEK",
+              "instrumentType": "STOCK",
+              "tradable": true,
+              "buyable": true,
+              "sellable": true
+            }
+          ],
+          "category": "PRESS_RELEASE",
+          "title": "Synthetic headline",
+          "publishDateTime": "2026-09-23T08:00:00"
+        }
+      ],
+      "currentDateTime": "2026-09-23T16:20:16+02:00"
+    },
+    "status": 200
+  }
+}

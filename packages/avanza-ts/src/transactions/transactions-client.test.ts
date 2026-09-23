@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { expectFixtureReplay, jsonResponse } from '../test-utils/http.js';
 
 const session = { mode: 'totp', authenticationSession: 'session', securityToken: 'token' } as const;
 
@@ -62,3 +62,8 @@ describe('TransactionsClient read-only endpoints', () => {
     expect(fetch).toHaveBeenCalledTimes(calls.length);
   });
 });
+
+it('replays an anonymized upcoming-dividends capture', () =>
+  expectFixtureReplay('transactions/fixtures/upcoming-dividends.json', (client) =>
+    client.transactions.upcomingDividends(),
+  ));

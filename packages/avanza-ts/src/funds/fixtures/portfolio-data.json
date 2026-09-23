@@ -1,0 +1,52 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-reference/portfolio-data/41567"
+  },
+  "response": {
+    "body": {
+      "countryChartData": [
+        {
+          "name": "Sverige",
+          "y": 92.13,
+          "type": null,
+          "currency": null,
+          "countryCode": "SE",
+          "isin": null,
+          "orderbookId": null,
+          "previousY": 91.83,
+          "deltaRank": 0
+        }
+      ],
+      "holdingChartData": [
+        {
+          "name": "Investor B",
+          "y": 9.03,
+          "type": "HOLDING_TYPE_EQUITY",
+          "currency": "SEK",
+          "countryCode": "SE",
+          "isin": "SE0015811963",
+          "orderbookId": "5247",
+          "previousY": 9.21,
+          "deltaRank": 0
+        }
+      ],
+      "sectorChartData": [
+        {
+          "name": "Industri",
+          "y": 45.91,
+          "type": null,
+          "currency": null,
+          "countryCode": null,
+          "isin": null,
+          "orderbookId": null,
+          "previousY": 45.86,
+          "deltaRank": 0
+        }
+      ],
+      "portfolioDate": "2026-08-31",
+      "previousPortfolioDate": "2026-07-31"
+    },
+    "status": 200
+  }
+}

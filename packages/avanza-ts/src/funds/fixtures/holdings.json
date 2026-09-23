@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-guide/fund-orderbook/piechart/holdings/41567"
+  },
+  "response": {
+    "body": [
+      {
+        "name": "Investor B",
+        "value": 9.03
+      },
+      {
+        "name": "Atlas Copco A",
+        "value": 8.3
+      },
+      {
+        "name": "Volvo B",
+        "value": 6.62
+      }
+    ],
+    "status": 200
+  }
+}

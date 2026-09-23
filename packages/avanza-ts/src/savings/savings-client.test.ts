@@ -2,7 +2,7 @@ import { expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { expectFixtureReplay, jsonResponse } from '../test-utils/http.js';
 
 const session = { mode: 'totp', authenticationSession: 'session', securityToken: 'token' } as const;
 
@@ -52,3 +52,13 @@ it('resolves an empty payout plan to null', async () => {
   const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch, session });
   await expect(client.savings.payoutPlan('1')).resolves.toBeNull();
 });
+
+it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
+  ['categories', (c) => c.savings.categories()],
+  ['goal-health', (c) => c.savings.goalHealth('synthetic-22')],
+  ['goal-performance', (c) => c.savings.goalPerformance('synthetic-22', 'ONE_WEEK')],
+  ['pension-details', (c) => c.savings.pensionDetails('synthetic-23')],
+  ['pension-distribution', (c) => c.savings.pensionDistribution('synthetic-23')],
+])('replays an anonymized %s capture', (name, call) =>
+  expectFixtureReplay(`savings/fixtures/${name}.json`, call),
+);

@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/user-note/"
+  },
+  "response": {
+    "body": [
+      {
+        "noteId": "synthetic-21",
+        "orderbookId": "synthetic-19",
+        "text": "Synthetic note",
+        "createdDate": "2026-01-01",
+        "originalPrice": 100,
+        "lastPrice": 110,
+        "currency": "SEK",
+        "color": "DEFAULT",
+        "instrumentName": "Synthetic-20",
+        "instrumentType": "STOCK",
+        "countryCode": "SE",
+        "priceDevelopmentPercentage": 10
+      }
+    ],
+    "status": 200
+  }
+}

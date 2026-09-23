@@ -1,0 +1,36 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-guide/fund-orderbook/details/41567"
+  },
+  "response": {
+    "body": {
+      "orderbookId": "41567",
+      "name": "Avanza Zero",
+      "minimumThresholdBuy": 1,
+      "minimumThresholdAdditionalBuy": 1,
+      "productFee": 0,
+      "prospectusLink": "/_api/fund-reference/reference/41567/prospectus",
+      "buyStopDateTime": "2026-09-24T13:00:00",
+      "sellStopDateTime": "2026-09-24T13:00:00",
+      "nav": 576.86,
+      "navDate": "2026-09-22T00:00:00",
+      "buyCommission": 0,
+      "hasCurrencyExchangeFee": false,
+      "rating": 5,
+      "risk": "Medel (4/7)",
+      "riskNumber": 4,
+      "owners": 1118734,
+      "description": "Fonden är en passivt förvaltad indexfond vars mål är att ge andelsägarna en värdeutveckling i linje med utvecklingen för SIX30 Return Index (SIX30RX) genom att placera i de i index ingående aktierna. SIX30RX är uppbyggt kring de 30 värdemässigt mest omsatta aktierna på Stockholmsbörsen och inkluderar utdelningar. I SIX30RX tillämpas en screening som innebär att företag, som bedöms bryta mot internationella normer och konventioner såsom FN Global Compacts principer, kan komma att exkluderas från index. Även företag som är involverade i kontroversiella vapen exkluderas från SIX30RX. Förutom överlåtbara värdepapper får fonden placera i fondandelar där SIX30RX är den underliggande tillgången och i derivatinstrument. Fonden får använda derivatinstrument i syfte att effektivisera förvaltningen. Högsta engångsinsättning är 25 000 SEK.",
+      "navChangeThreeMonths": 5.31831,
+      "navChangeOneYear": 27.57027,
+      "navChangeThreeYears": 27.57027,
+      "navChangeFiveYears": 67.852921,
+      "navChangeTenYears": 209.607035,
+      "managementFee": 0,
+      "fundCompanyName": "Avanza",
+      "buyable": true
+    },
+    "status": 200
+  }
+}

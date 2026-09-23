@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-guide/chart/timeperiods/41567"
+  },
+  "response": {
+    "body": [
+      {
+        "timePeriod": "one_month",
+        "change": 0.0092552,
+        "startDate": "2026-08-23"
+      },
+      {
+        "timePeriod": "three_months",
+        "change": 0.053183100000000004,
+        "startDate": "2026-06-23"
+      },
+      {
+        "timePeriod": "this_year",
+        "change": 0.1723367,
+        "startDate": "2026-01-02"
+      },
+      {
+        "timePeriod": "one_year",
+        "change": 0.2757027,
+        "startDate": "2025-09-23"
+      },
+      {
+        "timePeriod": "three_years",
+        "change": 0.6726398,
+        "startDate": "2023-09-23"
+      },
+      {
+        "timePeriod": "five_years",
+        "change": 0.67852921,
+        "startDate": "2021-09-23"
+      },
+      {
+        "timePeriod": "infinity",
+        "change": 6.117016255249,
+        "startDate": "2006-05-22"
+      }
+    ],
+    "status": 200
+  }
+}

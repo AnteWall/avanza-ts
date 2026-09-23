@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/account-company-events/dividends/upcoming"
+  },
+  "response": {
+    "body": [
+      {
+        "isin": "SE0000000001",
+        "date": "2026-10-15",
+        "amount": {
+          "value": 50,
+          "currency": "SEK"
+        },
+        "amountInSek": 50,
+        "orderbook": {
+          "id": "synthetic-5",
+          "flagCode": "SE",
+          "name": "Synthetic-6",
+          "marketplace": "XSTO",
+          "type": "STOCK",
+          "currency": "SEK",
+          "isin": "SE0000000001",
+          "volumeFactor": null
+        },
+        "instrumentName": "Synthetic-6",
+        "accountId": "synthetic-3",
+        "encryptedAccountId": "synthetic-4",
+        "volume": 10,
+        "amountPerShare": {
+          "value": 5,
+          "currency": "SEK"
+        },
+        "amountPerShareInSek": 5,
+        "exDate": "2026-10-01",
+        "status": "PRELIMINARY"
+      }
+    ],
+    "status": 200
+  }
+}

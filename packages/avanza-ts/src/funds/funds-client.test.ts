@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { AvanzaClient } from '../client.js';
 import { AvanzaAuthenticationRequiredError } from '../errors.js';
-import { jsonResponse } from '../test-utils/http.js';
+import { chartPeriods } from '../market/market-types.js';
+import { expectFixtureReplay, jsonResponse, loadHttpFixture } from '../test-utils/http.js';
 import type { FundsClient } from './funds-client.js';
 
 function setup(session = false) {
@@ -115,5 +116,27 @@ describe('FundsClient', () => {
     const authenticated = setup(true);
     await authenticated.client.funds.isFavourite('41567');
     expect(authenticated.request().path).toBe('/_api/fund-guide/is-favourite/41567');
+  });
+});
+
+describe('FundsClient recorded responses', () => {
+  it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
+    ['search', (c) => c.funds.search('zero')],
+    ['list', (c) => c.funds.list({ maxNoResults: 2 })],
+    ['top-ten', (c) => c.funds.topTen()],
+    ['details', (c) => c.funds.details('41567')],
+    ['holdings', (c) => c.funds.holdings('41567')],
+    ['chart', (c) => c.funds.chart('41567', 'one_week')],
+    ['chart-periods', (c) => c.funds.chartPeriods('41567')],
+    ['reference', (c) => c.funds.reference('41567')],
+    ['portfolio-data', (c) => c.funds.portfolioData('41567')],
+    ['sustainability', (c) => c.funds.sustainability('41567')],
+  ])('replays %s', (name, call) => expectFixtureReplay(`funds/fixtures/${name}.json`, call));
+
+  it('returns chart periods accepted by chart()', () => {
+    const { response } = loadHttpFixture<{ timePeriod: string }[]>(
+      'funds/fixtures/chart-periods.json',
+    );
+    for (const { timePeriod } of response.body) expect(chartPeriods).toContain(timePeriod);
   });
 });

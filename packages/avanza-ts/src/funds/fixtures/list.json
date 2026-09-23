@@ -1,0 +1,153 @@
+{
+  "request": {
+    "body": {
+      "name": "",
+      "sortField": "developmentThreeYears",
+      "sortDirection": "DESCENDING",
+      "startIndex": 0,
+      "maxNoResults": 2
+    },
+    "method": "POST",
+    "path": "/_api/fund-guide/list"
+  },
+  "response": {
+    "body": {
+      "fundListViews": [
+        {
+          "isin": "SE0013358181",
+          "name": "AuAg Silver Bullet A",
+          "rating": 2,
+          "risk": 6,
+          "developmentOneDay": 3.79974,
+          "developmentOneWeek": 7.2366399999999995,
+          "developmentOneMonth": 1.57228,
+          "developmentThreeMonths": 17.77443,
+          "developmentOneYear": 66.04264,
+          "developmentThisYear": 23.37504,
+          "developmentThreeYears": 342.785437,
+          "developmentFiveYears": 293.033086,
+          "developmentTenYears": null,
+          "lowCarbon": false,
+          "sharpeRatio": 1.17,
+          "standardDeviation": 47.48,
+          "capital": 6057466278,
+          "fossilFuelInvolvement": null,
+          "carbonRiskScore": 12.23,
+          "primaryBenchmark": "Nasdaq PHLX Gold/Silver Sector TR",
+          "recommendedHoldingPeriod": "Minst 5 år",
+          "esgScore": 29.78,
+          "environmentalScore": 5.03,
+          "socialScore": 5.46,
+          "governanceScore": 2.31,
+          "managementFee": 1.4,
+          "totalFee": 1.46,
+          "transactionFee": 0.06,
+          "ongoingFee": 1.4,
+          "otherFee": 0,
+          "minimumBuy": 100,
+          "minimumBuyMonthlySaving": 100,
+          "hasCurrencyExchangeFee": false,
+          "nrOfOwners": 54380,
+          "orderbookId": "1015114",
+          "tagList": [
+            {
+              "title": "Aktiefond",
+              "fundTagCategory": "TYPE"
+            }
+          ],
+          "category": "Branschfond, Ädelmetaller",
+          "indexFund": false,
+          "startDate": "2019-11-04",
+          "collateralValue": 70,
+          "superloanOrderbook": true,
+          "fundType": "EQUITY_FUND",
+          "companyName": "AIFM Capital AB",
+          "sustainabilityLevel": "WORSE",
+          "sustainabilityRating": 2,
+          "sustainabilityRatingCategoryName": "Aktier, ädelmetallgruvor",
+          "productInvolvements": [],
+          "productInvolvementViews": [
+            {
+              "product": "tobacco",
+              "productDescription": "Tobak",
+              "value": 0
+            }
+          ],
+          "carbonSolutionsInvolvement": null,
+          "aumCoveredCarbon": null,
+          "thermalCoalInvolvement": 0,
+          "oilSandsExtractionInvolvement": 0,
+          "arcticOilAndGasExplorationInvolvement": 0,
+          "environmentalRating": 3,
+          "socialRating": 4,
+          "governanceRating": 5,
+          "prospectusLink": "/_api/fund-reference/reference/1015114/prospectus",
+          "currencyCode": "SEK",
+          "svanen": false,
+          "nrBuyOrders": 445,
+          "nrSellOrders": 248,
+          "managedType": "ACTIVE",
+          "nav": 485.16,
+          "navDate": "2026-09-22T00:00:00",
+          "fundRatingViews": [
+            {
+              "date": "2026-08-31T00:00:00",
+              "fundRatingType": "THREE_YEARS",
+              "fundRating": 3
+            }
+          ],
+          "sustainableDevelopmentGoalsAlignments": null,
+          "euArticleType": {
+            "name": "Artikel 8",
+            "value": "ARTICLE_TYPE_EIGHT"
+          },
+          "type": "FUND",
+          "hasCashDividends": false,
+          "buyable": true,
+          "recommendedHoldingPeriodValue": "AT_LEAST_FIVE_YEARS"
+        }
+      ],
+      "totalNoFunds": 1515,
+      "filterCounts": {
+        "fundTypeCounts": [
+          {
+            "title": "Aktiefond",
+            "count": 1074,
+            "type": "fundType",
+            "active": false,
+            "group": 0
+          }
+        ],
+        "commonRegionCounts": [
+          {
+            "title": "Asien ex Japan",
+            "count": 39,
+            "type": "commonRegion",
+            "active": false,
+            "group": 0
+          }
+        ],
+        "otherRegionCounts": [
+          {
+            "title": "Afrika och Mellanöstern",
+            "count": 4,
+            "type": "otherRegion",
+            "active": false,
+            "group": 0
+          }
+        ]
+      },
+      "filteredFundsMetaData": {
+        "averageRisk": 4,
+        "averageTotalFee": 1.6,
+        "averageEsgScore": 19.25,
+        "numberOfFundsRisk": 1514,
+        "numberOfFundsTotalFee": 1515,
+        "numberOfFundsEsgScore": 1338,
+        "numberOfFunds": 1515,
+        "numberOfEtfs": 0
+      }
+    },
+    "status": 200
+  }
+}
