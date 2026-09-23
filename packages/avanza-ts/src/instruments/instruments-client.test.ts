@@ -210,3 +210,78 @@ describe('InstrumentsClient stock screener', () => {
     expect(JSON.parse(String(fetch.mock.calls[5]![1]?.body))).toEqual({ filters });
   });
 });
+
+describe('InstrumentsClient listed products', () => {
+  it('posts ETF, certificate, and warrant screens with per-product default sorting', async () => {
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockImplementation(async () => jsonResponse({ etfs: [] }));
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await client.instruments.screenEtfs({ filter: { issuers: ['xact'] }, limit: 5 });
+    await client.instruments.screenCertificates();
+    await client.instruments.screenWarrants({ sortBy: { field: 'name', order: 'asc' } });
+
+    const requests = fetch.mock.calls.map(([url, init]) => ({
+      path: new URL(url.toString()).pathname,
+      method: init?.method,
+      body: JSON.parse(String(init?.body)) as unknown,
+    }));
+    expect(requests).toEqual([
+      {
+        path: '/_api/market-etf-filter/',
+        method: 'POST',
+        body: {
+          filter: { issuers: ['xact'] },
+          offset: 0,
+          limit: 5,
+          sortBy: { field: 'numberOfOwners', order: 'desc' },
+        },
+      },
+      {
+        path: '/_api/market-certificate-filter/',
+        method: 'POST',
+        body: {
+          filter: {},
+          offset: 0,
+          limit: 20,
+          sortBy: { field: 'totalValueTraded', order: 'desc' },
+        },
+      },
+      {
+        path: '/_api/market-warrant-filter/',
+        method: 'POST',
+        body: { filter: {}, offset: 0, limit: 20, sortBy: { field: 'name', order: 'asc' } },
+      },
+    ]);
+  });
+
+  it('rejects invalid pagination before sending', async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>();
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await expect(client.instruments.screenEtfs({ limit: 0 })).rejects.toThrow();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('gets filter options for each listed product', async () => {
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockImplementation(async () => jsonResponse({ issuers: [] }));
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await client.instruments.getEtfFilterOptions();
+    await client.instruments.getCertificateFilterOptions();
+    await client.instruments.getWarrantFilterOptions();
+    await expect(client.instruments.getOptionFutureForwardFilterOptions()).resolves.toEqual({
+      issuers: [],
+    });
+
+    expect(fetch.mock.calls.map(([url]) => new URL(url.toString()).pathname)).toEqual([
+      '/_api/market-etf-filter/filter-options',
+      '/_api/market-certificate-filter/filter-options',
+      '/_api/market-warrant-filter/filter-options',
+      '/_api/market-option-future-forward-list/filter-options',
+    ]);
+  });
+});

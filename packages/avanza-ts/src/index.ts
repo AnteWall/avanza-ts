@@ -37,6 +37,20 @@ export {
   AvanzaHttpError,
 } from './errors.js';
 export type { InstrumentsClient } from './instruments/instruments-client.js';
+export type {
+  ListedProductFilter,
+  ListedProductFilterOption,
+  ListedProductFilterOptions,
+  ScreenCertificatesResponse,
+  ScreenedCertificate,
+  ScreenedEtf,
+  ScreenedWarrant,
+  ScreenEtfsResponse,
+  ScreenListedProductsOptions,
+  ScreenListedProductsResponse,
+  ScreenWarrantsResponse,
+  UnderlyingInstrument,
+} from './instruments/listed-product-types.js';
 export {
   savedFiltersSchema,
   screenerTabsSchema,

@@ -48,7 +48,7 @@
         "description": "Manage authentication and the stored session"
       },
       "instruments": {
-        "description": "Screen stocks and manage stock settings"
+        "description": "Screen stocks and other listed products, and manage stock settings"
       },
       "market": {
         "description": "Search instruments and read quotes, charts, indices, and ETFs"

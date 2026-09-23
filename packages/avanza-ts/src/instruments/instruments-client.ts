@@ -1,6 +1,13 @@
 import { z } from 'zod';
 
 import type { ClientContext } from '../internal/client-context.js';
+import type {
+  ListedProductFilterOptions,
+  ScreenCertificatesResponse,
+  ScreenEtfsResponse,
+  ScreenListedProductsOptions,
+  ScreenWarrantsResponse,
+} from './listed-product-types.js';
 import {
   gainersLosersResponseSchema,
   savedFiltersSchema,
@@ -196,5 +203,78 @@ export class InstrumentsClient {
       signal,
     });
     return stockSectorGroupsSchema.parse(response);
+  }
+
+  public screenEtfs(options: ScreenListedProductsOptions = {}): Promise<ScreenEtfsResponse> {
+    return this.screenListed('market-etf-filter', options, 'numberOfOwners');
+  }
+
+  public getEtfFilterOptions(signal?: AbortSignal): Promise<ListedProductFilterOptions> {
+    return this.getListedFilterOptions('market-etf-filter', signal);
+  }
+
+  public screenCertificates(
+    options: ScreenListedProductsOptions = {},
+  ): Promise<ScreenCertificatesResponse> {
+    return this.screenListed('market-certificate-filter', options, 'totalValueTraded');
+  }
+
+  public getCertificateFilterOptions(signal?: AbortSignal): Promise<ListedProductFilterOptions> {
+    return this.getListedFilterOptions('market-certificate-filter', signal);
+  }
+
+  public screenWarrants(
+    options: ScreenListedProductsOptions = {},
+  ): Promise<ScreenWarrantsResponse> {
+    return this.screenListed('market-warrant-filter', options, 'totalValueTraded');
+  }
+
+  public getWarrantFilterOptions(signal?: AbortSignal): Promise<ListedProductFilterOptions> {
+    return this.getListedFilterOptions('market-warrant-filter', signal);
+  }
+
+  public getOptionFutureForwardFilterOptions(
+    signal?: AbortSignal,
+  ): Promise<ListedProductFilterOptions> {
+    return this.getListedFilterOptions('market-option-future-forward-list', signal);
+  }
+
+  private async screenListed<Response>(
+    service: string,
+    options: ScreenListedProductsOptions,
+    defaultSortField: string,
+  ): Promise<Response> {
+    const offset = z
+      .number()
+      .int()
+      .nonnegative()
+      .parse(options.offset ?? 0);
+    const limit = z
+      .number()
+      .int()
+      .positive()
+      .parse(options.limit ?? 20);
+    const sortBy = stockSortSchema.parse(
+      options.sortBy ?? { field: defaultSortField, order: 'desc' },
+    );
+    return this.context.http.request<Response>({
+      access: 'optional',
+      method: 'POST',
+      path: `/_api/${service}/`,
+      body: { filter: options.filter ?? {}, offset, limit, sortBy },
+      signal: options.signal,
+    });
+  }
+
+  private getListedFilterOptions(
+    service: string,
+    signal?: AbortSignal,
+  ): Promise<ListedProductFilterOptions> {
+    return this.context.http.request<ListedProductFilterOptions>({
+      access: 'optional',
+      method: 'GET',
+      path: `/_api/${service}/filter-options`,
+      signal,
+    });
   }
 }

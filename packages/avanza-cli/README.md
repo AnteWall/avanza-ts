@@ -118,6 +118,20 @@ avanza instruments sectors --json
 These public commands also support `--fixture --output <new-temporary-file>`. Fixture output contains
 the raw HTTP response: anonymize it before adding it to the repository.
 
+### ETFs, certificates, warrants, and derivatives
+
+These public commands send query-only POST requests (screens) or GET requests (options). Filter keys and values come from the matching options command:
+
+```sh
+avanza instruments etf-options --json
+avanza instruments etfs --filter '{"issuers":["xact"]}' --limit 10
+avanza instruments certificate-options --json
+avanza instruments certificates --filter '{"directions":["long"]}' --sort-field totalValueTraded
+avanza instruments warrant-options --json
+avanza instruments warrants --filter '{"subTypes":["turbo"]}' --offset 20
+avanza instruments derivative-options --json
+```
+
 After signing in, the following settings commands use the stored session:
 
 ```sh
