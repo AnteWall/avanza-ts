@@ -59,6 +59,22 @@ avanza positions popular-statistics --orderbook-id 123
 
 `positions list` and `positions countries` also work without `--account-id`. `--fixture` includes raw personal account and holdings data; keep captures private and anonymize before tracking them.
 
+## Performance and transactions (read only)
+
+These commands also need a stored session. The performance commands send query-only POST requests; the transaction commands send GET requests only:
+
+```sh
+avanza performance chart --period ONE_YEAR
+avanza performance chart --from 2025-01-01 --to 2025-06-30 --account-ids <id>,<id>
+avanza performance total-values
+avanza transactions list --from 2025-01-01 --types BUY,SELL
+avanza transactions pending
+avanza transactions show --account-id <url-parameter-id> --transaction-id <id>
+avanza transactions dividends --include-closed
+```
+
+Omitting `--account-ids` includes all accounts. `transactions list` defaults to the last year. `--fixture` includes raw personal balances and transactions; keep captures private and anonymize before tracking them.
+
 ## Stock screener
 
 ```sh

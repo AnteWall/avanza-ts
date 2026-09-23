@@ -66,6 +66,21 @@ export type {
 } from './instruments/stock-screener-types.js';
 export type { MarketClient } from './market/market-client.js';
 export type { OrdersClient } from './orders/orders-client.js';
+export type { PerformanceClient } from './performance/performance-client.js';
+export { performancePeriods } from './performance/performance-types.js';
+export type {
+  BuyingPower,
+  CurrencyBalance,
+  PerformanceChartOptions,
+  PerformanceChartResponse,
+  PerformanceDateRange,
+  PerformanceDevelopment,
+  PerformancePeriod,
+  PerformancePoint,
+  TotalValue,
+  TotalValuesAccount,
+  TotalValuesResponse,
+} from './performance/performance-types.js';
 export type { PositionsClient } from './positions/positions-client.js';
 export type { PositionListResponse } from './positions/position-schemas.js';
 export type {
@@ -78,4 +93,16 @@ export type {
   PositionOrderbooksResponse,
   PositionPopularCategoriesResponse,
 } from './positions/position-types.js';
+export type { TransactionsClient } from './transactions/transactions-client.js';
+export type {
+  Dividend,
+  DividendAmount,
+  DividendOptions,
+  DividendsResponse,
+  PendingTransactionsResponse,
+  Transaction,
+  TransactionListFilter,
+  TransactionListResponse,
+  TransactionOrderbook,
+} from './transactions/transactions-types.js';
 export type { WebSocketClient } from './websocket/websocket-client.js';

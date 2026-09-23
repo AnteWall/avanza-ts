@@ -22,8 +22,8 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 
 ## Performance and activity
 
-- [ ] Read account performance — `chunk-CCAN4IPX.js`: `POST /_api/account-performance/overview/chart/accounts/timeperiod`, `POST /_api/account-performance/overview/chart/accounts/timeperiod_custom`; `chunk-7ZIXZFVN.js`: `POST /_api/account-performance/overview/total-values` (query calls).
-- [ ] Read transactions — `chunk-QPJ6455P.js`: `GET /_api/transactions/list`, `GET /_api/transactions/pending`, `GET /_api/transactions/transaction/{param}/{param}`; `chunk-T4MDGP4V.js`: `GET /_api/transactions/dividends{param}`.
+- [x] Read account performance — `chunk-CCAN4IPX.js`: `POST /_api/account-performance/overview/chart/accounts/timeperiod`, `POST /_api/account-performance/overview/chart/accounts/timeperiod_custom`; `chunk-7ZIXZFVN.js`: `POST /_api/account-performance/overview/total-values` (query calls).
+- [x] Read transactions — `chunk-QPJ6455P.js`: `GET /_api/transactions/list`, `GET /_api/transactions/pending`, `GET /_api/transactions/transaction/{param}/{param}`; `chunk-T4MDGP4V.js`: `GET /_api/transactions/dividends{param}`.
 
 ## Market data and instruments
 

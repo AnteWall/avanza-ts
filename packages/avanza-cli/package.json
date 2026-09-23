@@ -50,8 +50,14 @@
       "instruments": {
         "description": "Screen stocks and manage stock settings"
       },
+      "performance": {
+        "description": "Read account performance and total values"
+      },
       "positions": {
         "description": "Read positions and statistics"
+      },
+      "transactions": {
+        "description": "Read transactions and dividends"
       }
     }
   },
