@@ -398,3 +398,253 @@ export interface ShortSellingPoint {
 export interface ShortSellingResponse {
   readonly shortSellingHistory: readonly ShortSellingPoint[];
 }
+
+export interface MoneyAmount {
+  readonly value: number;
+  readonly currency: string;
+}
+
+export interface MarketplaceStatus {
+  readonly marketOpen: boolean;
+  readonly timeLeftMs: number;
+  readonly openingTime: string;
+  readonly todayClosingTime: string;
+  readonly normalClosingTime: string;
+  /** For example `OPEN` or `CLOSED`. */
+  readonly currentStatus: string;
+  readonly marketStateSchedule: readonly {
+    readonly status: string;
+    readonly start: string;
+    readonly end: string;
+  }[];
+}
+
+/** Closing prices at the start of each period; missing periods are omitted. */
+export type HistoricalClosingPrices = Readonly<Record<string, number | string>>;
+
+export interface CompanyReport {
+  readonly date: string;
+  readonly reportType: string;
+  readonly isConfirmed: boolean;
+}
+
+export interface StockInfo {
+  readonly orderbookId: string;
+  readonly name: string;
+  readonly isin: string;
+  readonly instrumentId: string;
+  readonly type: string;
+  readonly tradable: string;
+  readonly sectors: readonly { readonly sectorId: string; readonly sectorName: string }[];
+  readonly listing: Listing & { readonly marketListName?: string };
+  readonly marketPlace: MarketplaceStatus;
+  readonly historicalClosingPrices: HistoricalClosingPrices;
+  readonly keyIndicators: {
+    readonly numberOfOwners: number;
+    readonly reportDate: string;
+    readonly volatility?: number;
+    readonly beta?: number;
+    readonly priceEarningsRatio?: number;
+    readonly priceSalesRatio?: number;
+    readonly priceBookRatio?: number;
+    readonly evEbitRatio?: number;
+    readonly directYield?: number;
+    readonly ordinaryDirectYield?: number;
+    readonly totalDirectYield?: number;
+    readonly shortSellingRatio?: number;
+    readonly returnOnEquity?: number;
+    readonly returnOnTotalAssets?: number;
+    readonly returnOnCapitalEmployed?: number;
+    readonly equityRatio?: number;
+    readonly capitalTurnover?: number;
+    readonly interestCoverageRatio?: number;
+    readonly operatingProfitMargin?: number;
+    readonly grossMargin?: number;
+    readonly netMargin?: number;
+    readonly dividendsPerYear?: number;
+    readonly marketCapital?: MoneyAmount;
+    readonly equityPerShare?: MoneyAmount;
+    readonly turnoverPerShare?: MoneyAmount;
+    readonly earningsPerShare?: MoneyAmount;
+    readonly operatingCashFlow?: MoneyAmount;
+    readonly dividend?: {
+      readonly exDate: string;
+      readonly paymentDate?: string;
+      readonly amount: number;
+      readonly currencyCode: string;
+      readonly exDateStatus: string;
+    };
+    readonly nextReport?: CompanyReport;
+    readonly previousReport?: CompanyReport;
+  };
+  readonly quote: StockQuote;
+}
+
+export interface AnalysisPoint {
+  /** For example `FULL_YEAR` or `Q1`. */
+  readonly reportType: string;
+  readonly financialYear: number;
+  /** Report date; present on quarterly series and dividends. */
+  readonly date?: string;
+  readonly value: number;
+}
+
+/** Metric name, for example `priceEarningsRatio` or `sales`, to its series. */
+export type AnalysisSeries = Readonly<Record<string, readonly AnalysisPoint[]>>;
+
+export type AnalysisSummary = Readonly<
+  Record<string, { readonly latest: number | null; readonly average: number | null }>
+>;
+
+/**
+ * `ByQuarterTTM` series are trailing twelve months; `ByQuarterQuarter`
+ * series cover the single quarter.
+ */
+export interface StockAnalysis {
+  readonly stockKeyRatiosByYear: AnalysisSeries;
+  readonly stockKeyRatiosByQuarter: AnalysisSeries;
+  readonly stockKeyRatiosByQuarterTTM: AnalysisSeries;
+  readonly stockKeyRatiosByQuarterQuarter: AnalysisSeries;
+  readonly companyKeyRatiosByYear: AnalysisSeries;
+  readonly companyKeyRatiosByQuarter: AnalysisSeries;
+  readonly companyKeyRatiosByQuarterTTM: AnalysisSeries;
+  readonly companyKeyRatiosByQuarterQuarter: AnalysisSeries;
+  readonly dividendsByYear: AnalysisSeries;
+  readonly companyFinancialsByYear: AnalysisSeries;
+  readonly companyFinancialsByQuarter: AnalysisSeries;
+  readonly companyFinancialsByQuarterTTM: AnalysisSeries;
+  readonly companyFinancialsByQuarterQuarter: AnalysisSeries;
+  readonly keyRatiosByYear: AnalysisSummary;
+  readonly keyRatiosByQuarter: AnalysisSummary;
+  readonly keyRatiosByQuarterTTM: AnalysisSummary;
+  readonly keyRatiosByQuarterQuarter: AnalysisSummary;
+}
+
+export interface NumberOfOwnersResponse {
+  readonly ownersPoints: readonly { readonly timestamp: number; readonly numberOfOwners: number }[];
+  readonly historySummary: {
+    readonly oneYearChange: number;
+    readonly oneYearChangePercent: number;
+    readonly thisYearChange: number;
+    readonly thisYearChangePercent: number;
+  };
+}
+
+export const listedInstrumentTypes = ['certificate', 'warrant', 'futureforward', 'option'] as const;
+
+export type ListedInstrumentType = (typeof listedInstrumentTypes)[number];
+
+export interface InstrumentUnderlying {
+  readonly orderbookId: string;
+  readonly name: string;
+  readonly instrumentType: string;
+  readonly instrumentSubType: string;
+  readonly quote: Partial<StockQuote>;
+  readonly listing: Listing;
+  readonly previousClosingPrice: number | null;
+  readonly reference: boolean;
+}
+
+export interface ListedInstrument {
+  readonly orderbookId: string;
+  readonly name: string;
+  readonly isin: string;
+  readonly type: string;
+  readonly tradable: string;
+  readonly listing: Listing;
+  readonly historicalClosingPrices: HistoricalClosingPrices;
+  /**
+   * Product-specific, for example `leverage` and `productLink` (certificates),
+   * `barrierLevel` and `financingLevel` (warrants), or `strikePrice`,
+   * `callIndicator`, and `endDate` (options).
+   */
+  readonly keyIndicators: { readonly numberOfOwners: number } & Readonly<
+    Record<string, boolean | number | string>
+  >;
+  readonly quote: Partial<StockQuote>;
+  readonly underlying?: InstrumentUnderlying;
+  readonly assetCategory?: string;
+  readonly category?: string;
+  readonly subCategory?: string;
+}
+
+export interface ListedInstrumentDetails {
+  readonly issuer?: string;
+  readonly direction?: string;
+  readonly leverage?: number;
+  readonly exerciseType?: string;
+  readonly underlying?: InstrumentUnderlying;
+  readonly documents: { readonly kid?: string; readonly prospectus?: string };
+  readonly orderDepth: OrderDepth & {
+    readonly marketMakerLevelInBid?: number;
+    readonly marketMakerLevelInAsk?: number;
+  };
+  readonly trades: readonly MarketTrade[];
+  readonly brokerTradeSummaries: readonly BrokerTradeSummary[];
+  readonly collateralValue: number;
+  readonly tradingUnit?: number;
+  readonly superInterestApproved?: boolean;
+}
+
+export interface MarketMakerChartResponse {
+  readonly ohlc: readonly Ohlc[];
+  readonly marketMaker: readonly {
+    readonly timestamp: number;
+    readonly buy: number | null;
+    readonly sell: number | null;
+  }[];
+  readonly metadata: PriceChartResponse['metadata'];
+  readonly from: string;
+  readonly to: string;
+}
+
+export interface InstrumentNewsArticle {
+  readonly headline: string;
+  readonly vignette: string;
+  readonly intro: string;
+  readonly articleType: string;
+  readonly category: string;
+  readonly newsSource: string;
+  readonly fullArticleLink: string;
+  readonly externalLink: boolean;
+  readonly timePublished: string;
+  readonly timePublishedMillis: number;
+}
+
+export interface InstrumentNewsResponse {
+  readonly articles: readonly InstrumentNewsArticle[];
+}
+
+export interface InsiderTrade {
+  readonly orderbookId: string;
+  readonly ticker: string;
+  readonly instrumentType: string;
+  readonly instrumentDescription: string | null;
+  readonly marketCountryCode: string;
+  readonly insiderName: string;
+  readonly insiderPosition: string;
+  readonly owner: string | null;
+  readonly newHolder: string | null;
+  /** For example `BUY` or `SELL`. */
+  readonly transactionType: string;
+  readonly transactionDate: string;
+  readonly reportedDate: string;
+  readonly price: number;
+  readonly quantity: number;
+  readonly totalValue: number;
+  readonly currency: string;
+  readonly ownershipChangeFraction: number | null;
+  readonly marketTransaction: boolean;
+  readonly equityProgram: boolean;
+  readonly aggregatedTransaction: boolean;
+}
+
+export interface InsiderTradesResponse {
+  readonly transactions: readonly InsiderTrade[];
+  readonly source: string;
+  readonly buyCount: number | null;
+  readonly buyTotalValue: number | null;
+  readonly sellCount: number | null;
+  readonly sellTotalValue: number | null;
+  readonly allocationTotalValue: number | null;
+}

@@ -10,11 +10,19 @@ import type {
   EtfResponse,
   HeaderIndicesResponse,
   IndexConstituent,
+  InsiderTradesResponse,
   InsiderTransactionSummary,
+  InstrumentNewsResponse,
   InstrumentByIsinResponse,
+  ListedInstrument,
+  ListedInstrumentDetails,
+  ListedInstrumentType,
   MarketDataResponse,
+  MarketMakerChartResponse,
+  MarketplaceStatus,
   MarketOverview,
   MarketTrade,
+  NumberOfOwnersResponse,
   Ohlc,
   OrderDepth,
   OverviewChartResponse,
@@ -24,6 +32,8 @@ import type {
   SearchOptions,
   SearchResponse,
   ShortSellingResponse,
+  StockAnalysis,
+  StockInfo,
   StockQuote,
 } from './market-types.js';
 
@@ -53,6 +63,53 @@ export class MarketClient {
 
   public instrumentByIsin(isin: string, signal?: AbortSignal): Promise<InstrumentByIsinResponse> {
     return this.get(`/market-guide/instrument/isin${pathId(isin)}`, signal);
+  }
+
+  public stock(orderbookId: string, signal?: AbortSignal): Promise<StockInfo> {
+    return this.get(`/market-guide/stock${pathId(orderbookId)}`, signal);
+  }
+
+  /** Key ratios, financials, and dividends by year and quarter. */
+  public stockAnalysis(orderbookId: string, signal?: AbortSignal): Promise<StockAnalysis> {
+    return this.get(`/market-guide/stock${pathId(orderbookId)}/analysis`, signal);
+  }
+
+  public marketplace(orderbookId: string, signal?: AbortSignal): Promise<MarketplaceStatus> {
+    return this.get(`/market-guide/stock${pathId(orderbookId)}/marketplace`, signal);
+  }
+
+  /** History of how many Avanza customers own the instrument. */
+  public numberOfOwners(
+    orderbookId: string,
+    signal?: AbortSignal,
+  ): Promise<NumberOfOwnersResponse> {
+    return this.get(`/market-guide/number-of-owners${pathId(orderbookId)}`, signal);
+  }
+
+  public instrument(
+    type: ListedInstrumentType,
+    orderbookId: string,
+    signal?: AbortSignal,
+  ): Promise<ListedInstrument> {
+    return this.get(`/market-guide${pathId(type)}${pathId(orderbookId)}`, signal);
+  }
+
+  /** Issuer, documents, order depth, and trades for a listed product. */
+  public instrumentDetails(
+    type: ListedInstrumentType,
+    orderbookId: string,
+    signal?: AbortSignal,
+  ): Promise<ListedInstrumentDetails> {
+    return this.get(`/market-guide${pathId(type)}${pathId(orderbookId)}/details`, signal);
+  }
+
+  public news(orderbookId: string, signal?: AbortSignal): Promise<InstrumentNewsResponse> {
+    return this.get(`/market-guide/news${pathId(orderbookId)}`, signal);
+  }
+
+  /** Individual insider transactions with the reporting insider. */
+  public insiderTrades(orderbookId: string, signal?: AbortSignal): Promise<InsiderTradesResponse> {
+    return this.get(`/market-insider-transactions/transactions${pathId(orderbookId)}`, signal);
   }
 
   public quote(orderbookId: string, signal?: AbortSignal): Promise<StockQuote> {
@@ -162,6 +219,19 @@ export class MarketClient {
       signal,
       periodQuery(period),
     );
+  }
+
+  /** Price chart with market maker bid and ask, for certificates and warrants. */
+  public marketMakerChart(
+    orderbookId: string,
+    period: PriceChartPeriod,
+    options: PriceChartOptions = {},
+    signal?: AbortSignal,
+  ): Promise<MarketMakerChartResponse> {
+    return this.get(`/price-chart/marketmaker${pathId(orderbookId)}`, signal, {
+      ...periodQuery(period),
+      resolution: options.resolution,
+    });
   }
 
   /** Returns `points` OHLC points before the period start, used as technical-analysis lookback. */

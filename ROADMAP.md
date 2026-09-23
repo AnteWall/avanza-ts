@@ -34,6 +34,13 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 - [x] Read price and event history — `chunk-2CNBJ3C2.js`: `GET /_api/price-chart/stock/{param}`, `GET /_api/price-chart/stock/{param}/company-events`, `GET /_api/price-chart/stock/{param}/insider-transactions`, `GET /_api/price-chart/stock/{param}/ta/`.
 - [x] Explore other listed products — `chunk-SO75IO2W.js`: `GET /_api/market-etf-filter/filter-options`, `POST /_api/market-etf-filter/` (query); `chunk-U7BW24O3.js`: `GET /_api/market-certificate-filter/filter-options`, `POST /_api/market-certificate-filter/` (query); `chunk-VJC23FBK.js`: `GET /_api/market-warrant-filter/filter-options`, `POST /_api/market-warrant-filter/` (query); `chunk-VE24T3KN.js`: `GET /_api/market-option-future-forward-list/filter-options`.
 
+## Instrument pages
+
+Found by comparing with `Qluxzz/avanza` and `avanza-mcp`; these instrument pages load from bundles outside the original inventory.
+
+- [x] Read stock and product pages — `GET /_api/market-guide/stock/{param}`, `GET /_api/market-guide/stock/{param}/analysis`, `GET /_api/market-guide/stock/{param}/marketplace`, `GET /_api/market-guide/number-of-owners/{param}`, `GET /_api/market-guide/{certificate|warrant|futureforward|option}/{param}` and `/details`.
+- [x] Read instrument news, insider trades, and market maker charts — `GET /_api/market-guide/news/{param}`, `GET /_api/market-insider-transactions/transactions/{param}`, `GET /_api/price-chart/marketmaker/{param}`.
+
 ## Funds and market data
 
 - [x] Search funds — `chunk-FUCGIJ4G.js`: `POST /_api/fund-guide/search` (query); `chunk-CCQTHPYY.js`: `POST /_api/fund-guide/list` (query); `chunk-C4SHODCR.js`: `GET /_api/fund-guide/instrument-search`; `chunk-ZRTIIPYA.js`: `GET /_api/fund-guide/top-ten?{param}`.

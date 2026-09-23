@@ -1,0 +1,148 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/market-guide/stock/5269"
+  },
+  "response": {
+    "body": {
+      "orderbookId": "5269",
+      "name": "Volvo B",
+      "isin": "SE0000115446",
+      "instrumentId": "5429",
+      "sectors": [
+        {
+          "sectorId": "125",
+          "sectorName": "Lastbilar & Tunga Fordon"
+        },
+        {
+          "sectorId": "6",
+          "sectorName": "Industriella Varor & Tjänster"
+        },
+        {
+          "sectorId": "29",
+          "sectorName": "Industri"
+        }
+      ],
+      "tradable": "BUYABLE_AND_SELLABLE",
+      "listing": {
+        "shortName": "VOLV B",
+        "tickerSymbol": "VOLV B",
+        "countryCode": "SE",
+        "currency": "SEK",
+        "marketPlaceCode": "XSTO",
+        "marketPlaceName": "Stockholmsbörsen",
+        "marketListName": "Large Cap Stockholm",
+        "tickSizeListId": "2294",
+        "marketTradesAvailable": true
+      },
+      "marketPlace": {
+        "marketOpen": false,
+        "timeLeftMs": 49028179,
+        "openingTime": "09:00:00",
+        "todayClosingTime": "17:30:00",
+        "normalClosingTime": "17:30:00",
+        "currentStatus": "CLOSED",
+        "marketStateSchedule": [
+          {
+            "status": "OPEN",
+            "start": "09:00:00",
+            "end": "17:30:00"
+          }
+        ]
+      },
+      "historicalClosingPrices": {
+        "oneDay": 333.6,
+        "oneWeek": 330.2,
+        "oneMonth": 342.8,
+        "threeMonths": 321.6,
+        "sixMonths": 288.1,
+        "startOfYear": 295.9,
+        "oneYear": 272.8,
+        "threeYears": 228.95,
+        "fiveYears": 190.42,
+        "tenYears": 99,
+        "start": 1.97,
+        "startDate": "1982-06-14"
+      },
+      "keyIndicators": {
+        "numberOfOwners": 210632,
+        "shortSellingRatio": 0.008,
+        "reportDate": "2026-07-17",
+        "directYield": 0.026,
+        "ordinaryDirectYield": 0.026,
+        "totalDirectYield": 0.0397,
+        "volatility": 0.1817,
+        "beta": 1.12,
+        "priceEarningsRatio": 18.55,
+        "priceSalesRatio": 1.41,
+        "priceBookRatio": 3.77,
+        "evEbitRatio": 17.77,
+        "interestCoverageRatio": 28.924,
+        "returnOnEquity": 0.2031,
+        "returnOnTotalAssets": 0.0529,
+        "returnOnCapitalEmployed": 0.1196,
+        "equityRatio": 0.2603,
+        "capitalTurnover": 0.6948,
+        "operatingProfitMargin": 0.1049,
+        "grossMargin": 0.2534,
+        "netMargin": 0.1041,
+        "marketCapital": {
+          "value": 665857337852,
+          "currency": "SEK"
+        },
+        "equityPerShare": {
+          "value": 86.89,
+          "currency": "SEK"
+        },
+        "turnoverPerShare": {
+          "value": 231.89,
+          "currency": "SEK"
+        },
+        "earningsPerShare": {
+          "value": 17.63,
+          "currency": "SEK"
+        },
+        "operatingCashFlow": {
+          "value": 44523000000,
+          "currency": "SEK"
+        },
+        "dividend": {
+          "exDate": "2026-04-09",
+          "paymentDate": "2026-04-15",
+          "amount": 8.5,
+          "currencyCode": "SEK",
+          "exDateStatus": "HISTORICAL"
+        },
+        "dividendsPerYear": 1,
+        "nextReport": {
+          "date": "2026-10-23",
+          "reportType": "INTERIM",
+          "isConfirmed": true
+        },
+        "previousReport": {
+          "date": "2026-07-17",
+          "reportType": "INTERIM",
+          "isConfirmed": true
+        }
+      },
+      "quote": {
+        "buy": 327.5,
+        "sell": 327.7,
+        "last": 327.3,
+        "highest": 335.6,
+        "lowest": 325.8,
+        "change": -6.3,
+        "changePercent": -1.89,
+        "spread": 0.06,
+        "timeOfLast": 1790177393000,
+        "totalValueTraded": 1002468642.3,
+        "totalVolumeTraded": 3054526,
+        "updated": 1790179200408,
+        "volumeWeightedAveragePrice": 328.2,
+        "isRealTime": false
+      },
+      "type": "STOCK"
+    },
+    "status": 200
+  }
+}

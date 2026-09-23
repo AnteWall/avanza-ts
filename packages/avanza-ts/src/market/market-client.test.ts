@@ -45,6 +45,35 @@ describe('MarketClient', () => {
       {},
     ],
     ['short selling', (m) => m.shortSelling('5269'), '/market-guide/short-selling/5269', {}],
+    ['stock', (m) => m.stock('5269'), '/market-guide/stock/5269', {}],
+    ['stock analysis', (m) => m.stockAnalysis('5269'), '/market-guide/stock/5269/analysis', {}],
+    ['marketplace', (m) => m.marketplace('5269'), '/market-guide/stock/5269/marketplace', {}],
+    ['owners', (m) => m.numberOfOwners('5269'), '/market-guide/number-of-owners/5269', {}],
+    [
+      'instrument',
+      (m) => m.instrument('certificate', '563966'),
+      '/market-guide/certificate/563966',
+      {},
+    ],
+    [
+      'instrument details',
+      (m) => m.instrumentDetails('option', '2631305'),
+      '/market-guide/option/2631305/details',
+      {},
+    ],
+    ['news', (m) => m.news('5269'), '/market-guide/news/5269', {}],
+    [
+      'insider trades',
+      (m) => m.insiderTrades('5269'),
+      '/market-insider-transactions/transactions/5269',
+      {},
+    ],
+    [
+      'market maker chart',
+      (m) => m.marketMakerChart('563966', 'one_week'),
+      '/price-chart/marketmaker/563966',
+      { timePeriod: 'one_week' },
+    ],
     ['header indices', (m) => m.headerIndices(), '/market-index/header-index', {}],
     ['constituents', (m) => m.indexConstituents('19002'), '/market-index/19002/constituents', {}],
     ['etf', (m) => m.etf('5510'), '/market-etf/5510', {}],
@@ -136,7 +165,10 @@ describe('MarketClient', () => {
   });
 });
 
-it('replays a recorded short-selling response', () =>
-  expectFixtureReplay('market/fixtures/short-selling.json', (client) =>
-    client.market.shortSelling('5269'),
-  ));
+it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
+  ['short-selling', (c) => c.market.shortSelling('5269')],
+  ['stock', (c) => c.market.stock('5269')],
+  ['certificate', (c) => c.market.instrument('certificate', '563966')],
+])('replays a recorded %s response', (name, call) =>
+  expectFixtureReplay(`market/fixtures/${name}.json`, call),
+);

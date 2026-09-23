@@ -83,6 +83,15 @@ These commands work without a session, except `market data`, which uses the stor
 ```sh
 avanza market search --query volvo --types STOCK,EXCHANGE_TRADED_FUND --limit 5
 avanza market isin --isin SE0000115446
+avanza market stock --orderbook-id 5269
+avanza market analysis --orderbook-id 5269
+avanza market marketplace --orderbook-id 5269
+avanza market owners --orderbook-id 5269
+avanza market news --orderbook-id 5269
+avanza market insider-trades --orderbook-id 5269
+avanza market instrument --type certificate --orderbook-id 563966
+avanza market instrument-details --type warrant --orderbook-id 2634687
+avanza market market-maker-chart --orderbook-id 563966 --period one_week
 avanza market quote --orderbook-id 5269
 avanza market order-depth --orderbook-id 5269
 avanza market trades --orderbook-id 5269
@@ -103,7 +112,7 @@ avanza market short-selling --orderbook-id 5269
 avanza market technical-analysis --orderbook-id 5269 --period one_month --points 20
 ```
 
-Use `market search` or `market isin` to find orderbook IDs. Available `--resolution` values depend on the period; `price-chart` returns them in `metadata.resolution`.
+Use `market search` or `market isin` to find orderbook IDs; the `instruments` screeners list certificate, warrant, and option IDs. Available `--resolution` values depend on the period; `price-chart` returns them in `metadata.resolution`.
 
 ## Funds (read only)
 

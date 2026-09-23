@@ -1,0 +1,95 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/market-guide/certificate/563966"
+  },
+  "response": {
+    "body": {
+      "orderbookId": "563966",
+      "name": "XBT Provider Bitcoin Tracker One - SEK",
+      "isin": "SE0007126024",
+      "tradable": "BUYABLE_AND_SELLABLE",
+      "listing": {
+        "shortName": "BITCOIN XBT",
+        "tickerSymbol": "BITCOIN XBT",
+        "countryCode": "SE",
+        "currency": "SEK",
+        "marketPlaceCode": "FNSE",
+        "marketPlaceName": "First North Stockholm",
+        "tickSizeListId": "1998",
+        "marketTradesAvailable": true
+      },
+      "historicalClosingPrices": {
+        "oneDay": 3805.85,
+        "oneWeek": 3258.44,
+        "oneMonth": 3211.01,
+        "threeMonths": 2675.13,
+        "sixMonths": 2860.38,
+        "startOfYear": 3689.99,
+        "oneYear": 4894.95,
+        "threeYears": 1339.09,
+        "fiveYears": 1775.36,
+        "tenYears": 24.85,
+        "start": 9.73,
+        "startDate": "2015-05-18"
+      },
+      "keyIndicators": {
+        "leverage": 1,
+        "isAza": false,
+        "productLink": "https://etp.morganstanley.com/SE/SV/product-details/",
+        "numberOfOwners": 27936
+      },
+      "quote": {
+        "buy": 3707.83,
+        "sell": 3727.79,
+        "last": 3718,
+        "highest": 3820,
+        "lowest": 3685,
+        "change": -87.85,
+        "changePercent": -2.31,
+        "spread": 0.54,
+        "timeOfLast": 1790177096000,
+        "totalValueTraded": 29202001.61,
+        "totalVolumeTraded": 7751,
+        "updated": 1790179200408,
+        "volumeWeightedAveragePrice": 3767.51,
+        "isRealTime": false
+      },
+      "type": "CERTIFICATE",
+      "underlying": {
+        "orderbookId": "1002234",
+        "name": "BTC/USD",
+        "instrumentType": "INDEX",
+        "instrumentSubType": "CURRENCY",
+        "quote": {
+          "last": 83895,
+          "highest": 87282.81,
+          "lowest": 83513,
+          "change": -2303.05,
+          "changePercent": -2.67,
+          "timeOfLast": 1790183265883,
+          "totalValueTraded": 487443618.0925148,
+          "totalVolumeTraded": 5708.0016613,
+          "updated": 1790183265910,
+          "isRealTime": false
+        },
+        "listing": {
+          "shortName": "BTCUSD",
+          "tickerSymbol": "XXR-BTCUSD-SPOT",
+          "countryCode": "SE",
+          "currency": "USD",
+          "marketPlaceCode": "XXXX",
+          "marketPlaceName": "Inofficiella (beQuoted)",
+          "tickSizeListId": "4139",
+          "marketTradesAvailable": true
+        },
+        "previousClosingPrice": 86198.05,
+        "reference": true
+      },
+      "assetCategory": "Alternativa investeringar",
+      "category": "Kryptovaluta",
+      "subCategory": "Bitcoin"
+    },
+    "status": 200
+  }
+}
