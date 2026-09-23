@@ -14,11 +14,11 @@ Only retrieval operations and POSTs that **query** data belong here. Do not add 
 
 - [x] List accounts — `chunk-VFQ6RLZG.js`: `GET /_api/account-overview/accounts/list`, `GET /_api/account-overview/accounts/closed`, `GET /_api/account-overview/accounts/has-closed`, `GET /_api/account-overview/accounts/categories`.
 - [x] Inspect an account — `chunk-CAL6X3IJ.js`: `GET /_api/account-overview/overview/account/{param}`; `chunk-CZ3M76IO.js`: `GET /_api/account-overview/overview/categorizedAccounts`.
-- [ ] Read balances — `chunk-BJ5MRWSW.js`: `GET /_api/trading-critical/rest/accounts`, `GET /_api/trading-critical/rest/accountsandpositions`, `GET /_api/trading-critical/rest/accountvalues` (HTTP 404; not implemented), `GET /_api/trading-critical/rest/lightweightaccounts`. The other three endpoints are available.
+- [x] Read balances — `chunk-BJ5MRWSW.js`: `GET /_api/trading-critical/rest/accounts`, `GET /_api/trading-critical/rest/accountsandpositions`, `GET /_api/trading-critical/rest/accountvalues` (HTTP 404; not implemented), `GET /_api/trading-critical/rest/lightweightaccounts`. The other three endpoints are available; `accountvalues` still returned HTTP 404 on 2026-09-23 and is excluded.
 - [x] Read positions — `chunk-WFW3TCDP.js`: `GET /_api/position-data/positions`, `GET /_api/position-data/country/list`, `GET /_api/position-data/tools/active`; `chunk-LSFO4IUH.js`: `GET /_api/position-data/orderbooks`.
 - [x] Inspect position statistics — `chunk-FUCGIJ4G.js`: `GET /_api/position-statistics/statistics/categories/{param}`, `GET /_api/position-statistics/statistics/popular-categories/{param}`.
 
-Implemented routes are available in the SDK and CLI as GET-only calls with named response types. `accountvalues` needs a successful response before implementation.
+Implemented routes are available in the SDK and CLI as GET-only calls with named response types.
 
 ## Performance and activity
 
@@ -58,7 +58,7 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 
 ## Savings, credit, and pensions (view only)
 
-- [ ] Read recurring savings — `chunk-HOA3OBAZ.js`: `GET /_api/periodic-fund-saving/get-periodic-savings`, `GET /_api/periodic-fund-saving/get-periodic-saving-details?id={param}`, `GET /_api/recurring-deposit/get-recurring-deposits`; `chunk-U6EITUM7.js`: `GET /_api/recurring-deposit/get-recurring-deposit?id={param}`.
-- [ ] Read savings goals — `chunk-GJ3E53OB.js`: `GET /_api/savings-goals/savings-category/get-accounts-categorized`, `GET /_api/savings-goals/insights/get-goal-health-status/{param}`; `chunk-XTUIDC3M.js`: `GET /_api/savings-goals/insights/get-goal-performance-time-series/{param}?timePeriod={param}`.
-- [ ] Read credit status — `chunk-CANQRWVY.js`: `GET /_api/superloan/analysis/accounts`; `chunk-OJ2DN2LH.js`: `GET /_api/superloan/analysis/accounts/{param}`, `GET /_api/superloan/analysis/accountStatistics/{param}`; `chunk-LBJSWNAA.js`: `GET /_api/superloan/credithistory/{param}?amountOfMonths={param}`.
-- [ ] Read pension and payout details — `chunk-63B32IVD.js`: `GET /_api/insurance/details/pension-details/{param}`; `chunk-G55OP2WU.js`: `GET /_api/insurance/pension/distribution/v1/{param}/with-future`; `chunk-KWMD4B5G.js`: `GET /_api/insurance-payment/v3/accounts/payout-plans`; `chunk-3HHFM4VZ.js`: `GET /_api/insurance-payment/v3/accounts/{param}/payout-plan`.
+- [ ] Read recurring savings — `chunk-HOA3OBAZ.js`: `GET /_api/periodic-fund-saving/get-periodic-savings`, `GET /_api/periodic-fund-saving/get-periodic-saving-details?id={param}`, `GET /_api/recurring-deposit/get-recurring-deposits`; `chunk-U6EITUM7.js`: `GET /_api/recurring-deposit/get-recurring-deposit?id={param}`. The two lists are available (`avanza savings periodic`, `recurring-deposits`); the detail endpoints also take `accountId` and need an existing saving to confirm their shape.
+- [x] Read savings goals — `chunk-GJ3E53OB.js`: `GET /_api/savings-goals/savings-category/get-accounts-categorized`, `GET /_api/savings-goals/insights/get-goal-health-status/{param}`; `chunk-XTUIDC3M.js`: `GET /_api/savings-goals/insights/get-goal-performance-time-series/{param}?timePeriod={param}`.
+- [ ] Read credit status — `chunk-CANQRWVY.js`: `GET /_api/superloan/analysis/accounts`; `chunk-OJ2DN2LH.js`: `GET /_api/superloan/analysis/accounts/{param}`, `GET /_api/superloan/analysis/accountStatistics/{param}`; `chunk-LBJSWNAA.js`: `GET /_api/superloan/credithistory/{param}?amountOfMonths={param}`. The account list is available (`avanza savings credit-accounts`); the per-account endpoints return HTTP 400 without securities credit and need a credit account to confirm.
+- [x] Read pension and payout details — `chunk-63B32IVD.js`: `GET /_api/insurance/details/pension-details/{param}`; `chunk-G55OP2WU.js`: `GET /_api/insurance/pension/distribution/v1/{param}/with-future`; `chunk-KWMD4B5G.js`: `GET /_api/insurance-payment/v3/accounts/payout-plans`; `chunk-3HHFM4VZ.js`: `GET /_api/insurance-payment/v3/accounts/{param}/payout-plan`.

@@ -71,6 +71,9 @@
       "positions": {
         "description": "Read positions and statistics"
       },
+      "savings": {
+        "description": "Read recurring savings, savings goals, credit, and pensions"
+      },
       "transactions": {
         "description": "Read transactions and dividends"
       }

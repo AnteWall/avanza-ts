@@ -214,6 +214,23 @@ export type {
   PositionOrderbooksResponse,
   PositionPopularCategoriesResponse,
 } from './positions/position-types.js';
+export type { SavingsClient } from './savings/savings-client.js';
+export { savingsGoalPeriods } from './savings/savings-types.js';
+export type {
+  CreditAccountsResponse,
+  InsuranceParty,
+  PensionDetails,
+  PensionDistribution,
+  PeriodicSavingsResponse,
+  RecurringDepositsResponse,
+  SavingsCategory,
+  SavingsCategoryAccount,
+  SavingsGoalHealth,
+  SavingsGoalPerformance,
+  SavingsGoalPeriod,
+  SavingsGoalPoint,
+  UnverifiedItem,
+} from './savings/savings-types.js';
 export type { TransactionsClient } from './transactions/transactions-client.js';
 export type {
   Dividend,

@@ -175,6 +175,25 @@ avanza collections note-orderbooks
 
 `watchlist-data` and `watchlist-news` use every instrument in the watchlist unless `--orderbook-ids` narrows it. `--fixture` captures include personal watchlists and notes; keep them private.
 
+## Savings, credit, and pensions (read only)
+
+These commands use the stored session and send GET requests only:
+
+```sh
+avanza savings periodic
+avanza savings recurring-deposits
+avanza savings categories
+avanza savings goal-health --category-id <id>
+avanza savings goal-performance --category-id <id> --period THREE_YEARS
+avanza savings credit-accounts
+avanza savings pension --account-id <id>
+avanza savings pension-distribution --account-id <id>
+avanza savings payout-plans
+avanza savings payout-plan --account-id <id>
+```
+
+`savings categories` lists category IDs and numeric account IDs. Pension details include personal names and customer IDs; keep `--fixture` captures private.
+
 ## Stock screener
 
 ```sh
