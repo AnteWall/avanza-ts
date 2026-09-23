@@ -51,10 +51,10 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 
 ## Orders and trading status (view only)
 
-- [ ] Read active order IDs and counts — `chunk-4EYOY5Z2.js`: `GET /_api/trading/trading-orders-and-deals/activeorderids` or `GET /_api/trading/rest/activeorderids`; `chunk-33NDRR6Q.js`: `GET /_api/trading/trading-orders-and-deals/ordercount` or `GET /_api/trading/rest/ordercount`. The frontend selects between these base paths with a feature toggle; these four concrete paths are assembled dynamically and therefore are absent from the static inventory.
-- [ ] Read existing orders and deals — `chunk-EM3AXP4F.js`: `GET /_api/trading/bulk/order/fetch/{param}`; `chunk-UVHLIJVC.js`: `GET /_api/trading-order-logs/order/{param}/{param}`, `GET /_api/trading-order-logs/stoploss/{param}/{param}`.
-- [ ] Read instrument and exchange status — `chunk-I73DMDPQ.js`: `GET /_api/trading-critical/rest/orderbook/{param}`; `chunk-R6ZAMORS.js`: `GET /_api/trading/rest/exchangerates`; `chunk-2EM2NIDF.js`: `GET /_api/trading/rest/trading-calendar/market-status/{param}/{param}`.
-- [ ] Read existing stop-losses — `chunk-OHNVFBUW.js`: `GET /_api/trading/stoploss/{param}/{param}`; `chunk-QL6CKVK6.js`: `GET /_api/trading/stoploss/{param}`.
+- [x] Read active order IDs and counts — `chunk-4EYOY5Z2.js`: `GET /_api/trading/trading-orders-and-deals/activeorderids` or `GET /_api/trading/rest/activeorderids`; `chunk-33NDRR6Q.js`: `GET /_api/trading/trading-orders-and-deals/ordercount` or `GET /_api/trading/rest/ordercount`. The frontend selects between these base paths with a feature toggle; the SDK uses the `rest` paths, which respond identically. These four concrete paths are assembled dynamically and therefore are absent from the static inventory.
+- [ ] Read existing orders and deals — `chunk-EM3AXP4F.js`: `GET /_api/trading/bulk/order/fetch/{param}`; `chunk-UVHLIJVC.js`: `GET /_api/trading-order-logs/order/{param}/{param}`, `GET /_api/trading-order-logs/stoploss/{param}/{param}`. Bulk orders are available (`avanza orders bulk-orders`, `bulk-order`); the order-log endpoints close the connection for a synthetic order ID and stay unimplemented until a real order or stop-loss can confirm their shape.
+- [x] Read instrument and exchange status — `chunk-I73DMDPQ.js`: `GET /_api/trading-critical/rest/orderbook/{param}`; `chunk-R6ZAMORS.js`: `GET /_api/trading/rest/exchangerates`; `chunk-2EM2NIDF.js`: `GET /_api/trading/rest/trading-calendar/market-status/{param}/{param}`.
+- [x] Read existing stop-losses — `chunk-OHNVFBUW.js`: `GET /_api/trading/stoploss/{param}/{param}`; `chunk-QL6CKVK6.js`: `GET /_api/trading/stoploss/{param}`.
 
 ## Savings, credit, and pensions (view only)
 

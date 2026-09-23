@@ -161,6 +161,17 @@ export type {
   NewsFeedResponse,
 } from './news/news-types.js';
 export type { OrdersClient } from './orders/orders-client.js';
+export type {
+  BulkOrder,
+  BulkOrderOptions,
+  BulkOrdersResponse,
+  ExchangeRate,
+  MarketStatus,
+  OrderCount,
+  StopLoss,
+  StopLossOptions,
+  TradingOrderbook,
+} from './orders/orders-types.js';
 export type { PerformanceClient } from './performance/performance-client.js';
 export { performancePeriods } from './performance/performance-types.js';
 export type {

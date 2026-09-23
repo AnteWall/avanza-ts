@@ -59,6 +59,9 @@
       "news": {
         "description": "Read news articles, the personal news feed, and the event calendar"
       },
+      "orders": {
+        "description": "Read orders, stop-losses, and trading status"
+      },
       "performance": {
         "description": "Read account performance and total values"
       },

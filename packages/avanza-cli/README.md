@@ -143,6 +143,22 @@ avanza news calendar
 
 `news article` takes the `url` of a `news feed` item.
 
+## Orders and trading status (read only)
+
+These commands use the stored session and send GET requests only:
+
+```sh
+avanza orders count
+avanza orders active-ids
+avanza orders bulk-orders --side BUY
+avanza orders bulk-order --bulk-order-id <id>
+avanza orders stop-losses --orderbook-id 5269
+avanza orders stop-loss --account-id <url-parameter-id> --stop-loss-id <id>
+avanza orders orderbook --orderbook-id 5269
+avanza orders exchange-rates
+avanza orders market-status --country US --date 2026-09-23
+```
+
 ## Stock screener
 
 ```sh
