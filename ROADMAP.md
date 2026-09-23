@@ -36,9 +36,9 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 
 ## Funds and market data
 
-- [ ] Search funds — `chunk-FUCGIJ4G.js`: `POST /_api/fund-guide/search` (query); `chunk-CCQTHPYY.js`: `POST /_api/fund-guide/list` (query); `chunk-C4SHODCR.js`: `GET /_api/fund-guide/instrument-search`; `chunk-ZRTIIPYA.js`: `GET /_api/fund-guide/top-ten?{param}`.
-- [ ] Inspect funds — `chunk-N7LWZPU6.js`: `GET /_api/fund-guide/fund-orderbook/{param}`; `chunk-W6TONNNX.js`: `GET /_api/fund-guide/fund-orderbook/details/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/holdings/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/regions/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/sectors/{param}`.
-- [ ] Read fund history — `chunk-YIFHCSEA.js`: `GET /_api/fund-guide/chart/{param}/{param}`, `GET /_api/fund-guide/chart/timeperiods/{param}`; `chunk-JAHCAIGM.js`: `GET /_api/fund-reference/reference/{param}`, `GET /_api/fund-reference/development/{param}`, `GET /_api/fund-reference/portfolio-data/{param}`, `GET /_api/fund-reference/sustainability/{param}`.
+- [x] Search funds — `chunk-FUCGIJ4G.js`: `POST /_api/fund-guide/search` (query); `chunk-CCQTHPYY.js`: `POST /_api/fund-guide/list` (query); `chunk-C4SHODCR.js`: `GET /_api/fund-guide/instrument-search`; `chunk-ZRTIIPYA.js`: `GET /_api/fund-guide/top-ten?{param}`.
+- [x] Inspect funds — `chunk-N7LWZPU6.js`: `GET /_api/fund-guide/fund-orderbook/{param}`; `chunk-W6TONNNX.js`: `GET /_api/fund-guide/fund-orderbook/details/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/holdings/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/regions/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/sectors/{param}`.
+- [x] Read fund history — `chunk-YIFHCSEA.js`: `GET /_api/fund-guide/chart/{param}/{param}`, `GET /_api/fund-guide/chart/timeperiods/{param}`; `chunk-JAHCAIGM.js`: `GET /_api/fund-reference/reference/{param}`, `GET /_api/fund-reference/development/{param}`, `GET /_api/fund-reference/portfolio-data/{param}`, `GET /_api/fund-reference/sustainability/{param}`.
 - [x] Read short-selling and dividend events — `chunk-XQ4J5HE2.js`: `GET /_api/market-guide/short-selling/{param}`; `chunk-T4MDGP4V.js`: `GET /_api/account-company-events/dividends/upcoming{param}`.
 - [ ] Read news and events — `chunk-4GEUDVPB.js`: `GET /_api/news/article{param}`; `chunk-BBMXQDGC.js`: `GET /_api/customer-calendar/calendar`; `chunk-N4XFAAIZ.js`: `GET /_api/customer-news-feed-v2/news`.
 
@@ -47,7 +47,7 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 - [ ] View watchlists — `chunk-C2ZR4TQN.js`: `GET /_api/watchlist/watchlist`, `POST /_api/watchlist/data/by-id`, `POST /_api/watchlist/news` (the POST calls request watchlist data).
 - [ ] Read existing alerts — `chunk-MLBXYFDU.js`: `GET /_api/alert/alerts`, `GET /_api/alert/alerts/triggered-alerts`.
 - [ ] Read instrument notes — `chunk-TMLMSX3T.js`: `GET /_api/user-note/`, `GET /_api/user-note/available-orderbooks`.
-- [ ] Read saved funds — `chunk-YIFHCSEA.js`: `GET /_api/fund-guide/get-favourites`; `chunk-C4SHODCR.js`: `GET /_api/fund-guide/is-favourite/{param}`.
+- [x] Read saved funds — `chunk-YIFHCSEA.js`: `GET /_api/fund-guide/get-favourites`; `chunk-C4SHODCR.js`: `GET /_api/fund-guide/is-favourite/{param}`.
 
 ## Orders and trading status (view only)
 

@@ -1,6 +1,7 @@
 import { AccountsClient } from './accounts/accounts-client.js';
 import { AuthClient } from './auth/auth-client.js';
 import type { AvanzaSession } from './auth/session.js';
+import { FundsClient } from './funds/funds-client.js';
 import { InstrumentsClient } from './instruments/instruments-client.js';
 import { HttpClient } from './internal/http-client.js';
 import { MarketClient } from './market/market-client.js';
@@ -22,6 +23,7 @@ export class AvanzaClient {
 
   public readonly accounts: AccountsClient;
   public readonly auth: AuthClient;
+  public readonly funds: FundsClient;
   public readonly instruments: InstrumentsClient;
   public readonly market: MarketClient;
   public readonly orders: OrdersClient;
@@ -51,6 +53,7 @@ export class AvanzaClient {
 
     this.accounts = new AccountsClient(context);
     this.auth = new AuthClient(context);
+    this.funds = new FundsClient(context);
     this.instruments = new InstrumentsClient(context);
     this.market = new MarketClient(context);
     this.orders = new OrdersClient(context);

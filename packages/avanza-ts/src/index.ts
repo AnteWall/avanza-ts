@@ -36,6 +36,33 @@ export {
   AvanzaError,
   AvanzaHttpError,
 } from './errors.js';
+export type { FundsClient } from './funds/funds-client.js';
+export type {
+  FundChartResponse,
+  FundDevelopment,
+  FundFilterCount,
+  FundInstrumentSearchResponse,
+  FundInstrumentType,
+  FundListOptions,
+  FundListResponse,
+  FundListView,
+  FundNamedValue,
+  FundOrderbook,
+  FundOrderbookDetails,
+  FundPieChartPoint,
+  FundPortfolioData,
+  FundPortfolioPoint,
+  FundProductInvolvement,
+  FundRatingView,
+  FundReference,
+  FundSearchResponse,
+  FundSearchView,
+  FundSortDirection,
+  FundSustainability,
+  FundTopListView,
+  FundTopTenOptions,
+  FundTopTenResponse,
+} from './funds/funds-types.js';
 export type { InstrumentsClient } from './instruments/instruments-client.js';
 export type {
   ListedProductFilter,

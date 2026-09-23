@@ -47,6 +47,9 @@
       "auth": {
         "description": "Manage authentication and the stored session"
       },
+      "funds": {
+        "description": "Search, list, and inspect funds"
+      },
       "instruments": {
         "description": "Screen stocks and other listed products, and manage stock settings"
       },

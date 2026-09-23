@@ -1,6 +1,8 @@
 import { Flags } from '@oclif/core';
 import type { ListedProductFilter, ScreenListedProductsOptions } from 'avanza-ts';
 
+import { parseJsonObject } from './json-array.js';
+
 export const listedProductFlags = {
   filter: Flags.string({ description: 'Filter as JSON; keys and values from the options command' }),
   offset: Flags.integer({ default: 0, min: 0 }),
@@ -16,15 +18,7 @@ export function listedProductOptions(flags: {
   'sort-field': string | undefined;
   order: string;
 }): ScreenListedProductsOptions {
-  let filter: unknown;
-  try {
-    filter = flags.filter === undefined ? {} : JSON.parse(flags.filter);
-  } catch {
-    filter = undefined;
-  }
-  if (typeof filter !== 'object' || filter === null || Array.isArray(filter)) {
-    throw new Error('--filter must be a JSON object.');
-  }
+  const filter = flags.filter === undefined ? {} : parseJsonObject(flags.filter, '--filter');
   return {
     filter: filter as ListedProductFilter,
     offset: flags.offset,

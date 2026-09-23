@@ -105,6 +105,32 @@ avanza market technical-analysis --orderbook-id 5269 --period one_month --points
 
 Use `market search` or `market isin` to find orderbook IDs. Available `--resolution` values depend on the period; `price-chart` returns them in `metadata.resolution`.
 
+## Funds (read only)
+
+These commands work without a session, except `funds favourites` and `funds is-favourite`. `funds search` and `funds list` send query-only POST requests; the rest send GET requests only:
+
+```sh
+avanza funds search --name zero
+avanza funds lookup --query zero
+avanza funds list --filter '{"riskFilter":["2"]}' --sort-field developmentOneYear --limit 10
+avanza funds top-ten --sort-field developmentOneYear --type BOTH
+avanza funds orderbook --orderbook-id 41567
+avanza funds details --orderbook-id 41567
+avanza funds holdings --orderbook-id 41567
+avanza funds regions --orderbook-id 41567
+avanza funds sectors --orderbook-id 41567
+avanza funds chart --orderbook-id 41567 --period three_years
+avanza funds chart-periods --orderbook-id 41567
+avanza funds reference --orderbook-id 41567
+avanza funds development --orderbook-id 41567
+avanza funds portfolio --orderbook-id 41567
+avanza funds sustainability --orderbook-id 41567
+avanza funds favourites
+avanza funds is-favourite --orderbook-id 41567
+```
+
+`funds list` returns `filterCounts`; use their `type` and `title` values to build `--filter` keys such as `riskFilter` or `companyFilter`.
+
 ## Stock screener
 
 ```sh
