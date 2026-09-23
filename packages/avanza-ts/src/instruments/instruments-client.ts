@@ -4,6 +4,7 @@ import type { ClientContext } from '../internal/client-context.js';
 import type {
   ListedProductFilterOptions,
   ScreenCertificatesResponse,
+  ScreenDerivativesResponse,
   ScreenEtfsResponse,
   ScreenListedProductsOptions,
   ScreenWarrantsResponse,
@@ -233,6 +234,18 @@ export class InstrumentsClient {
     return this.getListedFilterOptions('market-warrant-filter', signal);
   }
 
+  /** Filter keys: `underlyingInstruments`, `optionTypes`, `endDates`, `callIndicators`. */
+  public screenDerivatives(
+    options: ScreenListedProductsOptions = {},
+  ): Promise<ScreenDerivativesResponse> {
+    return this.screenListed(
+      'market-option-future-forward-list',
+      options,
+      'strikePrice',
+      '/matrix',
+    );
+  }
+
   public getOptionFutureForwardFilterOptions(
     signal?: AbortSignal,
   ): Promise<ListedProductFilterOptions> {
@@ -243,6 +256,7 @@ export class InstrumentsClient {
     service: string,
     options: ScreenListedProductsOptions,
     defaultSortField: string,
+    endpoint = '/',
   ): Promise<Response> {
     const offset = z
       .number()
@@ -260,7 +274,7 @@ export class InstrumentsClient {
     return this.context.http.request<Response>({
       access: 'optional',
       method: 'POST',
-      path: `/_api/${service}/`,
+      path: `/_api/${service}${endpoint}`,
       body: { filter: options.filter ?? {}, offset, limit, sortBy },
       signal: options.signal,
     });

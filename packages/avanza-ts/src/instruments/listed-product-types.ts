@@ -90,3 +90,51 @@ export type ScreenCertificatesResponse = ScreenListedProductsResponse<
   ScreenedCertificate
 >;
 export type ScreenWarrantsResponse = ScreenListedProductsResponse<'warrants', ScreenedWarrant>;
+
+export interface MatrixFutureForward {
+  readonly orderbookId: string;
+  readonly name: string;
+  readonly countryCode: string;
+  readonly endDate: string;
+  readonly hasPosition: boolean;
+  readonly lastPrice?: number;
+  readonly buyPrice?: number;
+  readonly sellPrice?: number;
+  readonly highestPrice?: number;
+  readonly lowestPrice?: number;
+  readonly change?: number;
+  readonly changePercent?: number;
+  readonly totalVolumeTraded?: number;
+}
+
+export interface MatrixOption {
+  readonly orderbookId: string;
+  readonly name: string;
+  readonly countryCode: string;
+  readonly hasPosition: boolean;
+  readonly strikePrice: number;
+  /** `CALL` or `PUT`. */
+  readonly callIndicator: string;
+}
+
+/**
+ * Futures, forwards, and put/call pairs for one underlying. The API defaults
+ * to OMX Stockholm 30 and the nearest expiries, and only sorts by `strikePrice`.
+ */
+export type ScreenDerivativesResponse = ScreenListedProductsResponse<
+  'futureForwards',
+  MatrixFutureForward
+> & {
+  readonly matchedOptions: readonly { readonly put?: MatrixOption; readonly call?: MatrixOption }[];
+  readonly underlyingInstrument: {
+    readonly orderbookId: string;
+    readonly name: string;
+    readonly instrumentType: string;
+    readonly countryCode: string;
+    readonly lastPrice: number;
+    readonly highestPrice: number;
+    readonly lowestPrice: number;
+    readonly change: number;
+    readonly changePercent: number;
+  };
+};

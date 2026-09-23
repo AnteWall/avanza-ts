@@ -232,6 +232,7 @@ avanza instruments certificates --filter '{"directions":["long"]}' --sort-field 
 avanza instruments warrant-options --json
 avanza instruments warrants --filter '{"subTypes":["turbo"]}' --offset 20
 avanza instruments derivative-options --json
+avanza instruments derivatives --filter '{"underlyingInstruments":["5269"]}' --limit 10
 ```
 
 After signing in, the following settings commands use the stored session:

@@ -212,7 +212,7 @@ describe('InstrumentsClient stock screener', () => {
 });
 
 describe('InstrumentsClient listed products', () => {
-  it('posts ETF, certificate, and warrant screens with per-product default sorting', async () => {
+  it('posts ETF, certificate, warrant, and derivative screens with per-product default sorting', async () => {
     const fetch = vi
       .fn<typeof globalThis.fetch>()
       .mockImplementation(async () => jsonResponse({ etfs: [] }));
@@ -221,6 +221,7 @@ describe('InstrumentsClient listed products', () => {
     await client.instruments.screenEtfs({ filter: { issuers: ['xact'] }, limit: 5 });
     await client.instruments.screenCertificates();
     await client.instruments.screenWarrants({ sortBy: { field: 'name', order: 'asc' } });
+    await client.instruments.screenDerivatives({ filter: { underlyingInstruments: ['5269'] } });
 
     const requests = fetch.mock.calls.map(([url, init]) => ({
       path: new URL(url.toString()).pathname,
@@ -252,6 +253,16 @@ describe('InstrumentsClient listed products', () => {
         path: '/_api/market-warrant-filter/',
         method: 'POST',
         body: { filter: {}, offset: 0, limit: 20, sortBy: { field: 'name', order: 'asc' } },
+      },
+      {
+        path: '/_api/market-option-future-forward-list/matrix',
+        method: 'POST',
+        body: {
+          filter: { underlyingInstruments: ['5269'] },
+          offset: 0,
+          limit: 20,
+          sortBy: { field: 'strikePrice', order: 'desc' },
+        },
       },
     ]);
   });
