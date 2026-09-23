@@ -159,6 +159,8 @@ avanza news calendar
 These commands use the stored session and send GET requests only:
 
 ```sh
+avanza orders list
+avanza orders deals
 avanza orders count
 avanza orders active-ids
 avanza orders bulk-orders --side BUY

@@ -42,6 +42,7 @@ Found by comparing with `Qluxzz/avanza` and `avanza-mcp`; these instrument pages
 - [x] Read instrument news, insider trades, and market maker charts — `GET /_api/market-guide/news/{param}`, `GET /_api/market-insider-transactions/transactions/{param}`, `GET /_api/price-chart/marketmaker/{param}`.
 - [x] Read fund guide and description — `GET /_api/fund-guide/guide/{param}`, `GET /_api/fund-guide/description/{param}`.
 - [x] List futures, forwards, and options — `POST /_api/market-option-future-forward-list/matrix` (query; sorts only by `strikePrice`).
+- [x] Read orders and deals — `GET /_api/trading/rest/orders`, `GET /_api/trading/rest/deals`. Only `id`, `account.urlParameterId`, and `orderId` are typed until a capture includes orders.
 
 ## Funds and market data
 

@@ -107,3 +107,25 @@ export interface StopLoss {
     readonly triggerOnMarketMakerQuote?: boolean;
   } | null;
 }
+
+/**
+ * Only `id` and `account.urlParameterId` are confirmed by the web app;
+ * captured responses had no orders yet.
+ */
+export type OrderItem = {
+  readonly id: string;
+  readonly account: { readonly urlParameterId?: string } & Readonly<Record<string, unknown>>;
+} & Readonly<Record<string, unknown>>;
+
+export interface OrdersResponse {
+  readonly orders: readonly OrderItem[];
+  readonly fundOrders: readonly OrderItem[];
+  readonly cancelledOrders: readonly OrderItem[];
+}
+
+export type DealItem = OrderItem & { readonly orderId?: string };
+
+export interface DealsResponse {
+  readonly deals: readonly DealItem[];
+  readonly fundDeals: readonly DealItem[];
+}

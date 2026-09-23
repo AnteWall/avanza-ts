@@ -19,6 +19,8 @@ it('sends only GET requests with encoded IDs and filters', async () => {
   const fetch = vi.fn<typeof globalThis.fetch>().mockImplementation(async () => jsonResponse({}));
   const { orders } = new AvanzaClient({ baseUrl: 'https://example.test', fetch, session });
   const calls = [
+    [() => orders.orders(), '/_api/trading/rest/orders'],
+    [() => orders.deals(), '/_api/trading/rest/deals'],
     [() => orders.activeOrderIds(), '/_api/trading/rest/activeorderids'],
     [() => orders.orderCount(), '/_api/trading/rest/ordercount'],
     [() => orders.bulkOrders(), '/_api/trading/bulk/order/fetch'],

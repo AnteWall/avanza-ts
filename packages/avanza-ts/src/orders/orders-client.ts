@@ -5,9 +5,11 @@ import type {
   BulkOrder,
   BulkOrderOptions,
   BulkOrdersResponse,
+  DealsResponse,
   ExchangeRate,
   MarketStatus,
   OrderCount,
+  OrdersResponse,
   StopLoss,
   StopLossOptions,
   TradingOrderbook,
@@ -16,6 +18,16 @@ import type {
 /** Read-only order and trading status endpoints. All require a session. */
 export class OrdersClient {
   public constructor(protected readonly context: ClientContext) {}
+
+  /** Open, fund, and cancelled orders. */
+  public orders(signal?: AbortSignal): Promise<OrdersResponse> {
+    return this.get('/trading/rest/orders', signal);
+  }
+
+  /** Today's executed deals, including fund deals. */
+  public deals(signal?: AbortSignal): Promise<DealsResponse> {
+    return this.get('/trading/rest/deals', signal);
+  }
 
   public activeOrderIds(signal?: AbortSignal): Promise<readonly string[]> {
     return this.get('/trading/rest/activeorderids', signal);
