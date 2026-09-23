@@ -131,6 +131,18 @@ avanza funds is-favourite --orderbook-id 41567
 
 `funds list` returns `filterCounts`; use their `type` and `title` values to build `--filter` keys such as `riskFilter` or `companyFilter`.
 
+## News and events (read only)
+
+`news article` works without a session; `news feed` and `news calendar` use the stored session. All send GET requests only:
+
+```sh
+avanza news feed --limit 5 --max-days 7
+avanza news article --url https://www.placera.se/telegram/avanza/<id>
+avanza news calendar
+```
+
+`news article` takes the `url` of a `news feed` item.
+
 ## Stock screener
 
 ```sh

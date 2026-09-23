@@ -5,6 +5,7 @@ import { FundsClient } from './funds/funds-client.js';
 import { InstrumentsClient } from './instruments/instruments-client.js';
 import { HttpClient } from './internal/http-client.js';
 import { MarketClient } from './market/market-client.js';
+import { NewsClient } from './news/news-client.js';
 import { OrdersClient } from './orders/orders-client.js';
 import { PerformanceClient } from './performance/performance-client.js';
 import { PositionsClient } from './positions/positions-client.js';
@@ -26,6 +27,7 @@ export class AvanzaClient {
   public readonly funds: FundsClient;
   public readonly instruments: InstrumentsClient;
   public readonly market: MarketClient;
+  public readonly news: NewsClient;
   public readonly orders: OrdersClient;
   public readonly performance: PerformanceClient;
   public readonly positions: PositionsClient;
@@ -56,6 +58,7 @@ export class AvanzaClient {
     this.funds = new FundsClient(context);
     this.instruments = new InstrumentsClient(context);
     this.market = new MarketClient(context);
+    this.news = new NewsClient(context);
     this.orders = new OrdersClient(context);
     this.performance = new PerformanceClient(context);
     this.positions = new PositionsClient(context);

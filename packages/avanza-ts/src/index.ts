@@ -146,6 +146,20 @@ export type {
   ShortSellingResponse,
   StockQuote,
 } from './market/market-types.js';
+export type { NewsClient } from './news/news-client.js';
+export type {
+  CalendarDividend,
+  CalendarMonth,
+  CalendarOrderbook,
+  CalendarReport,
+  CalendarResponse,
+  NewsArticle,
+  NewsArticleOrderbook,
+  NewsFeedItem,
+  NewsFeedOptions,
+  NewsFeedOrderbook,
+  NewsFeedResponse,
+} from './news/news-types.js';
 export type { OrdersClient } from './orders/orders-client.js';
 export type { PerformanceClient } from './performance/performance-client.js';
 export { performancePeriods } from './performance/performance-types.js';

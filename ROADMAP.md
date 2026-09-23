@@ -40,7 +40,7 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 - [x] Inspect funds — `chunk-N7LWZPU6.js`: `GET /_api/fund-guide/fund-orderbook/{param}`; `chunk-W6TONNNX.js`: `GET /_api/fund-guide/fund-orderbook/details/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/holdings/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/regions/{param}`, `GET /_api/fund-guide/fund-orderbook/piechart/sectors/{param}`.
 - [x] Read fund history — `chunk-YIFHCSEA.js`: `GET /_api/fund-guide/chart/{param}/{param}`, `GET /_api/fund-guide/chart/timeperiods/{param}`; `chunk-JAHCAIGM.js`: `GET /_api/fund-reference/reference/{param}`, `GET /_api/fund-reference/development/{param}`, `GET /_api/fund-reference/portfolio-data/{param}`, `GET /_api/fund-reference/sustainability/{param}`.
 - [x] Read short-selling and dividend events — `chunk-XQ4J5HE2.js`: `GET /_api/market-guide/short-selling/{param}`; `chunk-T4MDGP4V.js`: `GET /_api/account-company-events/dividends/upcoming{param}`.
-- [ ] Read news and events — `chunk-4GEUDVPB.js`: `GET /_api/news/article{param}`; `chunk-BBMXQDGC.js`: `GET /_api/customer-calendar/calendar`; `chunk-N4XFAAIZ.js`: `GET /_api/customer-news-feed-v2/news`.
+- [x] Read news and events — `chunk-4GEUDVPB.js`: `GET /_api/news/article{param}`; `chunk-BBMXQDGC.js`: `GET /_api/customer-calendar/calendar`; `chunk-N4XFAAIZ.js`: `GET /_api/customer-news-feed-v2/news`.
 
 ## Personal collections (view only)
 

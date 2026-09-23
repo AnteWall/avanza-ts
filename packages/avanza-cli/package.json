@@ -56,6 +56,9 @@
       "market": {
         "description": "Search instruments and read quotes, charts, indices, and ETFs"
       },
+      "news": {
+        "description": "Read news articles, the personal news feed, and the event calendar"
+      },
       "performance": {
         "description": "Read account performance and total values"
       },
