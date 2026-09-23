@@ -27,11 +27,11 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 
 ## Market data and instruments
 
-- [ ] Search instruments — `chunk-QKYJGAHG.js`: `POST /_api/search/filtered-search` (query); `chunk-H7BPVWK5.js`: `GET /_api/market-guide/instrument/isin/{param}`.
-- [ ] Read stock prices and trading data — `chunk-5VW7N5HI.js`: `GET /_api/market-guide/stock/{param}/quote`, `GET /_api/market-guide/stock/{param}/orderdepth`, `GET /_api/market-guide/stock/{param}/trades`, `GET /_api/market-guide/stock/{param}/broker-trade-summaries`; `chunk-OHNVFBUW.js`: `GET /_api/trading-critical/rest/marketdata/{param}`.
-- [ ] Read market index and ETF data — `main-UH6CRINT.js`: `GET /_api/market-index/header-index`; `chunk-5VW7N5HI.js`: `GET /_api/market-index/{param}/constituents`; `chunk-ZRTIIPYA.js`: `GET /_api/market-etf/{param}`, `GET /_api/market-etf/{param}/details`.
-- [ ] Inspect market lists and charts — `chunk-SZCPO6E2.js`: `GET /_api/market-overview/overviews`; `chunk-SO75IO2W.js`: `GET /_api/market-overview/chart/{param}/{param}?raw=false`, `GET /_api/market-overview/chart/timeperiods/{param}`.
-- [ ] Read price and event history — `chunk-2CNBJ3C2.js`: `GET /_api/price-chart/stock/{param}`, `GET /_api/price-chart/stock/{param}/company-events`, `GET /_api/price-chart/stock/{param}/insider-transactions`, `GET /_api/price-chart/stock/{param}/ta/`.
+- [x] Search instruments — `chunk-QKYJGAHG.js`: `POST /_api/search/filtered-search` (query); `chunk-H7BPVWK5.js`: `GET /_api/market-guide/instrument/isin/{param}`.
+- [x] Read stock prices and trading data — `chunk-5VW7N5HI.js`: `GET /_api/market-guide/stock/{param}/quote`, `GET /_api/market-guide/stock/{param}/orderdepth`, `GET /_api/market-guide/stock/{param}/trades`, `GET /_api/market-guide/stock/{param}/broker-trade-summaries`; `chunk-OHNVFBUW.js`: `GET /_api/trading-critical/rest/marketdata/{param}`.
+- [x] Read market index and ETF data — `main-UH6CRINT.js`: `GET /_api/market-index/header-index`; `chunk-5VW7N5HI.js`: `GET /_api/market-index/{param}/constituents`; `chunk-ZRTIIPYA.js`: `GET /_api/market-etf/{param}`, `GET /_api/market-etf/{param}/details`.
+- [x] Inspect market lists and charts — `chunk-SZCPO6E2.js`: `GET /_api/market-overview/overviews`; `chunk-SO75IO2W.js`: `GET /_api/market-overview/chart/{param}/{param}?raw=false`, `GET /_api/market-overview/chart/timeperiods/{param}`.
+- [x] Read price and event history — `chunk-2CNBJ3C2.js`: `GET /_api/price-chart/stock/{param}`, `GET /_api/price-chart/stock/{param}/company-events`, `GET /_api/price-chart/stock/{param}/insider-transactions`, `GET /_api/price-chart/stock/{param}/ta/`.
 - [ ] Explore other listed products — `chunk-SO75IO2W.js`: `GET /_api/market-etf-filter/filter-options`, `POST /_api/market-etf-filter/` (query); `chunk-U7BW24O3.js`: `GET /_api/market-certificate-filter/filter-options`, `POST /_api/market-certificate-filter/` (query); `chunk-VJC23FBK.js`: `GET /_api/market-warrant-filter/filter-options`, `POST /_api/market-warrant-filter/` (query); `chunk-VE24T3KN.js`: `GET /_api/market-option-future-forward-list/filter-options`.
 
 ## Funds and market data

@@ -50,6 +50,9 @@
       "instruments": {
         "description": "Screen stocks and manage stock settings"
       },
+      "market": {
+        "description": "Search instruments and read quotes, charts, indices, and ETFs"
+      },
       "performance": {
         "description": "Read account performance and total values"
       },

@@ -65,6 +65,44 @@ export type {
   ThemeStocksResponse,
 } from './instruments/stock-screener-types.js';
 export type { MarketClient } from './market/market-client.js';
+export { chartPeriods, chartResolutions, searchInstrumentTypes } from './market/market-types.js';
+export type {
+  BrokerTradeSummary,
+  ChartPeriod,
+  ChartPeriodChange,
+  ChartResolution,
+  CompanyEvent,
+  EtfDetailsResponse,
+  EtfResponse,
+  EtfUnderlying,
+  Exposures,
+  HeaderIndex,
+  HeaderIndicesResponse,
+  IndexConstituent,
+  InsiderTransactionSummary,
+  InstrumentByIsinResponse,
+  InstrumentLink,
+  Listing,
+  MarketDataResponse,
+  MarketOverview,
+  MarketOverviewWidget,
+  MarketTrade,
+  Ohlc,
+  OrderDepth,
+  OrderDepthLevel,
+  OrderDepthSide,
+  OverviewChartResponse,
+  PriceChartOptions,
+  PriceChartPeriod,
+  PriceChartResponse,
+  SearchHit,
+  SearchHitPrice,
+  SearchHitSector,
+  SearchInstrumentType,
+  SearchOptions,
+  SearchResponse,
+  StockQuote,
+} from './market/market-types.js';
 export type { OrdersClient } from './orders/orders-client.js';
 export type { PerformanceClient } from './performance/performance-client.js';
 export { performancePeriods } from './performance/performance-types.js';

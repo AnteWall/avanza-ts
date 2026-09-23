@@ -75,6 +75,34 @@ avanza transactions dividends --include-closed
 
 Omitting `--account-ids` includes all accounts. `transactions list` defaults to the last year. `--fixture` includes raw personal balances and transactions; keep captures private and anonymize before tracking them.
 
+## Market data (read only)
+
+These commands work without a session, except `market data`, which uses the stored session. `market search` sends a query-only POST request; the rest send GET requests only:
+
+```sh
+avanza market search --query volvo --types STOCK,EXCHANGE_TRADED_FUND --limit 5
+avanza market isin --isin SE0000115446
+avanza market quote --orderbook-id 5269
+avanza market order-depth --orderbook-id 5269
+avanza market trades --orderbook-id 5269
+avanza market broker-trades --orderbook-id 5269
+avanza market data --orderbook-id 5269
+avanza market indices
+avanza market constituents --orderbook-id 19002
+avanza market etf --orderbook-id 5510
+avanza market etf-details --orderbook-id 5510
+avanza market overviews
+avanza market chart --orderbook-id 5269 --period one_month
+avanza market chart-periods --orderbook-id 5269
+avanza market price-chart --orderbook-id 5269 --period one_year --resolution week
+avanza market price-chart --orderbook-id 5269 --from 2026-01-01 --to 2026-06-30
+avanza market company-events --orderbook-id 5269
+avanza market insider-transactions --orderbook-id 5269
+avanza market technical-analysis --orderbook-id 5269 --period one_month --points 20
+```
+
+Use `market search` or `market isin` to find orderbook IDs. Available `--resolution` values depend on the period; `price-chart` returns them in `metadata.resolution`.
+
 ## Stock screener
 
 ```sh
