@@ -44,9 +44,9 @@ Implemented routes are available in the SDK and CLI as GET-only calls with named
 
 ## Personal collections (view only)
 
-- [ ] View watchlists — `chunk-C2ZR4TQN.js`: `GET /_api/watchlist/watchlist`, `POST /_api/watchlist/data/by-id`, `POST /_api/watchlist/news` (the POST calls request watchlist data).
-- [ ] Read existing alerts — `chunk-MLBXYFDU.js`: `GET /_api/alert/alerts`, `GET /_api/alert/alerts/triggered-alerts`.
-- [ ] Read instrument notes — `chunk-TMLMSX3T.js`: `GET /_api/user-note/`, `GET /_api/user-note/available-orderbooks`.
+- [x] View watchlists — `chunk-C2ZR4TQN.js`: `GET /_api/watchlist/watchlist`, `POST /_api/watchlist/data/by-id`, `POST /_api/watchlist/news` (the POST calls request watchlist data).
+- [x] Read existing alerts — `chunk-MLBXYFDU.js`: `GET /_api/alert/alerts`, `GET /_api/alert/alerts/triggered-alerts`.
+- [x] Read instrument notes — `chunk-TMLMSX3T.js`: `GET /_api/user-note/`, `GET /_api/user-note/available-orderbooks`.
 - [x] Read saved funds — `chunk-YIFHCSEA.js`: `GET /_api/fund-guide/get-favourites`; `chunk-C4SHODCR.js`: `GET /_api/fund-guide/is-favourite/{param}`.
 
 ## Orders and trading status (view only)

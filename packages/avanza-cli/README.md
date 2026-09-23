@@ -159,6 +159,22 @@ avanza orders exchange-rates
 avanza orders market-status --country US --date 2026-09-23
 ```
 
+## Watchlists, alerts, and notes (read only)
+
+These commands use the stored session. `watchlist-data` and `watchlist-news` send query-only POST requests; the rest send GET requests only:
+
+```sh
+avanza collections watchlists
+avanza collections watchlist-data --watchlist-id <id> --data-points LAST_PRICE,ONE_YEAR_PERFORMANCE,NUMBER_OF_OWNERS
+avanza collections watchlist-news --watchlist-id <id>
+avanza collections alerts
+avanza collections triggered-alerts
+avanza collections notes --orderbook-id 5269
+avanza collections note-orderbooks
+```
+
+`watchlist-data` and `watchlist-news` use every instrument in the watchlist unless `--orderbook-ids` narrows it. `--fixture` captures include personal watchlists and notes; keep them private.
+
 ## Stock screener
 
 ```sh

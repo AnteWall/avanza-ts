@@ -28,6 +28,21 @@ export type {
 } from './auth/auth-types.js';
 export type { BankIdAuthAttempt } from './auth/bankid-auth-attempt.js';
 export type { AvanzaCookie, AvanzaSession, BankIdSession, TotpSession } from './auth/session.js';
+export type { CollectionsClient } from './collections/collections-client.js';
+export { watchlistDataPoints } from './collections/collections-types.js';
+export type {
+  Alert,
+  AlertsResponse,
+  Note,
+  NoteOrderbook,
+  Watchlist,
+  WatchlistDataPoint,
+  WatchlistNewsItem,
+  WatchlistNewsOptions,
+  WatchlistNewsResponse,
+  WatchlistOrderbook,
+  WatchlistRow,
+} from './collections/collections-types.js';
 export { AvanzaClient, type AvanzaClientOptions } from './client.js';
 export {
   AvanzaAuthenticationError,

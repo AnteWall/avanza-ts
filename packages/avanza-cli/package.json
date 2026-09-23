@@ -47,6 +47,9 @@
       "auth": {
         "description": "Manage authentication and the stored session"
       },
+      "collections": {
+        "description": "Read watchlists, alerts, and instrument notes"
+      },
       "funds": {
         "description": "Search, list, and inspect funds"
       },
