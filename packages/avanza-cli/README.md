@@ -40,6 +40,8 @@ after use.
 ```sh
 avanza instruments stocks --limit 10 --sort-field numberOfOwners --order desc --json
 avanza instruments stocks --filter '{"marketPlaces":["se"],"sectors":["38"]}' --offset 20
+avanza instruments theme-stocks --orderbook-ids 5361,1234 --sort-field numberOfOwners --order desc --json
+avanza instruments gainers-losers --filter '{"marketPlaces":["se"]}' --json
 avanza instruments stock-options --json
 avanza instruments sectors --popular --json
 avanza instruments sectors --json

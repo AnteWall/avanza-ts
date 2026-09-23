@@ -26,6 +26,8 @@ export {
   stockFilterSchema,
 } from './instruments/stock-screener-schemas.js';
 export type {
+  GainersLosersResponse,
+  MoverStock,
   PopularStockSector,
   SavedStockFilter,
   SavedStockFiltersResponse,
@@ -43,6 +45,7 @@ export type {
   StockSector,
   StockSectorGroup,
   StockSort,
+  ThemeStocksResponse,
 } from './instruments/stock-screener-types.js';
 export type { MarketClient } from './market/market-client.js';
 export type { OrdersClient } from './orders/orders-client.js';

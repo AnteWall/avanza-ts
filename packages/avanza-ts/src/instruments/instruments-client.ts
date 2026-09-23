@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import type { ClientContext } from '../internal/client-context.js';
 import {
+  gainersLosersResponseSchema,
   savedFiltersSchema,
   screenerMetadataSchema,
   screenStocksResponseSchema,
@@ -10,18 +11,24 @@ import {
   stockFilterOptionsSchema,
   stockFilterSchema,
   stockSectorGroupsSchema,
+  stockSortSchema,
+  themeStocksResponseSchema,
 } from './stock-screener-schemas.js';
 import type {
+  GainersLosersResponse,
   PopularStockSector,
   SavedStockFilter,
   SavedStockFiltersResponse,
   ScreenStocksOptions,
   ScreenStocksResponse,
+  StockFilter,
   StockFilterOptions,
   StockScreenerMetadataResponse,
   StockScreenerTab,
   StockScreenerTabsResponse,
   StockSectorGroup,
+  StockSort,
+  ThemeStocksResponse,
 } from './stock-screener-types.js';
 
 const STOCKS_PATH = '/_api/market-stock-filter/stocks';
@@ -43,9 +50,9 @@ export class InstrumentsClient {
       .int()
       .positive()
       .parse(options.limit ?? 20);
-    const sortBy = z
-      .object({ field: z.string().min(1), order: z.enum(['asc', 'desc']) })
-      .parse(options.sortBy ?? { field: 'numberOfOwners', order: 'desc' });
+    const sortBy = stockSortSchema.parse(
+      options.sortBy ?? { field: 'numberOfOwners', order: 'desc' },
+    );
     const response = await this.context.http.request<unknown>({
       access: 'optional',
       method: 'POST',
@@ -54,6 +61,40 @@ export class InstrumentsClient {
       signal: options.signal,
     });
     return screenStocksResponseSchema.parse(response);
+  }
+
+  public async getThemeStocks(
+    orderbookIds: readonly string[],
+    sortBy: StockSort,
+    signal?: AbortSignal,
+  ): Promise<ThemeStocksResponse> {
+    const body = {
+      orderbookIds: z.array(z.string().min(1)).min(1).parse(orderbookIds),
+      sortBy: stockSortSchema.parse(sortBy),
+    };
+    const response = await this.context.http.request<unknown>({
+      access: 'optional',
+      method: 'POST',
+      path: `${STOCKS_PATH}/theme-stocks`,
+      body,
+      signal,
+    });
+    return themeStocksResponseSchema.parse(response);
+  }
+
+  public async getGainersLosers(
+    filter: StockFilter = {},
+    signal?: AbortSignal,
+  ): Promise<GainersLosersResponse> {
+    const body = { filter: stockFilterSchema.parse({ sectors: [], marketPlaces: [], ...filter }) };
+    const response = await this.context.http.request<unknown>({
+      access: 'optional',
+      method: 'POST',
+      path: `${STOCKS_PATH}/gainers-losers`,
+      body,
+      signal,
+    });
+    return gainersLosersResponseSchema.parse(response);
   }
 
   public async getStockFilterOptions(signal?: AbortSignal): Promise<StockFilterOptions> {

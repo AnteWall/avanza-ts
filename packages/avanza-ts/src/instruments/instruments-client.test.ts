@@ -72,6 +72,56 @@ describe('InstrumentsClient stock screener', () => {
     expect(fetch).toHaveBeenCalledOnce();
   });
 
+  it('queries themed stocks with orderbook IDs and sorting', async () => {
+    const fixture = loadHttpFixture('instruments/fixtures/theme-stocks.json');
+    const sortBy = { field: 'numberOfOwners', order: 'desc' } as const;
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockResolvedValue(httpFixtureResponse('instruments/fixtures/theme-stocks.json'));
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await expect(client.instruments.getThemeStocks(['5361'], sortBy)).resolves.toEqual(
+      fixture.response.body,
+    );
+    expect(new URL(fetch.mock.calls[0]![0].toString()).pathname).toBe(fixture.request.path);
+    expect(fetch.mock.calls[0]![1]?.method).toBe(fixture.request.method);
+    expect(JSON.parse(String(fetch.mock.calls[0]![1]?.body))).toEqual(fixture.request.body);
+
+    await expect(client.instruments.getThemeStocks([], sortBy)).rejects.toThrow();
+    expect(fetch).toHaveBeenCalledOnce();
+  });
+
+  it('queries movers with a stock filter and validates the lightweight response', async () => {
+    const fixture = loadHttpFixture('instruments/fixtures/gainers-losers.json');
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockResolvedValueOnce(httpFixtureResponse('instruments/fixtures/gainers-losers.json'))
+      .mockResolvedValueOnce(jsonResponse({ gainers: [], losers: [] }));
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await expect(client.instruments.getGainersLosers()).resolves.toEqual(fixture.response.body);
+    expect(new URL(fetch.mock.calls[0]![0].toString()).pathname).toBe(fixture.request.path);
+    expect(fetch.mock.calls[0]![1]?.method).toBe(fixture.request.method);
+    expect(JSON.parse(String(fetch.mock.calls[0]![1]?.body))).toEqual(fixture.request.body);
+    await expect(
+      client.instruments.getGainersLosers({ sectors: 'bad' } as never),
+    ).rejects.toThrow();
+    expect(fetch).toHaveBeenCalledOnce();
+    await expect(client.instruments.getGainersLosers()).rejects.toThrow();
+  });
+
+  it('forwards a custom movers filter', async () => {
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockResolvedValue(httpFixtureResponse('instruments/fixtures/gainers-losers.json'));
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await client.instruments.getGainersLosers({ marketPlaces: ['se'] });
+    expect(JSON.parse(String(fetch.mock.calls[0]![1]?.body))).toEqual({
+      filter: { sectors: [], marketPlaces: ['se'] },
+    });
+  });
+
   it('routes public option and sector requests', async () => {
     const fetch = vi
       .fn<typeof globalThis.fetch>()

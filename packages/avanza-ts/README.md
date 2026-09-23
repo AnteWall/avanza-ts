@@ -44,6 +44,11 @@ const { stocks, totalNumberOfOrderbooks } = await client.instruments.screenStock
 });
 
 const options = await client.instruments.getStockFilterOptions();
+const theme = await client.instruments.getThemeStocks(['5361', '1234'], {
+  field: 'numberOfOwners',
+  order: 'desc',
+});
+const movers = await client.instruments.getGainersLosers({ marketPlaces: ['se'] });
 ```
 
 The response includes pagination, filter options, and per-stock prices, performance, ownership,

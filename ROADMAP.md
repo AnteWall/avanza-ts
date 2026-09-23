@@ -8,7 +8,7 @@ Only retrieval operations and POSTs that **query** data belong here. Do not add 
 
 - [x] Screen stocks — `chunk-KZLALZVV.js`: `POST /_api/market-stock-filter/stocks` (query), `GET /_api/market-stock-filter/stocks/filter-options`, `GET /_api/market-stock-filter/stocks/metadata`.
 - [x] List stock sectors — `chunk-BUEBFRRE.js`: `GET /_api/market-stock-filter/sectors/all`, `GET /_api/market-stock-filter/sectors/popular`.
-- [ ] Query themed stocks and movers — `chunk-KZLALZVV.js`: `POST /_api/market-stock-filter/stocks/theme-stocks`, `POST /_api/market-stock-filter/stocks/gainers-losers` (both query data).
+- [x] Query themed stocks and movers — `chunk-KZLALZVV.js`: `POST /_api/market-stock-filter/stocks/theme-stocks`, `POST /_api/market-stock-filter/stocks/gainers-losers` (both query data).
 
 ## Accounts and positions
 

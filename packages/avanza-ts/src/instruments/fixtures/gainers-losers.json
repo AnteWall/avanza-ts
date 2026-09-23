@@ -1,0 +1,43 @@
+{
+  "request": {
+    "body": { "filter": { "sectors": [], "marketPlaces": [] } },
+    "method": "POST",
+    "path": "/_api/market-stock-filter/stocks/gainers-losers"
+  },
+  "response": {
+    "body": {
+      "gainers": [
+        {
+          "orderbookId": "516523",
+          "type": "STOCK",
+          "name": "Jaguar Health",
+          "countryCode": "US",
+          "currency": "USD",
+          "hasPosition": false,
+          "lastPrice": 34.46,
+          "oneDayChangePercent": 11.9064,
+          "totalValueTraded": 664549381.7174343,
+          "lastPriceUpdated": 1790107200000
+        }
+      ],
+      "losers": [
+        {
+          "orderbookId": "1118467",
+          "type": "STOCK",
+          "name": "SOS A",
+          "countryCode": "US",
+          "currency": "USD",
+          "hasPosition": false,
+          "lastPrice": 0.3486,
+          "oneDayChangePercent": -0.5462,
+          "totalValueTraded": 537147.58,
+          "lastPriceUpdated": 1790107197000
+        }
+      ],
+      "numberOfGainers": 4661,
+      "numberOfLosers": 4067,
+      "numberOfNeutrals": 2280
+    },
+    "status": 200
+  }
+}

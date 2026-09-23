@@ -1,10 +1,17 @@
 import { z } from 'zod';
 
 import type {
+  GainersLosersResponse,
   ScreenStocksResponse,
   StockFilter,
   StockFilterOptions,
+  ThemeStocksResponse,
 } from './stock-screener-types.js';
+
+export const stockSortSchema = z.object({
+  field: z.string().min(1),
+  order: z.enum(['asc', 'desc']),
+});
 
 const range = z.looseObject({ minValue: z.number().optional(), maxValue: z.number().optional() });
 const rangeFields = [
@@ -193,9 +200,35 @@ export const screenStocksResponseSchema: z.ZodType<ScreenStocksResponse> = z.loo
   stocks: z.array(stock),
   filter: stockFilterSchema,
   pagination: z.object({ offset: z.number(), limit: z.number() }),
-  sortBy: z.object({ field: z.string(), order: z.enum(['asc', 'desc']) }),
+  sortBy: stockSortSchema,
   totalNumberOfOrderbooks: z.number(),
   filterOptions: stockFilterOptionsSchema,
+});
+
+export const themeStocksResponseSchema: z.ZodType<ThemeStocksResponse> = z.looseObject({
+  stocks: z.array(stock),
+  sortBy: stockSortSchema,
+});
+
+const moverStock = z.looseObject({
+  orderbookId: z.string(),
+  type: z.string(),
+  name: z.string(),
+  countryCode: z.string(),
+  currency: z.string(),
+  hasPosition: z.boolean().optional(),
+  lastPrice: z.number().optional(),
+  oneDayChangePercent: z.number().optional(),
+  totalValueTraded: z.number().optional(),
+  lastPriceUpdated: z.number().optional(),
+});
+
+export const gainersLosersResponseSchema: z.ZodType<GainersLosersResponse> = z.looseObject({
+  gainers: z.array(moverStock),
+  losers: z.array(moverStock),
+  numberOfGainers: z.number(),
+  numberOfLosers: z.number(),
+  numberOfNeutrals: z.number(),
 });
 
 export const savedFiltersSchema = z.looseObject({

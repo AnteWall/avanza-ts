@@ -7,11 +7,13 @@ vi.mock('../../services/session/session-store.js', () => mocks);
 
 import FiltersList from './filters/list.js';
 import FiltersSave from './filters/save.js';
+import GainersLosers from './gainers-losers.js';
 import Metadata from './metadata.js';
 import Stocks from './stocks.js';
 import TabsDelete from './tabs/delete.js';
 import TabsList from './tabs/list.js';
 import TabsSave from './tabs/save.js';
+import ThemeStocks from './theme-stocks.js';
 
 const packageRoot = resolve(import.meta.dirname, '../../..');
 
@@ -22,6 +24,109 @@ afterEach(() => {
 });
 
 describe('stock screener CLI', () => {
+  it('captures fixture requests and responses for themed stocks and movers', async () => {
+    const themeBody = { stocks: [], sortBy: { field: 'numberOfOwners', order: 'desc' } };
+    const moversBody = {
+      gainers: [],
+      losers: [],
+      numberOfGainers: 0,
+      numberOfLosers: 0,
+      numberOfNeutrals: 0,
+    };
+    const fetch = vi
+      .spyOn(globalThis, 'fetch')
+      .mockImplementation(
+        async (url) =>
+          new Response(
+            JSON.stringify(
+              new URL(url.toString()).pathname.endsWith('/theme-stocks') ? themeBody : moversBody,
+            ),
+            { headers: { 'Content-Type': 'application/json' } },
+          ),
+      );
+    const themeLog = vi.spyOn(ThemeStocks.prototype, 'log').mockImplementation(() => undefined);
+    const moversLog = vi.spyOn(GainersLosers.prototype, 'log').mockImplementation(() => undefined);
+
+    await ThemeStocks.run(['--orderbook-ids', '5361', '--fixture'], { root: packageRoot });
+    await GainersLosers.run(['--fixture'], { root: packageRoot });
+
+    expect(JSON.parse(themeLog.mock.calls[0]![0]!)).toEqual({
+      request: {
+        method: 'POST',
+        path: '/_api/market-stock-filter/stocks/theme-stocks',
+        body: { orderbookIds: ['5361'], sortBy: themeBody.sortBy },
+      },
+      response: { status: 200, body: themeBody },
+    });
+    expect(JSON.parse(moversLog.mock.calls[0]![0]!)).toEqual({
+      request: {
+        method: 'POST',
+        path: '/_api/market-stock-filter/stocks/gainers-losers',
+        body: { filter: { sectors: [], marketPlaces: [] } },
+      },
+      response: { status: 200, body: moversBody },
+    });
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+  it('routes public themed stocks and movers queries with their request bodies', async () => {
+    const fetch = vi.spyOn(globalThis, 'fetch').mockImplementation(
+      async (url) =>
+        new Response(
+          JSON.stringify(
+            new URL(url.toString()).pathname.endsWith('/theme-stocks')
+              ? { stocks: [], sortBy: { field: 'lastPrice', order: 'asc' } }
+              : {
+                  gainers: [],
+                  losers: [],
+                  numberOfGainers: 0,
+                  numberOfLosers: 0,
+                  numberOfNeutrals: 0,
+                },
+          ),
+          { headers: { 'Content-Type': 'application/json' } },
+        ),
+    );
+    vi.spyOn(ThemeStocks.prototype, 'log').mockImplementation(() => undefined);
+    vi.spyOn(GainersLosers.prototype, 'log').mockImplementation(() => undefined);
+
+    await ThemeStocks.run(
+      ['--orderbook-ids', '10001, 10002', '--sort-field', 'lastPrice', '--order', 'asc'],
+      { root: packageRoot },
+    );
+    await GainersLosers.run(['--filter', '{"marketPlaces":["se"]}'], { root: packageRoot });
+
+    expect(
+      fetch.mock.calls.map(([url, init]) => [
+        new URL(url.toString()).pathname,
+        init?.method,
+        JSON.parse(String(init?.body)),
+      ]),
+    ).toEqual([
+      [
+        '/_api/market-stock-filter/stocks/theme-stocks',
+        'POST',
+        { orderbookIds: ['10001', '10002'], sortBy: { field: 'lastPrice', order: 'asc' } },
+      ],
+      [
+        '/_api/market-stock-filter/stocks/gainers-losers',
+        'POST',
+        { filter: { sectors: [], marketPlaces: ['se'] } },
+      ],
+    ]);
+  });
+
+  it('rejects invalid query flags before fetching', async () => {
+    const fetch = vi.spyOn(globalThis, 'fetch');
+    await expect(
+      ThemeStocks.run(['--orderbook-ids', '10001,'], { root: packageRoot }),
+    ).rejects.toThrow('--orderbook-ids must contain nonempty IDs');
+    await expect(
+      GainersLosers.run(['--filter', '{"sectors":"bad"}'], { root: packageRoot }),
+    ).rejects.toThrow('--filter must be a JSON object');
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it('captures the request and response for a stock search fixture', async () => {
     mocks.loadSession.mockResolvedValue(undefined);
     const body = {

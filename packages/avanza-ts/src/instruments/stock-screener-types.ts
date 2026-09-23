@@ -146,6 +146,33 @@ export interface ScreenStocksResponse {
   readonly filterOptions: StockFilterOptions;
 }
 
+export interface ThemeStocksResponse {
+  readonly stocks: readonly ScreenedStock[];
+  readonly sortBy: StockSort;
+}
+
+export interface MoverStock {
+  readonly orderbookId: string;
+  readonly type: string;
+  readonly name: string;
+  readonly countryCode: string;
+  readonly currency: string;
+  readonly hasPosition?: boolean | undefined;
+  readonly lastPrice?: number | undefined;
+  readonly oneDayChangePercent?: number | undefined;
+  readonly totalValueTraded?: number | undefined;
+  readonly lastPriceUpdated?: number | undefined;
+  readonly [key: string]: unknown;
+}
+
+export interface GainersLosersResponse {
+  readonly gainers: readonly MoverStock[];
+  readonly losers: readonly MoverStock[];
+  readonly numberOfGainers: number;
+  readonly numberOfLosers: number;
+  readonly numberOfNeutrals: number;
+}
+
 export interface StockScreenerTab {
   readonly name: string;
   readonly columns: readonly string[];
