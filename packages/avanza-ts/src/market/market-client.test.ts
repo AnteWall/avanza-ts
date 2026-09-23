@@ -44,6 +44,7 @@ describe('MarketClient', () => {
       '/market-guide/stock/5269/broker-trade-summaries',
       {},
     ],
+    ['short selling', (m) => m.shortSelling('5269'), '/market-guide/short-selling/5269', {}],
     ['header indices', (m) => m.headerIndices(), '/market-index/header-index', {}],
     ['constituents', (m) => m.indexConstituents('19002'), '/market-index/19002/constituents', {}],
     ['etf', (m) => m.etf('5510'), '/market-etf/5510', {}],

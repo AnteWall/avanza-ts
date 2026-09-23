@@ -115,6 +115,8 @@ export type {
   SearchInstrumentType,
   SearchOptions,
   SearchResponse,
+  ShortSellingPoint,
+  ShortSellingResponse,
   StockQuote,
 } from './market/market-types.js';
 export type { OrdersClient } from './orders/orders-client.js';
@@ -156,5 +158,7 @@ export type {
   TransactionListFilter,
   TransactionListResponse,
   TransactionOrderbook,
+  UpcomingDividend,
+  UpcomingDividendsResponse,
 } from './transactions/transactions-types.js';
 export type { WebSocketClient } from './websocket/websocket-client.js';

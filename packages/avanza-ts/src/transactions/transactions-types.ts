@@ -107,3 +107,24 @@ export interface Dividend {
 }
 
 export type DividendsResponse = readonly Dividend[];
+
+export interface UpcomingDividend {
+  readonly isin: string;
+  readonly date: string;
+  readonly exDate: string;
+  /** For example `CONFIRMED` or `PRELIMINARY`. */
+  readonly status: string;
+  readonly instrumentName: string;
+  readonly orderbook: Omit<TransactionOrderbook, 'volumeFactor'> & {
+    readonly volumeFactor: number | null;
+  };
+  readonly accountId: string;
+  readonly encryptedAccountId: string;
+  readonly volume: number;
+  readonly amount: DividendAmount;
+  readonly amountInSek: number;
+  readonly amountPerShare: DividendAmount;
+  readonly amountPerShareInSek: number;
+}
+
+export type UpcomingDividendsResponse = readonly UpcomingDividend[];

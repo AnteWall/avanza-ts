@@ -8,6 +8,7 @@ import type {
   Transaction,
   TransactionListFilter,
   TransactionListResponse,
+  UpcomingDividendsResponse,
 } from './transactions-types.js';
 
 export class TransactionsClient {
@@ -39,6 +40,19 @@ export class TransactionsClient {
   ): Promise<DividendsResponse> {
     return this.get(`/dividends${pathId(options.accountId)}`, signal, {
       includeClosedAccounts: options.includeClosedAccounts || undefined,
+    });
+  }
+
+  /** Upcoming dividends for held positions, optionally for one account URL parameter ID. */
+  public upcomingDividends(
+    accountId?: string,
+    signal?: AbortSignal,
+  ): Promise<UpcomingDividendsResponse> {
+    return this.context.http.request<UpcomingDividendsResponse>({
+      access: 'required',
+      method: 'GET',
+      path: `/_api/account-company-events/dividends/upcoming${pathId(accountId)}`,
+      signal,
     });
   }
 

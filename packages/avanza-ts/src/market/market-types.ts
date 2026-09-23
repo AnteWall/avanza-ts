@@ -389,3 +389,12 @@ export interface MarketDataResponse {
   readonly orderDepth: OrderDepth & { readonly marketMakerExpected: boolean };
   readonly trades: readonly MarketTrade[];
 }
+
+export interface ShortSellingPoint {
+  readonly timestamp: number;
+  readonly ratio: number;
+}
+
+export interface ShortSellingResponse {
+  readonly shortSellingHistory: readonly ShortSellingPoint[];
+}

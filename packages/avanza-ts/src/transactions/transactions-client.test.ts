@@ -42,6 +42,14 @@ describe('TransactionsClient read-only endpoints', () => {
         () => client.transactions.dividends({ accountId: 'a', includeClosedAccounts: true }),
         '/_api/transactions/dividends/a?includeClosedAccounts=true',
       ],
+      [
+        () => client.transactions.upcomingDividends(),
+        '/_api/account-company-events/dividends/upcoming',
+      ],
+      [
+        () => client.transactions.upcomingDividends('a'),
+        '/_api/account-company-events/dividends/upcoming/a',
+      ],
     ] as const;
     expect(await Promise.all(calls.map(([call]) => call()))).toEqual(calls.map(() => body));
     expect(

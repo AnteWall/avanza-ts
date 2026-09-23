@@ -71,6 +71,7 @@ avanza transactions list --from 2025-01-01 --types BUY,SELL
 avanza transactions pending
 avanza transactions show --account-id <url-parameter-id> --transaction-id <id>
 avanza transactions dividends --include-closed
+avanza transactions upcoming-dividends
 ```
 
 Omitting `--account-ids` includes all accounts. `transactions list` defaults to the last year. `--fixture` includes raw personal balances and transactions; keep captures private and anonymize before tracking them.
@@ -98,6 +99,7 @@ avanza market price-chart --orderbook-id 5269 --period one_year --resolution wee
 avanza market price-chart --orderbook-id 5269 --from 2026-01-01 --to 2026-06-30
 avanza market company-events --orderbook-id 5269
 avanza market insider-transactions --orderbook-id 5269
+avanza market short-selling --orderbook-id 5269
 avanza market technical-analysis --orderbook-id 5269 --period one_month --points 20
 ```
 

@@ -23,6 +23,7 @@ import type {
   PriceChartResponse,
   SearchOptions,
   SearchResponse,
+  ShortSellingResponse,
   StockQuote,
 } from './market-types.js';
 
@@ -71,6 +72,10 @@ export class MarketClient {
     signal?: AbortSignal,
   ): Promise<readonly BrokerTradeSummary[]> {
     return this.get(`/market-guide/stock${pathId(orderbookId)}/broker-trade-summaries`, signal);
+  }
+
+  public shortSelling(orderbookId: string, signal?: AbortSignal): Promise<ShortSellingResponse> {
+    return this.get(`/market-guide/short-selling${pathId(orderbookId)}`, signal);
   }
 
   /** Requires a session. */
