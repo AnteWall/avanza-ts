@@ -54,8 +54,10 @@ export {
 export type { FundsClient } from './funds/funds-client.js';
 export type {
   FundChartResponse,
+  FundDescription,
   FundDevelopment,
   FundFilterCount,
+  FundGuide,
   FundInstrumentSearchResponse,
   FundInstrumentType,
   FundListOptions,

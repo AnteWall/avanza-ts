@@ -45,6 +45,8 @@ describe('FundsClient', () => {
         }),
       '/_api/fund-guide/top-ten?sortField=developmentOneYear&sortDirection=ASCENDING&fundInstrumentType=BOTH',
     ],
+    ['guide', (f) => f.guide('41567'), '/_api/fund-guide/guide/41567'],
+    ['description', (f) => f.description('41567'), '/_api/fund-guide/description/41567'],
     ['orderbook', (f) => f.orderbook('41567'), '/_api/fund-guide/fund-orderbook/41567'],
     ['details', (f) => f.details('41567'), '/_api/fund-guide/fund-orderbook/details/41567'],
     [
@@ -122,6 +124,7 @@ describe('FundsClient', () => {
 describe('FundsClient recorded responses', () => {
   it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
     ['search', (c) => c.funds.search('zero')],
+    ['guide', (c) => c.funds.guide('41567')],
     ['list', (c) => c.funds.list({ maxNoResults: 2 })],
     ['top-ten', (c) => c.funds.topTen()],
     ['details', (c) => c.funds.details('41567')],

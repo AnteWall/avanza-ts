@@ -123,6 +123,8 @@ avanza funds search --name zero
 avanza funds lookup --query zero
 avanza funds list --filter '{"riskFilter":["2"]}' --sort-field developmentOneYear --limit 10
 avanza funds top-ten --sort-field developmentOneYear --type BOTH
+avanza funds guide --orderbook-id 41567
+avanza funds description --orderbook-id 41567
 avanza funds orderbook --orderbook-id 41567
 avanza funds details --orderbook-id 41567
 avanza funds holdings --orderbook-id 41567

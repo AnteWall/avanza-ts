@@ -324,3 +324,70 @@ export interface FundSustainability {
     readonly status: string;
   })[];
 }
+
+/** The complete fund page: reference data, returns, allocation, and sustainability. */
+export interface FundGuide {
+  readonly isin: string;
+  readonly name: string;
+  readonly description: string;
+  readonly nav: number;
+  readonly navDate: string;
+  readonly currency: string;
+  readonly rating: number | null;
+  readonly risk: number;
+  readonly riskText: string;
+  readonly productFee: number;
+  readonly managementFee: number;
+  readonly developmentOneDay: number | null;
+  readonly developmentOneMonth: number | null;
+  readonly developmentThreeMonths: number | null;
+  readonly developmentSixMonths: number | null;
+  readonly developmentOneYear: number | null;
+  readonly developmentThisYear: number | null;
+  readonly developmentThreeYears: number | null;
+  readonly developmentFiveYears: number | null;
+  readonly countryChartData: readonly FundPortfolioPoint[];
+  readonly holdingChartData: readonly FundPortfolioPoint[];
+  readonly sectorChartData: readonly FundPortfolioPoint[];
+  readonly portfolioDate: string;
+  readonly indexFund: boolean;
+  readonly hedgeFund: boolean;
+  readonly ucitsFund: boolean;
+  readonly superloanOrderbook: boolean;
+  readonly sharpeRatio: number | null;
+  readonly standardDeviation: number | null;
+  readonly capital: number;
+  readonly startDate: string;
+  readonly fundManagers: readonly { readonly name: string; readonly startDate: string }[];
+  readonly adminCompany: { readonly name: string; readonly country: string; readonly url: string };
+  readonly pricingFrequency: string;
+  readonly prospectusLink: string;
+  readonly categories: readonly string[];
+  readonly fundTypeName: string;
+  readonly fundType: string;
+  readonly primaryBenchmark: string | null;
+  readonly recommendedHoldingPeriod: string;
+  readonly ppmCode: string | null;
+  readonly lowCarbon: boolean | null;
+  readonly svanen: boolean;
+  readonly esgScore: number | null;
+  readonly environmentalScore: number | null;
+  readonly socialScore: number | null;
+  readonly governanceScore: number | null;
+  readonly controversyScore: number | null;
+  readonly sustainabilityRating: number | null;
+  readonly sustainabilityRatingCategoryName: string;
+  readonly carbonRiskScore: number | null;
+  readonly carbonSolutionsInvolvement: number | null;
+  readonly aumCoveredCarbon: number | null;
+  readonly fossilFuelInvolvement: number | null;
+  readonly productInvolvements: readonly FundProductInvolvement[];
+  readonly fundRatingViews: readonly FundRatingView[];
+}
+
+export interface FundDescription {
+  readonly heading: string;
+  /** The fund's description text. */
+  readonly response: string;
+  readonly detailedCategoryDescription: string;
+}

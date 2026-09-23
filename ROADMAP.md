@@ -40,6 +40,7 @@ Found by comparing with `Qluxzz/avanza` and `avanza-mcp`; these instrument pages
 
 - [x] Read stock and product pages — `GET /_api/market-guide/stock/{param}`, `GET /_api/market-guide/stock/{param}/analysis`, `GET /_api/market-guide/stock/{param}/marketplace`, `GET /_api/market-guide/number-of-owners/{param}`, `GET /_api/market-guide/{certificate|warrant|futureforward|option}/{param}` and `/details`.
 - [x] Read instrument news, insider trades, and market maker charts — `GET /_api/market-guide/news/{param}`, `GET /_api/market-insider-transactions/transactions/{param}`, `GET /_api/price-chart/marketmaker/{param}`.
+- [x] Read fund guide and description — `GET /_api/fund-guide/guide/{param}`, `GET /_api/fund-guide/description/{param}`.
 
 ## Funds and market data
 

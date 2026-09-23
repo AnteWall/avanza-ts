@@ -1,0 +1,118 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/fund-guide/guide/41567"
+  },
+  "response": {
+    "body": {
+      "isin": "SE0001718388",
+      "name": "Avanza Zero",
+      "description": "Fonden är en passivt förvaltad indexfond vars mål är att ge andelsägarna en värdeutveckling i linje med utvecklingen för SIX30 Return Index (SIX30RX) genom att placera i de i index ingående aktierna. SIX30RX är uppbyggt kring de 30 värdemässigt mest omsatta aktierna på Stockholmsbörsen och inkluderar utdelningar. I SIX30RX tillämpas en screening som innebär att företag, som bedöms bryta mot internationella normer och konventioner såsom FN Global Compacts principer, kan komma att exkluderas från index. Även företag som är involverade i kontroversiella vapen exkluderas från SIX30RX. Förutom överlåtbara värdepapper får fonden placera i fondandelar där SIX30RX är den underliggande tillgången och i derivatinstrument. Fonden får använda derivatinstrument i syfte att effektivisera förvaltningen. Högsta engångsinsättning är 25 000 SEK.",
+      "nav": 576.86,
+      "navDate": "2026-09-22T00:00:00",
+      "currency": "SEK",
+      "rating": 5,
+      "productFee": 0,
+      "managementFee": 0,
+      "risk": 4,
+      "riskText": "Medel",
+      "developmentOneDay": 0.91316,
+      "developmentOneMonth": 0.92552,
+      "developmentThreeMonths": 5.31831,
+      "developmentSixMonths": 18.88138,
+      "developmentOneYear": 27.57027,
+      "developmentThisYear": 17.23367,
+      "developmentThreeYears": 67.26398,
+      "developmentFiveYears": 67.852921,
+      "countryChartData": [
+        {
+          "name": "Sverige",
+          "y": 92.13,
+          "type": "",
+          "currency": "",
+          "countryCode": "SE",
+          "isin": null,
+          "orderbookId": null
+        }
+      ],
+      "holdingChartData": [
+        {
+          "name": "Investor B",
+          "y": 9.03,
+          "type": "HOLDING_TYPE_EQUITY",
+          "currency": "SEK",
+          "countryCode": "SE",
+          "isin": "SE0015811963",
+          "orderbookId": "5247"
+        }
+      ],
+      "sectorChartData": [
+        {
+          "name": "Industri",
+          "y": 45.91,
+          "type": "",
+          "currency": "",
+          "countryCode": null,
+          "isin": null,
+          "orderbookId": null
+        }
+      ],
+      "lowCarbon": true,
+      "indexFund": true,
+      "sharpeRatio": 1.19,
+      "standardDeviation": 12.36,
+      "capital": 70579348916,
+      "startDate": "2006-05-22",
+      "fundManagers": [
+        {
+          "name": "Emilie Chawala",
+          "startDate": "2013-01-01"
+        }
+      ],
+      "adminCompany": {
+        "name": "Avanza",
+        "country": "Sverige",
+        "url": "http://www.avanzafonder.se"
+      },
+      "pricingFrequency": "Dagligen",
+      "prospectusLink": "/_api/fund-reference/reference/41567/prospectus",
+      "aumCoveredCarbon": null,
+      "fossilFuelInvolvement": null,
+      "carbonRiskScore": 8.65,
+      "categories": ["Sverige"],
+      "fundTypeName": "Aktiefond",
+      "fundType": "EQUITY_FUND",
+      "primaryBenchmark": "SIX30RX",
+      "hedgeFund": false,
+      "ucitsFund": true,
+      "recommendedHoldingPeriod": "Minst 5 år",
+      "portfolioDate": "2026-08-31",
+      "ppmCode": "734491",
+      "superloanOrderbook": true,
+      "esgScore": 19,
+      "environmentalScore": 5.38,
+      "socialScore": 8.06,
+      "governanceScore": 5.56,
+      "controversyScore": null,
+      "carbonSolutionsInvolvement": null,
+      "productInvolvements": [
+        {
+          "product": "alcohol",
+          "productDescription": "Alkohol",
+          "value": 0
+        }
+      ],
+      "sustainabilityRating": 2,
+      "sustainabilityRatingCategoryName": "Aktier, Europa stora bolag",
+      "svanen": false,
+      "fundRatingViews": [
+        {
+          "date": "2026-08-31T00:00:00",
+          "fundRatingType": "THREE_YEARS",
+          "fundRating": 5
+        }
+      ]
+    },
+    "status": 200
+  }
+}

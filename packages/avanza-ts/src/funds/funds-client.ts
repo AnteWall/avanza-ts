@@ -4,7 +4,9 @@ import { pathId } from '../internal/path-id.js';
 import type { ChartPeriod, ChartPeriodChange } from '../market/market-types.js';
 import type {
   FundChartResponse,
+  FundDescription,
   FundDevelopment,
+  FundGuide,
   FundInstrumentSearchResponse,
   FundListOptions,
   FundListResponse,
@@ -61,6 +63,14 @@ export class FundsClient {
       sortDirection: options.sortDirection,
       fundInstrumentType: options.fundInstrumentType ?? 'FUND',
     });
+  }
+
+  public guide(orderbookId: string, signal?: AbortSignal): Promise<FundGuide> {
+    return this.get(`/fund-guide/guide${pathId(orderbookId)}`, signal);
+  }
+
+  public description(orderbookId: string, signal?: AbortSignal): Promise<FundDescription> {
+    return this.get(`/fund-guide/description${pathId(orderbookId)}`, signal);
   }
 
   public orderbook(orderbookId: string, signal?: AbortSignal): Promise<FundOrderbook> {
