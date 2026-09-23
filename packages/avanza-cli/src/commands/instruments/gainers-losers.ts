@@ -1,12 +1,12 @@
 import { Flags } from '@oclif/core';
 import { stockFilterSchema, type StockFilter } from 'avanza-ts';
 
-import { InstrumentsCommand } from '../../output/instruments-command.js';
+import { ApiRequestCommand } from '../../output/api-request-command.js';
 
-export default class GainersLosers extends InstrumentsCommand {
+export default class GainersLosers extends ApiRequestCommand {
   public static override summary = 'List stock market gainers and losers';
   public static override flags = {
-    ...InstrumentsCommand.flags,
+    ...ApiRequestCommand.flags,
     filter: Flags.string({ description: 'Stock filter as JSON' }),
   };
 

@@ -1,12 +1,12 @@
 import { Flags } from '@oclif/core';
 import { stockFilterSchema, type StockFilter } from 'avanza-ts';
 
-import { InstrumentsCommand } from '../../output/instruments-command.js';
+import { ApiRequestCommand } from '../../output/api-request-command.js';
 
-export default class Stocks extends InstrumentsCommand {
+export default class Stocks extends ApiRequestCommand {
   public static override summary = 'Screen stocks by filter, sort order, and page';
   public static override flags = {
-    ...InstrumentsCommand.flags,
+    ...ApiRequestCommand.flags,
     filter: Flags.string({ description: 'Stock filter as JSON' }),
     offset: Flags.integer({ default: 0, min: 0 }),
     limit: Flags.integer({ default: 20, min: 1 }),

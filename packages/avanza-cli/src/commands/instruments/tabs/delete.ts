@@ -1,6 +1,6 @@
-import { InstrumentsCommand } from '../../../output/instruments-command.js';
+import { ApiRequestCommand } from '../../../output/api-request-command.js';
 
-export default class Delete extends InstrumentsCommand {
+export default class Delete extends ApiRequestCommand {
   public static override summary = 'Delete all saved stock screener tabs';
 
   public async run(): Promise<void> {

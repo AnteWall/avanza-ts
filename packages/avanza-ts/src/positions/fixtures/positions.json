@@ -1,0 +1,140 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/position-data/positions/synthetic-account"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "withOrderbook": [
+        {
+          "account": {
+            "id": "synthetic-1",
+            "type": "TJANSTEPENSION",
+            "name": "synthetic-1",
+            "urlParameterId": "synthetic-2",
+            "hasCredit": false
+          },
+          "instrument": {
+            "id": "synthetic-3",
+            "type": "FUND",
+            "name": "synthetic-4",
+            "orderbook": {
+              "id": "synthetic-5",
+              "flagCode": null,
+              "name": "synthetic-4",
+              "type": "FUND",
+              "tradeStatus": "BUYABLE_AND_SELLABLE",
+              "quote": {
+                "highest": {
+                  "value": 0,
+                  "unit": "SEK",
+                  "unitType": "MONETARY",
+                  "decimalPrecision": 2
+                },
+                "lowest": {
+                  "value": 0,
+                  "unit": "SEK",
+                  "unitType": "MONETARY",
+                  "decimalPrecision": 2
+                },
+                "buy": null,
+                "sell": null,
+                "latest": {
+                  "value": 0,
+                  "unit": "SEK",
+                  "unitType": "MONETARY",
+                  "decimalPrecision": 2
+                },
+                "change": {
+                  "value": 0,
+                  "unit": "SEK",
+                  "unitType": "MONETARY",
+                  "decimalPrecision": 2
+                },
+                "changePercent": {
+                  "value": 0,
+                  "unit": "percentage",
+                  "unitType": "PERCENTAGE",
+                  "decimalPrecision": 2
+                },
+                "updated": "2020-01-01"
+              },
+              "turnover": {
+                "volume": {
+                  "value": 0,
+                  "unit": "",
+                  "unitType": "UNITLESS",
+                  "decimalPrecision": 2
+                },
+                "value": null
+              },
+              "lastDeal": {
+                "date": "2020-01-01",
+                "time": null
+              }
+            },
+            "currency": "SEK",
+            "isin": "SE0000000000",
+            "volumeFactor": 1
+          },
+          "lastTradingDayPerformance": {
+            "absolute": {
+              "value": 0,
+              "unit": "SEK",
+              "unitType": "MONETARY",
+              "decimalPrecision": 2
+            },
+            "relative": {
+              "value": 0,
+              "unit": "percentage",
+              "unitType": "PERCENTAGE",
+              "decimalPrecision": 2
+            }
+          },
+          "id": "synthetic-6",
+          "superInterestApproved": false,
+          "volume": {
+            "value": 0,
+            "unit": "",
+            "unitType": "UNITLESS",
+            "decimalPrecision": 2
+          },
+          "value": {
+            "value": 0,
+            "unit": "SEK",
+            "unitType": "MONETARY",
+            "decimalPrecision": 2
+          },
+          "averageAcquiredPrice": {
+            "value": 0,
+            "unit": "SEK",
+            "unitType": "MONETARY",
+            "decimalPrecision": 2
+          },
+          "averageAcquiredPriceInstrumentCurrency": {
+            "value": 0,
+            "unit": "SEK",
+            "unitType": "MONETARY",
+            "decimalPrecision": 2
+          },
+          "acquiredValue": {
+            "value": 0,
+            "unit": "SEK",
+            "unitType": "MONETARY",
+            "decimalPrecision": 2
+          },
+          "collateralFactor": {
+            "value": 0,
+            "unit": "percentage",
+            "unitType": "PERCENTAGE",
+            "decimalPrecision": 2
+          }
+        }
+      ],
+      "withoutOrderbook": [],
+      "cashPositions": [],
+      "withCreditAccount": false
+    }
+  }
+}

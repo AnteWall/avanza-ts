@@ -41,11 +41,17 @@
     "dirname": "avanza",
     "topicSeparator": " ",
     "topics": {
+      "accounts": {
+        "description": "Read accounts and balances"
+      },
       "auth": {
         "description": "Manage authentication and the stored session"
       },
       "instruments": {
         "description": "Screen stocks and manage stock settings"
+      },
+      "positions": {
+        "description": "Read positions and statistics"
       }
     }
   },

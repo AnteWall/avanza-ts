@@ -4,7 +4,7 @@ import { loadSession, saveSession } from '../services/session/session-store.js';
 import { ApiCommand } from './api-output.js';
 import { recordFixture } from './http-fixture.js';
 
-export abstract class InstrumentsCommand extends ApiCommand {
+export abstract class ApiRequestCommand extends ApiCommand {
   protected async request(
     flags: {
       fields: string | undefined;

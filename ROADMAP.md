@@ -12,11 +12,13 @@ Only retrieval operations and POSTs that **query** data belong here. Do not add 
 
 ## Accounts and positions
 
-- [ ] List accounts — `chunk-VFQ6RLZG.js`: `GET /_api/account-overview/accounts/list`, `GET /_api/account-overview/accounts/closed`, `GET /_api/account-overview/accounts/has-closed`, `GET /_api/account-overview/accounts/categories`.
-- [ ] Inspect an account — `chunk-CAL6X3IJ.js`: `GET /_api/account-overview/overview/account/{param}`; `chunk-CZ3M76IO.js`: `GET /_api/account-overview/overview/categorizedAccounts`.
-- [ ] Read balances — `chunk-BJ5MRWSW.js`: `GET /_api/trading-critical/rest/accounts`, `GET /_api/trading-critical/rest/accountsandpositions`, `GET /_api/trading-critical/rest/accountvalues`, `GET /_api/trading-critical/rest/lightweightaccounts`.
-- [ ] Read positions — `chunk-WFW3TCDP.js`: `GET /_api/position-data/positions`, `GET /_api/position-data/country/list`, `GET /_api/position-data/tools/active`; `chunk-LSFO4IUH.js`: `GET /_api/position-data/orderbooks`.
-- [ ] Inspect position statistics — `chunk-FUCGIJ4G.js`: `GET /_api/position-statistics/statistics/categories/{param}`, `GET /_api/position-statistics/statistics/popular-categories/{param}`.
+- [x] List accounts — `chunk-VFQ6RLZG.js`: `GET /_api/account-overview/accounts/list`, `GET /_api/account-overview/accounts/closed`, `GET /_api/account-overview/accounts/has-closed`, `GET /_api/account-overview/accounts/categories`.
+- [x] Inspect an account — `chunk-CAL6X3IJ.js`: `GET /_api/account-overview/overview/account/{param}`; `chunk-CZ3M76IO.js`: `GET /_api/account-overview/overview/categorizedAccounts`.
+- [ ] Read balances — `chunk-BJ5MRWSW.js`: `GET /_api/trading-critical/rest/accounts`, `GET /_api/trading-critical/rest/accountsandpositions`, `GET /_api/trading-critical/rest/accountvalues` (HTTP 404; not implemented), `GET /_api/trading-critical/rest/lightweightaccounts`. The other three endpoints are available.
+- [x] Read positions — `chunk-WFW3TCDP.js`: `GET /_api/position-data/positions`, `GET /_api/position-data/country/list`, `GET /_api/position-data/tools/active`; `chunk-LSFO4IUH.js`: `GET /_api/position-data/orderbooks`.
+- [x] Inspect position statistics — `chunk-FUCGIJ4G.js`: `GET /_api/position-statistics/statistics/categories/{param}`, `GET /_api/position-statistics/statistics/popular-categories/{param}`.
+
+Implemented routes are available in the SDK and CLI as GET-only calls with named response types. `accountvalues` needs a successful response before implementation.
 
 ## Performance and activity
 

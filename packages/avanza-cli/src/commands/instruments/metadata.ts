@@ -1,6 +1,6 @@
-import { InstrumentsCommand } from '../../output/instruments-command.js';
+import { ApiRequestCommand } from '../../output/api-request-command.js';
 
-export default class Metadata extends InstrumentsCommand {
+export default class Metadata extends ApiRequestCommand {
   public static override summary = 'Show signed-in stock screener metadata';
 
   public async run(): Promise<void> {

@@ -35,6 +35,30 @@ avanza auth session --fixture --output "$capture_dir/raw.json"
 file. Anonymize captured data before adding it to tracked fixtures, and remove temporary captures
 after use.
 
+## Accounts and positions (read only)
+
+Sign in first with `avanza auth totp` or `avanza auth bankid`. All of these commands send GET requests only and use the stored session:
+
+```sh
+avanza accounts list --json
+avanza accounts closed
+avanza accounts has-closed
+avanza accounts categories
+avanza accounts overview --account-id <url-parameter-id>
+avanza accounts categorized-overview
+avanza accounts trading
+avanza accounts trading-with-positions
+avanza accounts lightweight
+avanza positions list --account-id <url-parameter-id>
+avanza positions countries --account-id <url-parameter-id>
+avanza positions tools
+avanza positions orderbooks --orderbook-ids 123,456
+avanza positions statistics --orderbook-id 123
+avanza positions popular-statistics --orderbook-id 123
+```
+
+`positions list` and `positions countries` also work without `--account-id`. `--fixture` includes raw personal account and holdings data; keep captures private and anonymize before tracking them.
+
 ## Stock screener
 
 ```sh

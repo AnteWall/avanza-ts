@@ -1,4 +1,21 @@
 export type { AccountsClient } from './accounts/accounts-client.js';
+export type {
+  AccountAmount,
+  AccountCategoriesResponse,
+  AccountCategory,
+  AccountListResponse,
+  AccountOverviewResponse,
+  AccountSummary,
+  CategorizedAccountOverviewResponse,
+  ClosedAccount,
+  ClosedAccountsResponse,
+  HasClosedAccountsResponse,
+  LightweightAccount,
+  LightweightAccountsResponse,
+  TradingAccount,
+  TradingAccountsResponse,
+  TradingPosition,
+} from './accounts/account-types.js';
 export type { AuthClient } from './auth/auth-client.js';
 export type {
   BankIdChallenge,
@@ -49,4 +66,16 @@ export type {
 } from './instruments/stock-screener-types.js';
 export type { MarketClient } from './market/market-client.js';
 export type { OrdersClient } from './orders/orders-client.js';
+export type { PositionsClient } from './positions/positions-client.js';
+export type { PositionListResponse } from './positions/position-schemas.js';
+export type {
+  ActivePositionTool,
+  ActivePositionToolsResponse,
+  PositionCategoriesResponse,
+  PositionCountriesResponse,
+  PositionCountryAllocation,
+  PositionOrderbook,
+  PositionOrderbooksResponse,
+  PositionPopularCategoriesResponse,
+} from './positions/position-types.js';
 export type { WebSocketClient } from './websocket/websocket-client.js';

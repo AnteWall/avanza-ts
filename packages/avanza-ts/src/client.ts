@@ -5,6 +5,7 @@ import { InstrumentsClient } from './instruments/instruments-client.js';
 import { HttpClient } from './internal/http-client.js';
 import { MarketClient } from './market/market-client.js';
 import { OrdersClient } from './orders/orders-client.js';
+import { PositionsClient } from './positions/positions-client.js';
 import { WebSocketClient } from './websocket/websocket-client.js';
 
 export interface AvanzaClientOptions {
@@ -22,6 +23,7 @@ export class AvanzaClient {
   public readonly instruments: InstrumentsClient;
   public readonly market: MarketClient;
   public readonly orders: OrdersClient;
+  public readonly positions: PositionsClient;
   public readonly websocket: WebSocketClient;
 
   public constructor(options: AvanzaClientOptions = {}) {
@@ -48,6 +50,7 @@ export class AvanzaClient {
     this.instruments = new InstrumentsClient(context);
     this.market = new MarketClient(context);
     this.orders = new OrdersClient(context);
+    this.positions = new PositionsClient(context);
     this.websocket = new WebSocketClient(context);
   }
 
