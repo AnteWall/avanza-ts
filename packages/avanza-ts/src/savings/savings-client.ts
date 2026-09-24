@@ -3,6 +3,8 @@ import type { HttpRequest } from '../internal/http-types.js';
 import { pathId } from '../internal/path-id.js';
 import type {
   CreditAccountsResponse,
+  CreditInfoResponse,
+  CreditType,
   PensionDetails,
   PensionDistribution,
   PeriodicSavingsResponse,
@@ -50,6 +52,11 @@ export class SavingsClient {
   /** Accounts available for securities credit. */
   public creditAccounts(signal?: AbortSignal): Promise<CreditAccountsResponse> {
     return this.get('/superloan/analysis/accounts', signal);
+  }
+
+  /** Credit limit, used credit, interest, and leverage per account. */
+  public creditInfo(type: CreditType, signal?: AbortSignal): Promise<CreditInfoResponse> {
+    return this.get(`/superloan/creditinfo${pathId(type)}`, signal);
   }
 
   /** `accountId` is the numeric account ID of a pension or insurance account. */

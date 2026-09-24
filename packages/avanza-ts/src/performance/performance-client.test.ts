@@ -16,7 +16,7 @@ describe('PerformanceClient query endpoints', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  it('posts time period, custom range, and total value queries', async () => {
+  it('posts time period, custom range, total value, and insights queries', async () => {
     const body = { accounts: [] };
     const fetch = vi
       .fn<typeof globalThis.fetch>()
@@ -45,6 +45,11 @@ describe('PerformanceClient query endpoints', () => {
       ],
       [() => client.performance.totalValues(['a', 'b']), `${base}/total-values`, ['a', 'b']],
       [() => client.performance.totalValues(), `${base}/total-values`, []],
+      [
+        () => client.performance.insights('THIS_YEAR', ['a']),
+        '/_api/insights-development/insights',
+        { timePeriod: 'THIS_YEAR', accountIds: ['a'] },
+      ],
     ] as const;
     expect(await Promise.all(calls.map(([call]) => call()))).toEqual(calls.map(() => body));
     expect(

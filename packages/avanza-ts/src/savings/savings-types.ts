@@ -118,3 +118,26 @@ export interface PensionDistribution {
   }[];
   readonly nextAutoDistribution: unknown;
 }
+
+export type CreditType = 'credited' | 'uncredited';
+
+export interface CreditInfo {
+  readonly accountId: string;
+  readonly creditLimit: number;
+  readonly currentUsedCredit: number;
+  readonly currentInterest: number;
+  readonly currentLeverage: number;
+  /** Loan to value. */
+  readonly currentLtv: number;
+  readonly currentTotalPotentialCollateralValue: number;
+  readonly currentCreditBreakPoints: readonly {
+    readonly type: string;
+    readonly interest: number;
+    readonly upperLimit: number;
+  }[];
+  readonly ongoingOrders: unknown;
+}
+
+export interface CreditInfoResponse {
+  readonly creditInfos: readonly CreditInfo[];
+}

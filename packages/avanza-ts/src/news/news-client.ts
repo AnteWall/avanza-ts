@@ -33,6 +33,16 @@ export class NewsClient {
     });
   }
 
+  /** Requires a session. Item fields are unverified; captured lists were empty so far. */
+  public offers(signal?: AbortSignal): Promise<readonly Readonly<Record<string, unknown>>[]> {
+    return this.context.http.request<readonly Readonly<Record<string, unknown>>[]>({
+      access: 'required',
+      method: 'GET',
+      path: '/_api/customer-offer/currentoffers/',
+      signal,
+    });
+  }
+
   /** Requires a session. Upcoming dividends, reports, and other events by month. */
   public calendar(signal?: AbortSignal): Promise<CalendarResponse> {
     return this.context.http.request<CalendarResponse>({

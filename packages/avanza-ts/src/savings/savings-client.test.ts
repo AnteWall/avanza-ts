@@ -28,6 +28,7 @@ it('sends only GET requests with encoded IDs', async () => {
       '/_api/savings-goals/insights/get-goal-performance-time-series/c1?timePeriod=INFINITY',
     ],
     [() => savings.creditAccounts(), '/_api/superloan/analysis/accounts'],
+    [() => savings.creditInfo('uncredited'), '/_api/superloan/creditinfo/uncredited'],
     [() => savings.pensionDetails('1'), '/_api/insurance/details/pension-details/1'],
     [
       () => savings.pensionDistribution('1'),

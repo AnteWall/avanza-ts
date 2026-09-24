@@ -1,5 +1,7 @@
 import type { ClientContext } from '../internal/client-context.js';
 import type {
+  InsightsPeriod,
+  InsightsReport,
   PerformanceChartOptions,
   PerformanceChartResponse,
   PerformanceDateRange,
@@ -32,6 +34,21 @@ export class PerformanceClient {
   /** Omitted or empty `ids` include all accounts. */
   public totalValues(ids?: readonly string[], signal?: AbortSignal): Promise<TotalValuesResponse> {
     return this.post('/total-values', accountIds(ids), signal);
+  }
+
+  /** Omitted or empty `accountIds` include all accounts. */
+  public insights(
+    timePeriod: InsightsPeriod,
+    ids?: readonly string[],
+    signal?: AbortSignal,
+  ): Promise<InsightsReport> {
+    return this.context.http.request<InsightsReport>({
+      access: 'required',
+      method: 'POST',
+      path: '/_api/insights-development/insights',
+      body: { timePeriod, accountIds: accountIds(ids) },
+      signal,
+    });
   }
 
   private post<Response>(path: string, body: unknown, signal?: AbortSignal): Promise<Response> {

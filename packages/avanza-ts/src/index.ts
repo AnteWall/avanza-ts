@@ -221,10 +221,16 @@ export type {
   TradingOrderbook,
 } from './orders/orders-types.js';
 export type { PerformanceClient } from './performance/performance-client.js';
-export { performancePeriods } from './performance/performance-types.js';
+export { insightsPeriods, performancePeriods } from './performance/performance-types.js';
 export type {
   BuyingPower,
   CurrencyBalance,
+  InsightsInstrumentGroup,
+  InsightsInstrumentLink,
+  InsightsOutcome,
+  InsightsPeriod,
+  InsightsPosition,
+  InsightsReport,
   PerformanceChartOptions,
   PerformanceChartResponse,
   PerformanceDateRange,
@@ -251,6 +257,9 @@ export type { SavingsClient } from './savings/savings-client.js';
 export { savingsGoalPeriods } from './savings/savings-types.js';
 export type {
   CreditAccountsResponse,
+  CreditInfo,
+  CreditInfoResponse,
+  CreditType,
   InsuranceParty,
   PensionDetails,
   PensionDistribution,

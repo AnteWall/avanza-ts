@@ -37,10 +37,12 @@ it('gets the news feed and calendar with a session', async () => {
   await client.news.feed();
   await client.news.feed({ count: 3, maxDays: 7 });
   await client.news.calendar();
+  await client.news.offers();
   expect(paths()).toEqual([
     ['GET', '/_api/customer-news-feed-v2/news?count=10&maxDays=30'],
     ['GET', '/_api/customer-news-feed-v2/news?count=3&maxDays=7'],
     ['GET', '/_api/customer-calendar/calendar'],
+    ['GET', '/_api/customer-offer/currentoffers/'],
   ]);
 });
 

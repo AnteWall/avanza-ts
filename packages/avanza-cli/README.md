@@ -67,6 +67,7 @@ These commands also need a stored session. The performance commands send query-o
 avanza performance chart --period ONE_YEAR
 avanza performance chart --from 2025-01-01 --to 2025-06-30 --account-ids <id>,<id>
 avanza performance total-values
+avanza performance insights --period THREE_YEARS_ROLLING
 avanza transactions list --from 2025-01-01 --types BUY,SELL
 avanza transactions pending
 avanza transactions show --account-id <url-parameter-id> --transaction-id <id>
@@ -144,12 +145,13 @@ avanza funds is-favourite --orderbook-id 41567
 
 ## News and events (read only)
 
-`news article` works without a session; `news feed` and `news calendar` use the stored session. All send GET requests only:
+`news article` works without a session; `news feed`, `news calendar`, and `news offers` use the stored session. All send GET requests only:
 
 ```sh
 avanza news feed --limit 5 --max-days 7
 avanza news article --url https://www.placera.se/telegram/avanza/<id>
 avanza news calendar
+avanza news offers
 ```
 
 `news article` takes the `url` of a `news feed` item.
@@ -199,6 +201,7 @@ avanza savings categories
 avanza savings goal-health --category-id <id>
 avanza savings goal-performance --category-id <id> --period THREE_YEARS
 avanza savings credit-accounts
+avanza savings credit-info --type uncredited
 avanza savings pension --account-id <id>
 avanza savings pension-distribution --account-id <id>
 avanza savings payout-plans
