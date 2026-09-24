@@ -9,8 +9,8 @@ const mocks = vi.hoisted(() => ({
 }));
 vi.mock('../services/session/session-store.js', () => mocks);
 
-import Calendar from '../commands/news/calendar.js';
 import TabsList from '../commands/instruments/tabs/list.js';
+import Calendar from '../commands/news/calendar.js';
 
 const root = resolve(import.meta.dirname, '../..');
 
@@ -22,7 +22,9 @@ afterEach(() => {
 it('rejects authenticated commands without a session before sending a request', async () => {
   mocks.loadSession.mockResolvedValue(undefined);
   const fetch = vi.spyOn(globalThis, 'fetch');
-  const calendarError = vi.spyOn(Calendar.prototype, 'logToStderr').mockImplementation(() => undefined);
+  const calendarError = vi
+    .spyOn(Calendar.prototype, 'logToStderr')
+    .mockImplementation(() => undefined);
   const tabsError = vi.spyOn(TabsList.prototype, 'logToStderr').mockImplementation(() => undefined);
 
   await expect(Calendar.run([], { root })).rejects.toMatchObject({ oclif: { exit: 1 } });
