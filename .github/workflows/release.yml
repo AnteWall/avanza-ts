@@ -6,6 +6,8 @@ on:
     paths:
       - packages/avanza-ts/package.json
       - packages/avanza-cli/package.json
+      - packages/avanza-ts/CHANGELOG.md
+      - packages/avanza-cli/CHANGELOG.md
   workflow_dispatch:
 
 permissions:
@@ -24,18 +26,12 @@ jobs:
       cli: ${{ steps.versions.outputs.cli }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Find changed versions
         id: versions
-        env:
-          BEFORE: ${{ github.event.before }}
         run: |
           for package in avanza-ts avanza-cli; do
             current=$(jq -r .version "packages/$package/package.json")
-            previous=$(git show "$BEFORE:packages/$package/package.json" 2>/dev/null | jq -r .version || true)
-            if [[ ( "${{ github.event_name }}" == 'workflow_dispatch' || "$current" != "$previous" ) ]] &&
-               node scripts/release-notes.mjs "$package" "$current" >/dev/null 2>&1; then
+            if node scripts/release-notes.mjs "$package" "$current" >/dev/null 2>&1; then
               if [[ "$package" == 'avanza-ts' ]]; then
                 echo "sdk=$current" >> "$GITHUB_OUTPUT"
               else
