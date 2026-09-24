@@ -13,7 +13,8 @@ console.log(`class AvanzaTools < Formula
   depends_on "node"
 
   def install
-    system "npm", "install", *std_npm_args
+    # ponytail: allow same-day SDK releases; pin dependencies if cooldown becomes necessary.
+    system "npm", "install", *std_npm_args, "--min-release-age=0"
     bin.install_symlink libexec.glob("bin/*")
   end
 
