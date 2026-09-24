@@ -126,7 +126,8 @@ jobs:
         run: |
           test -n "$GH_TOKEN" || { echo 'Set HOMEBREW_TAP_TOKEN to update AnteWall/homebrew-tap'; exit 1; }
           url="https://registry.npmjs.org/avanza-tools/-/avanza-tools-$VERSION.tgz"
-          curl --fail --location --silent --show-error "$url" --output "$RUNNER_TEMP/avanza-tools.tgz"
+          curl --fail --location --silent --show-error --retry 18 --retry-delay 10 --retry-all-errors \
+            "$url" --output "$RUNNER_TEMP/avanza-tools.tgz"
           sha=$(shasum -a 256 "$RUNNER_TEMP/avanza-tools.tgz" | cut -d ' ' -f 1)
           content=$(node scripts/homebrew-formula.mjs "$VERSION" "$sha" | base64 | tr -d '\n')
           existing=$(gh api repos/AnteWall/homebrew-tap/contents/Formula/avanza-tools.rb --jq .sha 2>/dev/null || true)
