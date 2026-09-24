@@ -1,5 +1,5 @@
 {
-  "title": "avanza-cli",
+  "title": "avanza-tools",
   "description": "Command-line documentation",
   "root": true,
   "pages": ["index", "getting-started", "authentication", "output", "sessions", "reference"]

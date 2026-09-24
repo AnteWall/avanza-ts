@@ -3,6 +3,8 @@ dist/
 coverage/
 *.tsbuildinfo
 .direnv/
+.env
+.env.*
 .DS_Store
 *.log
 .next/

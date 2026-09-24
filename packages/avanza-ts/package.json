@@ -1,7 +1,12 @@
 {
   "name": "avanza-ts",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "TypeScript SDK for Avanza",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnteWall/avanza-ts.git",
+    "directory": "packages/avanza-ts"
+  },
   "files": [
     "dist",
     "README.md"

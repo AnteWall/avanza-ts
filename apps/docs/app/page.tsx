@@ -118,7 +118,7 @@ export default function Home() {
                 <span className="text-xs font-semibold tracking-[0.18em] text-emerald-700 uppercase dark:text-emerald-300">
                   The CLI · Terminal
                 </span>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight">avanza-cli</h2>
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight">avanza-tools (CLI)</h2>
                 <p className="mt-3 max-w-sm leading-relaxed text-fd-muted-foreground">
                   Search markets and inspect your accounts, right from the command line.
                 </p>
@@ -148,7 +148,7 @@ export default function Home() {
               Disclaimer
             </h2>
             <p>
-              avanza-ts and avanza-cli are unofficial tools for Avanza&apos;s API. They are not
+              avanza-ts and avanza-tools are unofficial tools for Avanza&apos;s API. They are not
               affiliated with Avanza Bank AB. The underlying API can be taken down or changed
               without warning at any point in time.
             </p>

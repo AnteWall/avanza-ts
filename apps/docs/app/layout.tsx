@@ -8,7 +8,7 @@ import './global.css';
 
 export const metadata: Metadata = {
   title: { default: 'Avanza Tools', template: '%s | Avanza Tools' },
-  description: 'Documentation for the avanza-ts SDK and avanza-cli.',
+  description: 'Documentation for the avanza-ts SDK and avanza-tools (CLI).',
 };
 
 export default function Layout({ children }: { children: ReactNode }) {

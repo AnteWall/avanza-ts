@@ -1,7 +1,12 @@
 {
-  "name": "avanza-cli",
-  "version": "0.0.0",
+  "name": "avanza-tools",
+  "version": "1.0.0",
   "description": "Command-line interface for Avanza",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnteWall/avanza-ts.git",
+    "directory": "packages/avanza-cli"
+  },
   "bin": {
     "avanza": "./bin/run.js"
   },

@@ -1,6 +1,6 @@
-# avanza-cli
+# avanza-tools
 
-Command-line interface for `avanza-ts`.
+Command-line interface for `avanza-ts`. Install with `npm install -g avanza-tools` or `brew install AnteWall/tap/avanza-tools`, then run `avanza`.
 
 ## Disclaimer
 

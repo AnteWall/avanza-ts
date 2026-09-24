@@ -11,11 +11,10 @@
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "lint": "oxlint . --deny-warnings",
-    "release": "pnpm build && changeset publish",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
     "typecheck": "tsc --build && pnpm --filter @avanza/docs typecheck",
-    "version-packages": "changeset version"
+    "version-packages": "changeset version && pnpm install --lockfile-only"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

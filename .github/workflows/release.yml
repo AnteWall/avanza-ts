@@ -1,0 +1,147 @@
+name: Release packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - packages/avanza-ts/package.json
+      - packages/avanza-cli/package.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: package-releases
+  cancel-in-progress: false
+
+jobs:
+  versions:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      sdk: ${{ steps.versions.outputs.sdk }}
+      cli: ${{ steps.versions.outputs.cli }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Find changed versions
+        id: versions
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          for package in avanza-ts avanza-cli; do
+            current=$(jq -r .version "packages/$package/package.json")
+            previous=$(git show "$BEFORE:packages/$package/package.json" 2>/dev/null | jq -r .version || true)
+            if [[ ( "${{ github.event_name }}" == 'workflow_dispatch' || "$current" != "$previous" ) ]] &&
+               node scripts/release-notes.mjs "$package" "$current" >/dev/null 2>&1; then
+              if [[ "$package" == 'avanza-ts' ]]; then
+                echo "sdk=$current" >> "$GITHUB_OUTPUT"
+              else
+                echo "cli=$current" >> "$GITHUB_OUTPUT"
+              fi
+            fi
+          done
+
+  sdk:
+    needs: versions
+    if: needs.versions.outputs.sdk != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm install -g npm@^11
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm --filter avanza-ts build
+      - name: Publish SDK
+        env:
+          VERSION: ${{ needs.versions.outputs.sdk }}
+        run: |
+          if ! npm view "avanza-ts@$VERSION" version >/dev/null 2>&1; then
+            pnpm --filter avanza-ts pack --pack-destination "$RUNNER_TEMP"
+            npm publish "$RUNNER_TEMP/avanza-ts-$VERSION.tgz" --access public
+          fi
+      - name: Create SDK GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.versions.outputs.sdk }}
+        run: |
+          tag="avanza-ts@$VERSION"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            node scripts/release-notes.mjs avanza-ts "$VERSION" > "$RUNNER_TEMP/release-notes.md"
+            gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --notes-file "$RUNNER_TEMP/release-notes.md"
+          fi
+
+  cli:
+    needs: [versions, sdk]
+    if: always() && needs.versions.outputs.cli != '' && (needs.sdk.result == 'success' || needs.sdk.result == 'skipped')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm install -g npm@^11
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm --filter avanza-tools... build
+      - name: Publish CLI
+        env:
+          VERSION: ${{ needs.versions.outputs.cli }}
+        run: |
+          if ! npm view "avanza-tools@$VERSION" version >/dev/null 2>&1; then
+            pnpm --filter avanza-tools pack --pack-destination "$RUNNER_TEMP"
+            npm publish "$RUNNER_TEMP/avanza-tools-$VERSION.tgz" --access public
+          fi
+      - name: Create CLI GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.versions.outputs.cli }}
+        run: |
+          tag="avanza-tools@$VERSION"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            node scripts/release-notes.mjs avanza-cli "$VERSION" > "$RUNNER_TEMP/release-notes.md"
+            gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --notes-file "$RUNNER_TEMP/release-notes.md"
+          fi
+      - name: Update Homebrew tap
+        env:
+          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          VERSION: ${{ needs.versions.outputs.cli }}
+        run: |
+          test -n "$GH_TOKEN" || { echo 'Set HOMEBREW_TAP_TOKEN to update AnteWall/homebrew-tap'; exit 1; }
+          url="https://registry.npmjs.org/avanza-tools/-/avanza-tools-$VERSION.tgz"
+          curl --fail --location --silent --show-error "$url" --output "$RUNNER_TEMP/avanza-tools.tgz"
+          sha=$(shasum -a 256 "$RUNNER_TEMP/avanza-tools.tgz" | cut -d ' ' -f 1)
+          content=$(node scripts/homebrew-formula.mjs "$VERSION" "$sha" | base64 | tr -d '\n')
+          existing=$(gh api repos/AnteWall/homebrew-tap/contents/Formula/avanza-tools.rb --jq .sha 2>/dev/null || true)
+          if [[ -n "$existing" ]]; then
+            installed=$(gh api repos/AnteWall/homebrew-tap/contents/Formula/avanza-tools.rb --jq .content | tr -d '\n')
+            if [[ "$content" == "$installed" ]]; then
+              exit 0
+            fi
+            gh api repos/AnteWall/homebrew-tap/contents/Formula/avanza-tools.rb --method PUT \
+              -f "message=Update avanza-tools to $VERSION" -f "content=$content" -f "sha=$existing" >/dev/null
+          else
+            gh api repos/AnteWall/homebrew-tap/contents/Formula/avanza-tools.rb --method PUT \
+              -f "message=Add avanza-tools $VERSION" -f "content=$content" >/dev/null
+          fi

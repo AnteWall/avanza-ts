@@ -1,0 +1,29 @@
+name: Version packages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: changesets/action/select-mode@v2.1.2
+        id: changesets
+      - uses: changesets/action/version@v2.1.2
+        if: steps.changesets.outputs.mode == 'version'
+        with:
+          script: pnpm version-packages
