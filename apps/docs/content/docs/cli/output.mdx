@@ -1,0 +1,15 @@
+---
+title: Output formats
+description: JSON selection and temporary HTTP captures.
+---
+
+Commands supporting structured output accept `--json`. Add `--fields` to select comma-separated paths, including nested fields:
+
+```sh
+avanza market search --query volvo --json
+avanza auth session --json --fields user.greetingName,user.loggedIn
+```
+
+Unknown fields are rejected. `--json` without `--fields` returns the complete redacted response.
+
+`--fixture` prints the raw HTTP request and response. To write it to a **new** temporary file, pass `--fixture --output <path>`; the CLI will not overwrite an existing file. `--json` and `--fixture` cannot be combined. Fixture output may contain personal information: keep captures private, anonymize them before tracking, and delete temporary captures after use.

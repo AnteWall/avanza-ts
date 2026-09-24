@@ -1,0 +1,27 @@
+---
+title: Authentication API
+description: TOTP, BankID, and session methods and options.
+---
+
+Use `client.auth` for login and session lifecycle operations. For setup steps, credentials, and a BankID polling example, read the [authentication guide](/docs/sdk/authentication).
+
+## Auth client
+
+<AutoTypeTable path="../../packages/avanza-ts/src/auth/auth-client.ts" name="AuthClient" />
+
+## TOTP options
+
+Choose either a six-digit `totpCode` or a base32 `totpSecret` (never both). Both modes accept `maxInactiveMinutes` for the requested inactivity timeout.
+
+<AutoTypeTable path="../../packages/avanza-ts/src/auth/auth-types.ts" name="TotpCodeLoginOptions" />
+
+<AutoTypeTable
+  path="../../packages/avanza-ts/src/auth/auth-types.ts"
+  name="TotpSecretLoginOptions"
+/>
+
+## BankID challenge
+
+The QR payload must be rendered again after each pending poll. See the [BankID attempt API](/docs/sdk/reference/generated/interfaces/BankIdAuthAttempt) for the complete signatures.
+
+<AutoTypeTable path="../../packages/avanza-ts/src/auth/auth-types.ts" name="BankIdChallenge" />

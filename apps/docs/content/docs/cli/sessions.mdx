@@ -1,0 +1,19 @@
+---
+title: Session storage
+description: Where avanza-cli stores authentication sessions.
+---
+
+The CLI saves one `avanza-cli` credential in the operating system credential store: macOS Keychain, Windows Credential Manager, or Linux Secret Service (for example, GNOME Keyring or KWallet). Linux requires a running Secret Service provider.
+
+```sh
+avanza auth session
+avanza auth logout
+```
+
+Session status validates the saved session and prints a redacted summary. Logout removes the local credential even if the remote logout request fails.
+
+## Session duration
+
+Avanza lets you choose how long you stay logged in—from 30 minutes to 24 hours—in your account's website settings. This applies to biometric, username/password, and BankID logins. See Avanza's [session-duration instructions](https://www.avanza.se/kundservice.html/5121/hur-lange-kan-jag-vara-inloggad-pa-mitt-konto-utan-att-loggas-ut). The CLI checks the stored session with `avanza auth session`; an expired session requires signing in again.
+
+Separately, the CLI's TOTP login sends a 1,440-minute `maxInactiveMinutes` value with its login request. The SDK supports requesting 30–1,440 minutes, but the CLI does not currently offer a flag for that setting. See the [SDK authentication guide](/docs/sdk/authentication#totp-login) if you need to set it programmatically.

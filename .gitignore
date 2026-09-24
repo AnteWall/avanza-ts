@@ -5,3 +5,8 @@ coverage/
 .direnv/
 .DS_Store
 *.log
+.next/
+out/
+.source/
+apps/docs/content/docs/cli/reference/*.md
+apps/docs/content/docs/sdk/reference/generated/

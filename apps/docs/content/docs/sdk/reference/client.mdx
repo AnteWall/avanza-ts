@@ -1,0 +1,25 @@
+---
+title: Client and configuration
+description: Create an AvanzaClient and configure its transport and session.
+---
+
+Import `AvanzaClient` from `avanza-ts`. One instance owns its HTTP transport, active session, and domain clients.
+
+```ts
+import { AvanzaClient } from 'avanza-ts';
+
+const client = new AvanzaClient();
+const results = await client.market.search('volvo');
+```
+
+## Client
+
+<AutoTypeTable path="../../packages/avanza-ts/src/client.ts" name="AvanzaClient" />
+
+## Options
+
+Pass an existing session or replace the transport when needed. The SDK uses the Node.js global `fetch` and `https://www.avanza.se` by default.
+
+<AutoTypeTable path="../../packages/avanza-ts/src/client.ts" name="AvanzaClientOptions" />
+
+See [sessions](/docs/sdk/sessions) for restoring and validating an authenticated client. All exported response types and error classes are listed in the [complete reference](/docs/sdk/reference/generated).

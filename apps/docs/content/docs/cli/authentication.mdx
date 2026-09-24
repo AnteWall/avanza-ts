@@ -1,0 +1,32 @@
+---
+title: Authentication
+description: Sign in with TOTP or BankID and manage the saved session.
+---
+
+## Getting a TOTP secret
+
+1. Sign in to Avanza and go to **Profil → Inställningar → Sajtinställningar → Inloggning och utloggning → Användarnamn → Tvåfaktorsinloggning**.
+2. Choose **Aktivera** to set up two-factor login. If it is already enabled, choose **Återaktivera** instead.
+3. Select **Annan app för tvåfaktorsinloggning**.
+4. Select **Kan du inte scanna QR-koden?** to reveal the TOTP secret. Add that secret to your authenticator app.
+5. Enter the six-digit code from the authenticator app on Avanza to complete setup.
+
+Reactivation may invalidate a previous authenticator setup. Do not share or commit the secret.
+
+## TOTP login
+
+```sh
+avanza auth totp
+```
+
+The CLI prompts for missing credentials and masks passwords and TOTP codes. For non-interactive use, set `AVANZA_USERNAME` and `AVANZA_PASSWORD`, plus exactly one of `AVANZA_TOTP_CODE` or `AVANZA_TOTP_SECRET`. Credentials used to authenticate are not stored; only the resulting session is saved.
+
+## BankID
+
+```sh
+avanza auth bankid
+```
+
+BankID requires an interactive terminal. The CLI displays and refreshes a QR code until the attempt finishes or is cancelled.
+
+Check or clear the session with `avanza auth session` and `avanza auth logout`. See [session storage](/docs/cli/sessions) for details.

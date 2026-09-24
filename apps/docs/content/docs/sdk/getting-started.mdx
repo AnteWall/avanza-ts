@@ -1,0 +1,22 @@
+---
+title: Getting started
+description: Install the SDK and make a public market request.
+---
+
+Install the package in a Node.js 22.12+ application:
+
+```sh
+pnpm add avanza-ts
+```
+
+Create a client and make a public request:
+
+```ts
+import { AvanzaClient } from 'avanza-ts';
+
+const client = new AvanzaClient();
+const results = await client.market.search('volvo');
+console.log(results);
+```
+
+Public market and instrument requests work without logging in. For account-specific operations, see [authentication](/docs/sdk/authentication).

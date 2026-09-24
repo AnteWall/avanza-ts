@@ -14,7 +14,7 @@
     "release": "pnpm build && changeset publish",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
-    "typecheck": "tsc --build",
+    "typecheck": "tsc --build && pnpm --filter @avanza/docs typecheck",
     "version-packages": "changeset version"
   },
   "devDependencies": {

@@ -1,6 +1,12 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["**/dist/**", "**/coverage/**", ".direnv/**", "pnpm-lock.yaml"],
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/coverage/**",
+    ".direnv/**",
+    "pnpm-lock.yaml",
+    "**/next-env.d.ts"
+  ],
   "printWidth": 100,
   "semi": true,
   "singleQuote": true,

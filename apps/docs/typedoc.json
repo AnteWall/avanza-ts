@@ -1,0 +1,21 @@
+{
+  "entryPoints": ["../../packages/avanza-ts/src/index.ts"],
+  "tsconfig": "../../packages/avanza-ts/tsconfig.json",
+  "out": "content/docs/sdk/reference/generated",
+  "plugin": ["typedoc-plugin-markdown"],
+  "router": "member",
+  "entryFileName": "index",
+  "readme": "none",
+  "hideBreadcrumbs": true,
+  "hidePageHeader": true,
+  "disableSources": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "intentionallyNotExported": [
+    "positionListResponseSchema",
+    "ClientContext",
+    "AvanzaAuthenticationErrorOptions",
+    "AvanzaHttpErrorOptions"
+  ],
+  "cleanOutputDir": true
+}

@@ -2,9 +2,11 @@
 
 Reusable, ESM-first TypeScript SDK for Avanza.
 
-> [!WARNING]
-> This project uses an unofficial API that may change without notice. It is not affiliated with
-> Avanza Bank AB.
+## Disclaimer
+
+This is an unofficial TypeScript SDK for Avanza's API. It is not affiliated with Avanza Bank AB. The underlying API can be taken down or changed without warning at any point in time.
+
+The author of this software is not responsible for any indirect damages (foreseeable or unforeseeable), such as, if necessary, loss or alteration of or fraudulent access to data, accidental transmission of viruses or of any other harmful element, loss of profits or opportunities, the cost of replacement goods and services or the attitude and behavior of a third party.
 
 ## Client
 

@@ -1,0 +1,50 @@
+---
+title: Authentication
+description: Sign in with TOTP or BankID from an application.
+---
+
+## Getting a TOTP secret
+
+1. Sign in to Avanza and go to **Profil → Inställningar → Sajtinställningar → Inloggning och utloggning → Användarnamn → Tvåfaktorsinloggning**.
+2. Choose **Aktivera** to set up two-factor login. If it is already enabled, choose **Återaktivera** instead.
+3. Select **Annan app för tvåfaktorsinloggning**.
+4. Select **Kan du inte scanna QR-koden?** to reveal the TOTP secret. Add that secret to your authenticator app.
+5. Enter the six-digit code from the authenticator app on Avanza to complete setup.
+
+Reactivating TOTP can invalidate an existing authenticator setup. Keep the revealed secret private; pass it as `totpSecret` or supply a current `totpCode` instead.
+
+## TOTP login
+
+Provide credentials from your own secure configuration. The returned session is also installed on the client:
+
+```ts
+import { AvanzaClient } from 'avanza-ts';
+
+const client = new AvanzaClient();
+const session = await client.auth.loginWithTotp({
+  username: process.env.AVANZA_USERNAME!,
+  password: process.env.AVANZA_PASSWORD!,
+  totpSecret: process.env.AVANZA_TOTP_SECRET!,
+  maxInactiveMinutes: 60,
+});
+```
+
+You may provide `totpCode` in place of `totpSecret` when generating the code yourself. `maxInactiveMinutes` controls the requested inactivity timeout for TOTP login (30–1,440 minutes; defaults to 1,440). Store the session in a suitable credential store; do not log or commit it.
+
+## BankID
+
+`startBankId()` returns an attempt whose `challenge.qrPayload` is text to render as a QR code. Poll and rerender the challenge while the status is `pending`:
+
+```ts
+const attempt = await client.auth.startBankId();
+renderQr(attempt.challenge.qrPayload);
+
+while (true) {
+  await new Promise((resolve) => setTimeout(resolve, attempt.challenge.refreshAfterMs));
+  const result = await attempt.poll();
+  if (result.status !== 'pending') break;
+  renderQr(result.challenge.qrPayload);
+}
+```
+
+Call `attempt.cancel()` when abandoning an active login. The SDK supplies the QR payload and optional `bankid://` autostart URL; your application chooses the renderer.

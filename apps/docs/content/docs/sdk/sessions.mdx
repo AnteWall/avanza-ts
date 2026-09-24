@@ -1,0 +1,27 @@
+---
+title: Sessions
+description: Restore, validate, and clear an SDK session.
+---
+
+The SDK keeps its session in memory. Persisting it is the application's responsibility.
+
+```ts
+import { AvanzaClient } from 'avanza-ts';
+
+const client = new AvanzaClient({ session: restoredSession });
+const valid = await client.auth.validateSession();
+
+if (valid) {
+  const accounts = await client.accounts.list();
+}
+
+client.clearSession();
+```
+
+You can also replace a session with `client.setSession(session)` or call `client.auth.logout()` to log out remotely and clear it locally. Authentication-required requests fail before making a network call when no session is available. TOTP sessions carry authentication headers; BankID sessions contain a serializable cookie snapshot.
+
+## Session duration
+
+Avanza lets you choose how long you stay logged in—from 30 minutes to 24 hours—in your account's website settings. This applies to biometric, username/password, and BankID logins. See Avanza's [session-duration instructions](https://www.avanza.se/kundservice.html/5121/hur-lange-kan-jag-vara-inloggad-pa-mitt-konto-utan-att-loggas-ut).
+
+Separately, `loginWithTotp()` sends `maxInactiveMinutes` with its login request (30–1,440 minutes; default 1,440). See [TOTP login](/docs/sdk/authentication#totp-login) for an example. The SDK has no equivalent setting for BankID login. Avanza determines when any session actually expires, so validate a restored session before using it. The 120-second BankID _login attempt_ timeout is unrelated to session lifetime.

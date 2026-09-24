@@ -1,0 +1,6 @@
+{
+  "title": "avanza-ts SDK",
+  "description": "TypeScript SDK documentation",
+  "root": true,
+  "pages": ["index", "getting-started", "authentication", "sessions", "reference"]
+}

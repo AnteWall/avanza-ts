@@ -1,6 +1,9 @@
 packages:
+  - apps/*
   - packages/*
 
+allowBuilds:
+  esbuild: true
 engineStrict: true
 minimumReleaseAge: 0
 strictPeerDependencies: true
