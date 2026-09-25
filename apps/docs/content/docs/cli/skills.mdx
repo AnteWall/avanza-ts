@@ -1,0 +1,22 @@
+---
+title: Agent skill
+description: Install the Avanza CLI skill for AI coding agents.
+---
+
+The [Avanza CLI skill](https://github.com/AnteWall/avanza-ts/blob/main/skills/avanza-cli/SKILL.md) helps AI agents use `avanza` to look up market data and work with your account. It includes command examples and guidance for `--json` and `--fields`.
+
+First [install the CLI](/docs/cli/getting-started), then run this in your project:
+
+```sh
+npx skills add AnteWall/avanza-ts --skill avanza-cli
+```
+
+To use it in all your projects, add `--global` to the install command.
+
+For example, ask your agent:
+
+> Find the latest quote for Volvo B using Avanza.
+
+> Show my recent dividends from Avanza.
+
+For account data, [sign in](/docs/cli/authentication) first.

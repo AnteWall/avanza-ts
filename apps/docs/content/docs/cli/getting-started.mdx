@@ -3,12 +3,31 @@ title: Getting started
 description: Install the CLI and discover commands.
 ---
 
-Install with Node.js 22.12+:
+Install [Node.js 22.12 or newer](https://nodejs.org/en/download) first. The package is `avanza-tools` and the command is `avanza`.
+
+## macOS, Linux, and Windows
+
+```sh tab="npm"
+npm install --global avanza-tools
+```
+
+```sh tab="pnpm"
+pnpm add --global avanza-tools
+```
+
+```sh tab="bun"
+bun add --global avanza-tools
+```
+
+On macOS or Linux, Homebrew is also available:
 
 ```sh
-npm install --global avanza-cli
-avanza --help
+brew install AnteWall/tap/avanza-tools
 ```
+
+Verify the installation with `avanza --help`.
+
+On Linux, signing in requires a running Secret Service provider; see [session storage](/docs/cli/sessions).
 
 Get help for any command and try a public market query without signing in:
 
@@ -17,4 +36,4 @@ avanza market search --help
 avanza market search --query volvo --limit 5
 ```
 
-For private data, [authenticate](/docs/cli/authentication) first. See the [command reference](/docs/cli/reference) for all topics and available flags.
+For private data, [authenticate](/docs/cli/authentication) first. See the [command reference](/docs/cli/reference) for all topics and available flags. AI agent users can also [install the Avanza CLI skill](/docs/cli/skills).

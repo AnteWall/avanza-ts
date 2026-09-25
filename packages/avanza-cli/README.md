@@ -1,6 +1,16 @@
 # avanza-tools
 
-Command-line interface for `avanza-ts`. Install with `npm install -g avanza-tools` or `brew install AnteWall/tap/avanza-tools`, then run `avanza`.
+Command-line interface for `avanza-ts`. Install with `npm install -g avanza-tools` (macOS, Linux, Windows) or `brew install AnteWall/tap/avanza-tools` (macOS, Linux), then run `avanza`.
+
+## Agent skill
+
+Install the [Avanza CLI skill](../../skills/avanza-cli/SKILL.md) for an AI agent to discover commands and use market or account data safely:
+
+```sh
+npx skills add AnteWall/avanza-ts --skill avanza-cli
+```
+
+Run this in your project, or add `--global` to use the skill across projects. Install the `avanza` CLI separately.
 
 ## Disclaimer
 

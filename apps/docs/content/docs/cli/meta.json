@@ -2,5 +2,13 @@
   "title": "avanza-tools",
   "description": "Command-line documentation",
   "root": true,
-  "pages": ["index", "getting-started", "authentication", "output", "sessions", "reference"]
+  "pages": [
+    "index",
+    "getting-started",
+    "skills",
+    "authentication",
+    "output",
+    "sessions",
+    "reference"
+  ]
 }
