@@ -7,7 +7,7 @@ if (!/^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(version ?? '') || !/^[a-f0-9]{64}$/.tes
 console.log(`class AvanzaTools < Formula
   desc "Command-line interface for Avanza"
   homepage "https://github.com/AnteWall/avanza-ts"
-  url "https://registry.npmjs.org/avanza-tools/-/avanza-tools-${version}.tgz"
+  url "https://github.com/AnteWall/avanza-ts/releases/download/avanza-tools@${version}/avanza-tools-${version}.tgz"
   sha256 "${sha256}"
 
   depends_on "node"
