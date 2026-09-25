@@ -38,6 +38,21 @@ for (const file of pages) {
   }
 }
 
+const llmsIndex = readFileSync(path.join(out, 'llms.txt'), 'utf8');
+const markdownLinks = [...llmsIndex.matchAll(/\]\(([^)]+\.md)\)/g)];
+if (markdownLinks.length === 0 || statSync(path.join(out, 'llms-full.txt')).size === 0) {
+  failures.push('LLM documentation is empty');
+}
+for (const [, href] of markdownLinks) {
+  const target = new URL(href, 'https://docs.test');
+  const pathname = decodeURIComponent(target.pathname.slice(basePath.length + 1));
+  if (!target.pathname.startsWith(`${basePath}/`)) {
+    failures.push(`llms.txt: ${href} (outside site)`);
+  } else if (!existsSync(path.join(out, pathname))) {
+    failures.push(`llms.txt: ${href} (missing Markdown page)`);
+  }
+}
+
 if (failures.length > 0) {
   console.error(failures.join('\n'));
   process.exitCode = 1;

@@ -4,6 +4,8 @@ An unofficial TypeScript SDK and command-line tool for Avanza.
 
 **Documentation:** [SDK guide](https://antewall.github.io/avanza-ts/docs/sdk/) · [CLI guide](https://antewall.github.io/avanza-ts/docs/cli/) · [Full documentation](https://antewall.github.io/avanza-ts/)
 
+**For AI agents:** [llms.txt](https://antewall.github.io/avanza-ts/llms.txt) · [Full Markdown docs](https://antewall.github.io/avanza-ts/llms-full.txt)
+
 Requires Node.js 22.12 or newer.
 
 ## TypeScript SDK — `avanza-ts`
