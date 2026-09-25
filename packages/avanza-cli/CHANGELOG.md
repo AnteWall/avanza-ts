@@ -1,5 +1,11 @@
 # avanza-tools
 
+## 1.0.2
+
+### Patch Changes
+
+- 5de1e19: Add an installable Avanza CLI agent skill and document CLI and skill installation.
+
 ## 1.0.1
 
 ### Patch Changes
