@@ -1,5 +1,11 @@
 # avanza-ts
 
+## 1.0.2
+
+### Patch Changes
+
+- c99aa82: Persist TOTP login cookies so authenticated account requests no longer return 401.
+
 ## 1.0.1
 
 ### Patch Changes
