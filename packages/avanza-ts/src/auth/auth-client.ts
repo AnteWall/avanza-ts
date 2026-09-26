@@ -204,7 +204,10 @@ export class AuthClient {
     }
 
     const customerId = optionalString(login, 'customerId', 256);
-    const pushSubscriptionId = optionalString(login, 'pushSubscriptionId', 512);
+    const pushSubscriptionId =
+      login.pushSubscriptionId === ''
+        ? undefined
+        : optionalString(login, 'pushSubscriptionId', 512);
     const session: TotpSession = {
       authenticationSession: requiredString(login, 'authenticationSession', 4096),
       ...(customerId === undefined ? {} : { customerId }),

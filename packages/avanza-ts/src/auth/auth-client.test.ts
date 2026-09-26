@@ -106,6 +106,37 @@ describe('AuthClient TOTP login', () => {
     });
   });
 
+  it('accepts an empty optional push subscription ID', async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>();
+    fetch.mockResolvedValueOnce(
+      jsonResponse({ twoFactorLogin: { method: 'TOTP', transactionId: 'transaction-id' } }),
+    );
+    fetch.mockResolvedValueOnce(
+      jsonResponse(
+        { ...loginBody(), pushSubscriptionId: '' },
+        { headers: { 'X-SecurityToken': 'security-token' } },
+      ),
+    );
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+
+    await expect(
+      client.auth.loginWithTotp({
+        password: 'password',
+        totpCode: '123456',
+        username: 'username',
+      }),
+    ).resolves.toEqual({
+      authenticationSession: 'authentication-session',
+      customerId: 'customer-id',
+      mode: 'totp',
+      securityToken: 'security-token',
+    });
+    expect(fetch.mock.calls.map(([url]) => new URL(url.toString()).pathname)).toEqual([
+      '/_api/authentication/sessions/usercredentials',
+      '/_api/authentication/sessions/totp',
+    ]);
+  });
+
   it('generates a code from a secret', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(59_000);
