@@ -19,6 +19,7 @@ export interface TotpSession {
   readonly mode: 'totp';
   readonly authenticationSession: string;
   readonly securityToken: string;
+  readonly cookies?: readonly AvanzaCookie[];
   readonly pushSubscriptionId?: string;
   readonly customerId?: string;
 }

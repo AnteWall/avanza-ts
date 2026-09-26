@@ -137,6 +137,47 @@ describe('AuthClient TOTP login', () => {
     ]);
   });
 
+  it('uses TOTP login cookies for account requests after restoring a session', async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>(async (url, init) => {
+      const path = new URL(url.toString()).pathname;
+      if (path.endsWith('/usercredentials')) {
+        return jsonResponse({
+          twoFactorLogin: { method: 'TOTP', transactionId: 'transaction-id' },
+        });
+      }
+      if (path.endsWith('/totp')) {
+        return jsonResponse(loginBody(), {
+          headers: {
+            'Set-Cookie': 'csid=credential; Path=/; Secure; HttpOnly',
+            'X-SecurityToken': 'security-token',
+          },
+        });
+      }
+      expect(path).toBe('/_api/account-overview/accounts/list');
+      const headers = new Headers(init?.headers);
+      expect(headers.get('Cookie')).toBe('csid=credential');
+      expect(headers.has('X-AuthenticationSession')).toBe(false);
+      expect(headers.get('X-SecurityToken')).toBe('security-token');
+      return jsonResponse({ accounts: [] });
+    });
+    const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+    const session = await client.auth.loginWithTotp({
+      password: 'password',
+      totpCode: '123456',
+      username: 'username',
+    });
+    expect(session.cookies).toEqual([
+      expect.objectContaining({ key: 'csid', value: 'credential' }),
+    ]);
+
+    const restored = new AvanzaClient({
+      baseUrl: 'https://example.test',
+      fetch,
+      session: JSON.parse(JSON.stringify(session)),
+    });
+    await expect(restored.accounts.list()).resolves.toEqual({ accounts: [] });
+  });
+
   it('generates a code from a secret', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(59_000);

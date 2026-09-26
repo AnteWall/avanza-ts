@@ -39,7 +39,7 @@ export class AuthClient {
     }
 
     try {
-      const http = this.context.createHttpSession(session.mode === 'bankid' ? session.cookies : []);
+      const http = this.context.createHttpSession(session.cookies ?? []);
       const response = await http.requestDetailed<unknown>(
         {
           access: 'anonymous',
@@ -48,7 +48,7 @@ export class AuthClient {
           redirect: 'error',
           signal,
         },
-        { includeCookies: session.mode === 'bankid', session },
+        { session },
       );
       const info = parseSessionInfo(response.body);
 
@@ -82,7 +82,7 @@ export class AuthClient {
     let failure: unknown;
 
     try {
-      const http = this.context.createHttpSession(session.mode === 'bankid' ? session.cookies : []);
+      const http = this.context.createHttpSession(session.cookies ?? []);
       await http.requestDetailed<unknown>(
         {
           access: 'anonymous',
@@ -91,7 +91,7 @@ export class AuthClient {
           redirect: 'error',
           signal,
         },
-        { includeCookies: session.mode === 'bankid', session },
+        { session },
       );
     } catch (error) {
       if (!(error instanceof AvanzaHttpError) || error.status !== 401) {
@@ -166,7 +166,7 @@ export class AuthClient {
 
     if (secondFactor === undefined || secondFactor === null) {
       const login = asObject(initialBody.successfulLogin);
-      return this.installTotpSession(login, initial.headers);
+      return this.installTotpSession(login, initial.headers, http.cookies);
     }
 
     const secondFactorBody = asObject(secondFactor);
@@ -183,7 +183,7 @@ export class AuthClient {
     const code =
       options.totpSecret === undefined ? options.totpCode : generateTotpCode(options.totpSecret);
     const completed = await this.completeTotp(http, code, options.signal);
-    return this.installTotpSession(asObject(completed.body), completed.headers);
+    return this.installTotpSession(asObject(completed.body), completed.headers, http.cookies);
   }
 
   private async completeTotp(http: HttpSession, code: string, signal?: AbortSignal) {
@@ -197,7 +197,12 @@ export class AuthClient {
     });
   }
 
-  private installTotpSession(login: Record<string, unknown>, headers: Headers): TotpSession {
+  private installTotpSession(
+    login: Record<string, unknown>,
+    headers: Headers,
+    cookies: readonly AvanzaCookie[],
+  ): TotpSession {
+    cookies = cookies.filter((cookie) => cookie.key !== 'AZAMFATRANSACTION');
     const securityToken = headers.get('X-SecurityToken');
     if (securityToken === null || securityToken.length === 0 || securityToken.length > 4096) {
       throw new AvanzaAuthenticationError({ code: 'malformed_response' });
@@ -210,6 +215,7 @@ export class AuthClient {
         : optionalString(login, 'pushSubscriptionId', 512);
     const session: TotpSession = {
       authenticationSession: requiredString(login, 'authenticationSession', 4096),
+      ...(cookies.length === 0 ? {} : { cookies }),
       ...(customerId === undefined ? {} : { customerId }),
       mode: 'totp',
       ...(pushSubscriptionId === undefined ? {} : { pushSubscriptionId }),
@@ -249,7 +255,11 @@ function updateValidatedSession(
   securityToken: string | undefined,
 ): AvanzaSession {
   if (session.mode === 'totp') {
-    return securityToken === undefined ? session : { ...session, securityToken };
+    return {
+      ...session,
+      ...(session.cookies === undefined ? {} : { cookies }),
+      ...(securityToken === undefined ? {} : { securityToken }),
+    };
   }
 
   const { securityToken: _previousSecurityToken, ...sessionWithoutToken } = session;

@@ -35,18 +35,18 @@ export class HttpClient implements HttpTransport {
     }
 
     if (session !== this.#loadedSession) {
-      this.#session.replaceCookies(session?.mode === 'bankid' ? session.cookies : []);
+      this.#session.replaceCookies(session?.cookies ?? []);
       this.#loadedSession = session;
     }
 
     const includeCredentials = request.access !== 'anonymous' && session !== undefined;
     const response = await this.#session.requestDetailed<Response>(request, {
-      captureCookies: includeCredentials && session.mode === 'bankid',
-      includeCookies: includeCredentials && session.mode === 'bankid',
+      captureCookies: includeCredentials && session.cookies !== undefined,
+      includeCookies: includeCredentials && session.cookies !== undefined,
       ...(includeCredentials ? { session } : {}),
     });
 
-    if (response.cookiesChanged && session?.mode === 'bankid' && includeCredentials) {
+    if (response.cookiesChanged && session?.cookies !== undefined && includeCredentials) {
       const updatedSession: AvanzaSession = {
         ...session,
         cookies: this.#session.cookies,
@@ -208,7 +208,7 @@ function createHeaders(request: HttpRequest, session: AvanzaSession | undefined)
     headers.set('Content-Type', 'application/json');
   }
 
-  if (session?.mode === 'totp') {
+  if (session?.mode === 'totp' && !session.cookies?.length) {
     headers.set('X-AuthenticationSession', session.authenticationSession);
     headers.set('X-SecurityToken', session.securityToken);
   } else if (session?.securityToken !== undefined) {
