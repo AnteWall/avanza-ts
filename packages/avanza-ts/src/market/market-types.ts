@@ -520,6 +520,191 @@ export interface StockAnalysis {
   readonly keyRatiosByQuarterQuarter: AnalysisSummary;
 }
 
+export interface EstimatePoint {
+  /** For example `FULL_YEAR` or `Q1`. */
+  readonly reportPeriod: string;
+  readonly financialYear: number;
+  /** Report date; present on quarterly series. */
+  readonly date?: string;
+  /** Reported value; absent on future periods. */
+  readonly value?: number;
+  /** Analyst consensus estimate; present on future periods. */
+  readonly estimate?: number;
+  readonly onlyEstimate: boolean;
+}
+
+/** Metric name, for example `priceEarningsRatio` or `sales`, to its series. */
+export type EstimateSeries = Readonly<Record<string, readonly EstimatePoint[]>>;
+
+/** Like {@link StockAnalysis}, with analyst estimates for coming periods. */
+export interface StockEstimates {
+  readonly stockKeyRatiosByYear: EstimateSeries;
+  readonly stockKeyRatiosByQuarterTTM: EstimateSeries;
+  readonly stockKeyRatiosByQuarterQuarter: EstimateSeries;
+  readonly companyKeyRatiosByYear: EstimateSeries;
+  readonly companyKeyRatiosByQuarterTTM: EstimateSeries;
+  readonly companyKeyRatiosByQuarterQuarter: EstimateSeries;
+  readonly dividendsByYear: EstimateSeries;
+  readonly companyFinancialsByYear: EstimateSeries;
+  readonly companyFinancialsByQuarterTTM: EstimateSeries;
+  readonly companyFinancialsByQuarterQuarter: EstimateSeries;
+  readonly keyRatiosByYear: AnalysisSummary;
+  readonly keyRatiosByQuarterTTM: AnalysisSummary;
+  readonly keyRatiosByQuarterQuarter: AnalysisSummary;
+}
+
+export interface SectorIndicator {
+  /** For example `earningsPerShare` or `priceEarningsRatio`. */
+  readonly key: string;
+  readonly label: string;
+  readonly snapshot: { readonly latest: number | null; readonly average: number | null };
+  readonly historical: readonly EstimatePoint[];
+}
+
+/** Key ratios for the stock's sector. */
+export interface SectorAnalysis {
+  readonly sectorId: string;
+  readonly sectorName: string;
+  readonly indicators: readonly SectorIndicator[];
+}
+
+export interface AnalystRecommendations {
+  readonly date: string;
+  readonly numberOfOutperform: number;
+  readonly numberOfBuy: number;
+  readonly numberOfHold: number;
+  readonly numberOfUnderperform: number;
+  readonly numberOfSell: number;
+  /** For example `BUY`, `OUTPERFORM`, or `HOLD`. */
+  readonly consensusAction: string;
+  /** For example `HOLD` or `UNKNOWN`. */
+  readonly industryConsensusAction: string;
+}
+
+export interface PriceTargets {
+  readonly date: string;
+  readonly lowPriceTarget: number;
+  readonly averagePriceTarget: number;
+  readonly highPriceTarget: number;
+  readonly numberOfEstimates: number;
+}
+
+export interface EstimateHistory {
+  readonly recommendations: readonly AnalystRecommendations[];
+  readonly priceTargets: readonly PriceTargets[];
+}
+
+export interface MorningstarAnalysis {
+  /** PDF report URL. */
+  readonly documentUrl: string;
+  readonly documentId: string;
+  readonly documentPublishedDate: string;
+  readonly fairValue: {
+    readonly financialValue: string;
+    readonly currency: string;
+    readonly published: string;
+  };
+  /** Economic moat, for example `Narrow` or `Wide`. */
+  readonly moat: { readonly value: string };
+  readonly bullBear: {
+    readonly bulls: readonly string[];
+    readonly bears: readonly string[];
+    readonly published: string;
+    readonly author: { readonly byLine: string; readonly jobTitle: string };
+  };
+}
+
+export interface MorningstarAnalysisResponse {
+  /** `null` when Morningstar does not cover the stock. */
+  readonly morningstar: MorningstarAnalysis | null;
+}
+
+/**
+ * Placera is open to all customers; Affärsvärlden needs a linked subscription
+ * and Kepler Cheuvreux Private Banking or Pro to read the full analyses.
+ */
+export const analysisProviders = ['placera', 'afv', 'kepler'] as const;
+
+export type AnalysisProvider = (typeof analysisProviders)[number];
+
+/** Which gated providers the customer can read. */
+export interface AnalysisAccess {
+  readonly afv: boolean;
+  readonly kepler: boolean;
+  readonly platina: boolean;
+}
+
+export interface AnalysisSummaryItem {
+  readonly analysisId: string;
+  readonly orderbookId: string;
+  /** `name`, `countryCode`, and `currency` are absent from single-stock responses. */
+  readonly name?: string;
+  readonly countryCode?: string;
+  readonly currency?: string;
+  readonly lastPrice?: number;
+  readonly priceAtPublish?: number;
+  readonly hasPosition: boolean;
+  /** `ANALYSIS` or `COMMENT`; Affärsvärlden and Kepler only. */
+  readonly analysisType?: string;
+  readonly title?: string;
+  readonly points?: readonly string[];
+  readonly authors: readonly string[];
+  /** Article URL; Placera only. */
+  readonly link?: string;
+  readonly published: string;
+}
+
+export interface AnalysisFilter {
+  /** Defaults to 0. */
+  readonly offset?: number | undefined;
+  /** Defaults to 20. */
+  readonly limit?: number | undefined;
+  /** Matches the instrument name. */
+  readonly name?: string | undefined;
+  /** Sector values from `filterOptions.sectors`. */
+  readonly sectors?: readonly string[] | undefined;
+  /** Market values from `filterOptions.countryMarketList`, for example `se/xsto`. */
+  readonly countryMarkets?: readonly string[] | undefined;
+  /** For example `buy`, `hold`, or `reduce`. */
+  readonly recommendations?: readonly string[] | undefined;
+}
+
+export interface FilteredAnalysis {
+  readonly analysisId: string;
+  readonly orderbookId: string;
+  readonly name: string;
+  readonly countryCode: string;
+  readonly marketPlaceCode: string;
+  readonly currency: string;
+  readonly lastPrice?: number;
+  readonly priceAtPublish?: number;
+  readonly publishDate: string;
+  readonly publishChangeRatio?: number;
+  readonly hasPosition: boolean;
+  readonly title?: string;
+  readonly link?: string;
+}
+
+export interface AnalysisFilterOption {
+  readonly value: string;
+  readonly displayName: string;
+  readonly numberOfOrderbooks: string;
+  readonly children?: readonly AnalysisFilterOption[];
+}
+
+export interface FilteredAnalysesResponse {
+  readonly analyses: readonly FilteredAnalysis[];
+  readonly offset: number;
+  readonly limit: number;
+  readonly totalCount: number;
+  readonly filterOptions: {
+    readonly countryMarketList: readonly AnalysisFilterOption[];
+    readonly sectors: readonly AnalysisFilterOption[];
+    readonly recommendations: readonly AnalysisFilterOption[];
+  };
+  readonly sortBy: { readonly field: string; readonly order: string };
+}
+
 export interface NumberOfOwnersResponse {
   readonly ownersPoints: readonly { readonly timestamp: number; readonly numberOfOwners: number }[];
   readonly historySummary: {

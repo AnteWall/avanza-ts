@@ -1,0 +1,63 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/market-stock-analysis/analysis/5269/sector"
+  },
+  "response": {
+    "body": {
+      "sectorId": "29",
+      "sectorName": "Industri",
+      "indicators": [
+        {
+          "key": "earningsPerShare",
+          "label": "Vinst/aktie",
+          "snapshot": {
+            "latest": 19.21,
+            "average": 20.65
+          },
+          "historical": [
+            {
+              "date": "2024-07-18",
+              "reportPeriod": "Q2",
+              "financialYear": 2024,
+              "value": 27.42,
+              "onlyEstimate": false
+            },
+            {
+              "date": "2024-10-18",
+              "reportPeriod": "Q3",
+              "financialYear": 2024,
+              "value": 25.42,
+              "onlyEstimate": false
+            }
+          ]
+        },
+        {
+          "key": "turnoverPerShare",
+          "label": "Omsättning/aktie",
+          "snapshot": {
+            "latest": 236.23,
+            "average": 247.16
+          },
+          "historical": [
+            {
+              "date": "2024-07-18",
+              "reportPeriod": "Q2",
+              "financialYear": 2024,
+              "value": 271.43,
+              "onlyEstimate": false
+            },
+            {
+              "date": "2024-10-18",
+              "reportPeriod": "Q3",
+              "financialYear": 2024,
+              "value": 263.85,
+              "onlyEstimate": false
+            }
+          ]
+        }
+      ]
+    },
+    "status": 200
+  }
+}

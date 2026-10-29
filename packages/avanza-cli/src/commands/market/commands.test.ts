@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({ loadSession: vi.fn(), saveSession: vi.fn() }))
 vi.mock('../../services/session/session-store.js', () => mocks);
 
 import Data from './data.js';
+import FilterAnalyses from './filter-analyses.js';
 import PriceChart from './price-chart.js';
 import Search from './search.js';
 
@@ -94,5 +95,31 @@ it('reads market data with the stored session', async () => {
 
   const [url, init] = fetch.mock.calls[0]!;
   expect(new URL(url.toString()).pathname).toBe('/_api/trading-critical/rest/marketdata/5269');
+  expect(new Headers(init?.headers).get('X-AuthenticationSession')).toBe('session');
+});
+
+it('posts analysis filters with the stored session', async () => {
+  mocks.loadSession.mockResolvedValue({
+    mode: 'totp',
+    authenticationSession: 'session',
+    securityToken: 'token',
+  });
+  const fetch = mockFetch();
+  vi.spyOn(FilterAnalyses.prototype, 'log').mockImplementation(() => undefined);
+
+  await FilterAnalyses.run(
+    ['--provider', 'kepler', '--markets', 'se/xsto,dk', '--name', 'volvo', '--json'],
+    { root },
+  );
+
+  const [url, init] = fetch.mock.calls[0]!;
+  expect(new URL(url.toString()).pathname).toBe('/_api/market-external-analysis/filtered-analyses');
+  expect(JSON.parse(String(init?.body))).toMatchObject({
+    provider: 'KEPLER',
+    stringListFilters: [{ filterField: 'countryMarketList', values: ['se/xsto', 'dk'] }],
+    stringQueryFilters: [{ filterField: 'name', query: 'volvo' }],
+    offset: 0,
+    limit: 20,
+  });
   expect(new Headers(init?.headers).get('X-AuthenticationSession')).toBe('session');
 });

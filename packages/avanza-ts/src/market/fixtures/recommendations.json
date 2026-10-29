@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/market-stock-analysis/estimate/recommendation/5269"
+  },
+  "response": {
+    "body": {
+      "date": "2026-10-24",
+      "numberOfOutperform": 2,
+      "numberOfBuy": 9,
+      "numberOfSell": 1,
+      "numberOfHold": 9,
+      "numberOfUnderperform": 1,
+      "consensusAction": "OUTPERFORM",
+      "industryConsensusAction": "HOLD"
+    },
+    "status": 200
+  }
+}

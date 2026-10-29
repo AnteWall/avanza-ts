@@ -127,6 +127,21 @@ avanza market company-events --orderbook-id 5269
 avanza market insider-transactions --orderbook-id 5269
 avanza market short-selling --orderbook-id 5269
 avanza market technical-analysis --orderbook-id 5269 --period one_month --points 20
+avanza market sector-analysis --orderbook-id 5269
+```
+
+Analyst data needs a session. Placera analyses are open to all customers; Affärsvärlden needs a linked subscription and Kepler Cheuvreux Private Banking or Pro to read the full analyses (`analysis-access` shows which you have).
+
+```sh
+avanza market estimates --orderbook-id 5269
+avanza market recommendations --orderbook-id 5269
+avanza market price-targets --orderbook-id 5269
+avanza market estimate-history --orderbook-id 5269
+avanza market morningstar --orderbook-id 5269
+avanza market analysis-access
+avanza market latest-analyses --provider kepler
+avanza market latest-analysis --provider placera --orderbook-id 5342
+avanza market filter-analyses --provider kepler --markets se/xsto --recommendations buy
 ```
 
 Use `market search` or `market isin` to find orderbook IDs; the `instruments` screeners list certificate, warrant, and option IDs. Available `--resolution` values depend on the period; `price-chart` returns them in `metadata.resolution`.

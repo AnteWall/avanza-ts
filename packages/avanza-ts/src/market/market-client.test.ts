@@ -47,6 +47,12 @@ describe('MarketClient', () => {
     ['short selling', (m) => m.shortSelling('5269'), '/market-guide/short-selling/5269', {}],
     ['stock', (m) => m.stock('5269'), '/market-guide/stock/5269', {}],
     ['stock analysis', (m) => m.stockAnalysis('5269'), '/market-guide/stock/5269/analysis', {}],
+    [
+      'sector analysis',
+      (m) => m.sectorAnalysis('5269'),
+      '/market-stock-analysis/analysis/5269/sector',
+      {},
+    ],
     ['marketplace', (m) => m.marketplace('5269'), '/market-guide/stock/5269/marketplace', {}],
     ['owners', (m) => m.numberOfOwners('5269'), '/market-guide/number-of-owners/5269', {}],
     [
@@ -156,6 +162,74 @@ describe('MarketClient', () => {
     expect(authed.request().path).toBe('/_api/trading-critical/rest/marketdata/5269');
   });
 
+  it.each<[string, (market: MarketClient) => Promise<unknown>, string]>([
+    ['estimates', (m) => m.stockEstimates('5269'), '/market-stock-analysis/analysis/5269'],
+    [
+      'recommendations',
+      (m) => m.analystRecommendations('5269'),
+      '/market-stock-analysis/estimate/recommendation/5269',
+    ],
+    [
+      'estimate history',
+      (m) => m.estimateHistory('5269'),
+      '/market-stock-analysis/estimate/history/5269',
+    ],
+    ['morningstar', (m) => m.morningstarAnalysis('5269'), '/stock-analyses/5269'],
+    [
+      'analysis access',
+      (m) => m.analysisAccess(),
+      '/market-external-analysis/external-analysis/access',
+    ],
+    [
+      'latest analyses',
+      (m) => m.latestAnalyses('kepler'),
+      '/market-external-analysis/latest-analysis-summary/kepler',
+    ],
+    [
+      'latest analysis',
+      (m) => m.latestAnalysis('placera', '5269'),
+      '/market-external-analysis/latest-analysis-summary/placera/5269',
+    ],
+  ])('requires a session for %s', async (_name, call, path) => {
+    const { client, fetch } = setup();
+    await expect(call(client.market)).rejects.toBeInstanceOf(AvanzaAuthenticationRequiredError);
+    expect(fetch).not.toHaveBeenCalled();
+
+    const authed = setup({}, true);
+    await call(authed.client.market);
+    expect(authed.request()).toEqual({
+      method: 'GET',
+      path: `/_api${path}`,
+      query: {},
+      body: undefined,
+    });
+  });
+
+  it('posts an analysis filter with only the given filters', async () => {
+    const { client, request } = setup({ analyses: [] }, true);
+
+    await client.market.filterAnalyses('kepler', {
+      countryMarkets: ['se/xsto'],
+      recommendations: ['buy'],
+      limit: 2,
+    });
+
+    expect(request()).toMatchObject({
+      method: 'POST',
+      path: '/_api/market-external-analysis/filtered-analyses',
+      body: {
+        provider: 'KEPLER',
+        dateFilter: {},
+        recommendationFilter: { filterField: 'recommendation', values: ['buy'] },
+        stringListFilters: [{ filterField: 'countryMarketList', values: ['se/xsto'] }],
+        stringQueryFilters: [],
+        offset: 0,
+        limit: 2,
+        sortBy: { field: 'publishDate', order: 'desc' },
+      },
+    });
+  });
+
   it('rejects invalid input before sending', () => {
     const { client, fetch } = setup();
     expect(() => client.market.search(' ')).toThrow(TypeError);
@@ -167,6 +241,9 @@ describe('MarketClient', () => {
 
 it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
   ['short-selling', (c) => c.market.shortSelling('5269')],
+  ['recommendations', (c) => c.market.analystRecommendations('5269')],
+  ['price-targets', (c) => c.market.priceTargets('5269')],
+  ['sector-analysis', (c) => c.market.sectorAnalysis('5269')],
   ['stock', (c) => c.market.stock('5269')],
   ['certificate', (c) => c.market.instrument('certificate', '563966')],
 ])('replays a recorded %s response', (name, call) =>

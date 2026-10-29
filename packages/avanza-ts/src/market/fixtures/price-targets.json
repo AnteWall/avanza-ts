@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/market-stock-analysis/estimate/pricetarget/5269"
+  },
+  "response": {
+    "body": {
+      "date": "2026-10-27",
+      "lowPriceTarget": 285,
+      "averagePriceTarget": 354.26571,
+      "highPriceTarget": 450,
+      "numberOfEstimates": 21
+    },
+    "status": 200
+  }
+}

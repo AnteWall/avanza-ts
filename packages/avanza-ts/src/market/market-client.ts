@@ -2,12 +2,19 @@ import type { ClientContext } from '../internal/client-context.js';
 import type { HttpRequest } from '../internal/http-types.js';
 import { pathId } from '../internal/path-id.js';
 import type {
+  AnalysisAccess,
+  AnalysisFilter,
+  AnalysisProvider,
+  AnalysisSummaryItem,
+  AnalystRecommendations,
   BrokerTradeSummary,
   ChartPeriod,
   ChartPeriodChange,
   CompanyEvent,
+  EstimateHistory,
   EtfDetailsResponse,
   EtfResponse,
+  FilteredAnalysesResponse,
   HeaderIndicesResponse,
   IndexConstituent,
   InsiderTradesResponse,
@@ -22,6 +29,7 @@ import type {
   MarketplaceStatus,
   MarketOverview,
   MarketTrade,
+  MorningstarAnalysisResponse,
   NumberOfOwnersResponse,
   Ohlc,
   OrderDepth,
@@ -29,10 +37,13 @@ import type {
   PriceChartOptions,
   PriceChartPeriod,
   PriceChartResponse,
+  PriceTargets,
   SearchOptions,
   SearchResponse,
+  SectorAnalysis,
   ShortSellingResponse,
   StockAnalysis,
+  StockEstimates,
   StockInfo,
   StockQuote,
 } from './market-types.js';
@@ -137,10 +148,110 @@ export class MarketClient {
 
   /** Requires a session. */
   public marketData(orderbookId: string, signal?: AbortSignal): Promise<MarketDataResponse> {
-    return this.context.http.request<MarketDataResponse>({
+    return this.getAuthenticated(`/trading-critical/rest/marketdata${pathId(orderbookId)}`, signal);
+  }
+
+  /** Key ratios, financials, and dividends with analyst estimates. Requires a session. */
+  public stockEstimates(orderbookId: string, signal?: AbortSignal): Promise<StockEstimates> {
+    return this.getAuthenticated(`/market-stock-analysis/analysis${pathId(orderbookId)}`, signal);
+  }
+
+  /** Key ratios for the stock's sector. */
+  public sectorAnalysis(orderbookId: string, signal?: AbortSignal): Promise<SectorAnalysis> {
+    return this.get(`/market-stock-analysis/analysis${pathId(orderbookId)}/sector`, signal);
+  }
+
+  /** Current analyst recommendation counts and consensus. Requires a session. */
+  public analystRecommendations(
+    orderbookId: string,
+    signal?: AbortSignal,
+  ): Promise<AnalystRecommendations> {
+    return this.getAuthenticated(
+      `/market-stock-analysis/estimate/recommendation${pathId(orderbookId)}`,
+      signal,
+    );
+  }
+
+  /** Current analyst price targets. Requires a session. */
+  public priceTargets(orderbookId: string, signal?: AbortSignal): Promise<PriceTargets> {
+    return this.getAuthenticated(
+      `/market-stock-analysis/estimate/pricetarget${pathId(orderbookId)}`,
+      signal,
+    );
+  }
+
+  /** Past recommendations and price targets. Requires a session. */
+  public estimateHistory(orderbookId: string, signal?: AbortSignal): Promise<EstimateHistory> {
+    return this.getAuthenticated(
+      `/market-stock-analysis/estimate/history${pathId(orderbookId)}`,
+      signal,
+    );
+  }
+
+  /** Morningstar fair value, moat, and bull/bear case. Requires a session. */
+  public morningstarAnalysis(
+    orderbookId: string,
+    signal?: AbortSignal,
+  ): Promise<MorningstarAnalysisResponse> {
+    return this.getAuthenticated(`/stock-analyses${pathId(orderbookId)}`, signal);
+  }
+
+  /** Which gated analysis providers the customer can read. Requires a session. */
+  public analysisAccess(signal?: AbortSignal): Promise<AnalysisAccess> {
+    return this.getAuthenticated('/market-external-analysis/external-analysis/access', signal);
+  }
+
+  /** Latest analyses from a provider. Requires a session. */
+  public latestAnalyses(
+    provider: AnalysisProvider,
+    signal?: AbortSignal,
+  ): Promise<readonly AnalysisSummaryItem[]> {
+    return this.getAuthenticated(
+      `/market-external-analysis/latest-analysis-summary${pathId(provider)}`,
+      signal,
+    );
+  }
+
+  /** Latest analysis of one stock, or `undefined` when there is none. Requires a session. */
+  public latestAnalysis(
+    provider: AnalysisProvider,
+    orderbookId: string,
+    signal?: AbortSignal,
+  ): Promise<AnalysisSummaryItem | undefined> {
+    return this.getAuthenticated(
+      `/market-external-analysis/latest-analysis-summary${pathId(provider)}${pathId(orderbookId)}`,
+      signal,
+    );
+  }
+
+  /** Filters a provider's analyses, newest first. Requires a session. */
+  public filterAnalyses(
+    provider: AnalysisProvider,
+    filter: AnalysisFilter = {},
+    signal?: AbortSignal,
+  ): Promise<FilteredAnalysesResponse> {
+    const lists = [
+      ['sectors', filter.sectors],
+      ['countryMarketList', filter.countryMarkets],
+    ] as const;
+    return this.context.http.request<FilteredAnalysesResponse>({
       access: 'required',
-      method: 'GET',
-      path: `/_api/trading-critical/rest/marketdata${pathId(orderbookId)}`,
+      method: 'POST',
+      path: '/_api/market-external-analysis/filtered-analyses',
+      body: {
+        provider: provider.toUpperCase(),
+        dateFilter: {},
+        recommendationFilter: filter.recommendations?.length
+          ? { filterField: 'recommendation', values: filter.recommendations }
+          : {},
+        stringListFilters: lists
+          .filter(([, values]) => values?.length)
+          .map(([filterField, values]) => ({ filterField, values })),
+        stringQueryFilters: filter.name ? [{ filterField: 'name', query: filter.name }] : [],
+        offset: filter.offset ?? 0,
+        limit: filter.limit ?? 20,
+        sortBy: { field: 'publishDate', order: 'desc' },
+      },
       signal,
     });
   }
@@ -258,6 +369,15 @@ export class MarketClient {
       method: 'GET',
       path: `/_api${path}`,
       query,
+      signal,
+    });
+  }
+
+  private getAuthenticated<Response>(path: string, signal?: AbortSignal): Promise<Response> {
+    return this.context.http.request<Response>({
+      access: 'required',
+      method: 'GET',
+      path: `/_api${path}`,
       signal,
     });
   }
