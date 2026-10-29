@@ -46,6 +46,20 @@ it('gets the news feed and calendar with a session', async () => {
   ]);
 });
 
+it('screens news with comma-joined filters and no session', async () => {
+  const { client, paths } = setup();
+  await client.news.screenerFilters();
+  await client.news.screen();
+  await client.news.screen({ companies: ['5269', '5247'], newsTypes: ['2'], sources: [] });
+  await client.news.screen({ watchlists: ['w'] });
+  expect(paths()).toEqual([
+    ['GET', '/_api/news-screener/filters'],
+    ['GET', '/_api/news-screener/results'],
+    ['GET', '/_api/news-screener/results?companies=5269%2C5247&newsTypes=2'],
+    ['GET', '/_api/news-screener/results?watchLists=w'],
+  ]);
+});
+
 it('requires a session for the feed', async () => {
   const { client, fetch } = setup();
   await expect(client.news.feed()).rejects.toBeInstanceOf(AvanzaAuthenticationRequiredError);
@@ -56,6 +70,8 @@ it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
   ['article', (c) => c.news.article('https://www.placera.se/telegram/avanza/13_synthetic')],
   ['feed', (c) => c.news.feed({ count: 2 })],
   ['calendar', (c) => c.news.calendar()],
+  ['screener-filters', (c) => c.news.screenerFilters()],
+  ['screen', (c) => c.news.screen({ companies: ['5269'] })],
 ])('replays an anonymized %s capture', (name, call) =>
   expectFixtureReplay(`news/fixtures/${name}.json`, call),
 );

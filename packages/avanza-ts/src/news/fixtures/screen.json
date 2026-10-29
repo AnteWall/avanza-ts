@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/news-screener/results?companies=5269"
+  },
+  "response": {
+    "body": {
+      "articles": [
+        {
+          "headline": " NYREGISTRERINGAR TUNGA LASTBILAR I EU +8,5% 9 MÅN- ACEA",
+          "vignette": "FORDON",
+          "teaser": "STOCKHOLM (Nyhetsbyrån Direkt) EU-registreringar av nya lastbilar steg 7,5 procent till 245.079 fordon under de första nio månaderna av 2026, jämfört med samma period i fjol.Det framgår av data från b",
+          "ingress": null,
+          "source": "Nyhetsbyrån Direkt",
+          "category": "TELEGRAM",
+          "publishTime": 1793165091000,
+          "path": "/telegram/avanza/1_aeec2ad5-aa96-4fb7-841c-bb5b58afa691",
+          "orderbookIds": ["5268", "5269"],
+          "companyId": "144",
+          "companyName": "Volvo A",
+          "instrumentType": "STOCK",
+          "flagCode": "SE"
+        },
+        {
+          "headline": "EU-registreringarna av tunga lastbilar steg 8,5 procent under första nio månaderna - ACEA",
+          "vignette": "Traton",
+          "teaser": "Registreringarna av tunga lastvagnar över 16 ton i EU steg med 8,5 procent till 205 857 fordon under årets första nio månader. Det följer på en nedgång om 5,4 procent under helåret 2025.Det visar färs",
+          "ingress": null,
+          "source": "Finwire",
+          "category": "TELEGRAM",
+          "publishTime": 1793163438000,
+          "path": "/telegram/avanza/13_52c55cc1-034e-457f-a8e4-ada3432ad747",
+          "orderbookIds": ["1248257", "5268", "5269", "972553", "1323463"],
+          "companyId": "106076",
+          "companyName": "TRATON SE",
+          "instrumentType": "STOCK",
+          "flagCode": "DE"
+        }
+      ]
+    },
+    "status": 200
+  }
+}

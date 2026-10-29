@@ -13,10 +13,11 @@ export abstract class ApiRequestCommand extends ApiCommand {
       output: string | undefined;
     },
     operation: (client: AvanzaClient) => Promise<unknown>,
-    authenticated = false,
+    /** `'optional'` uses a stored session when there is one. */
+    authenticated: boolean | 'optional' = false,
   ): Promise<void> {
     const session = authenticated ? await loadSession() : undefined;
-    if (authenticated && session === undefined) {
+    if (authenticated === true && session === undefined) {
       this.signInRequired('Not signed in.');
     }
     const recorder = recordFixture(flags.fixture);

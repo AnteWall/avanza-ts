@@ -11,6 +11,8 @@ vi.mock('../services/session/session-store.js', () => mocks);
 
 import TabsList from '../commands/instruments/tabs/list.js';
 import Calendar from '../commands/news/calendar.js';
+import Screen from '../commands/news/screen.js';
+import ScreenerFilters from '../commands/news/screener-filters.js';
 
 const root = resolve(import.meta.dirname, '../..');
 
@@ -56,4 +58,42 @@ it('clears a rejected session and reports that sign-in is needed', async () => {
     '/_api/customer-calendar/calendar',
   );
   expect(mocks.deleteSession).toHaveBeenCalledOnce();
+});
+
+it('uses a stored session only when one exists for optional commands', async () => {
+  const fetch = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => Response.json({}));
+  vi.spyOn(ScreenerFilters.prototype, 'log').mockImplementation(() => undefined);
+
+  mocks.loadSession.mockResolvedValue(undefined);
+  await ScreenerFilters.run(['--json'], { root });
+  mocks.loadSession.mockResolvedValue({
+    mode: 'totp',
+    authenticationSession: 'session',
+    securityToken: 'token',
+  });
+  await ScreenerFilters.run(['--json'], { root });
+
+  expect(
+    fetch.mock.calls.map(([, init]) => new Headers(init?.headers).get('X-AuthenticationSession')),
+  ).toEqual([null, 'session']);
+});
+
+it('screens news without a session unless account or watchlist filters are given', async () => {
+  mocks.loadSession.mockResolvedValue(undefined);
+  const fetch = vi
+    .spyOn(globalThis, 'fetch')
+    .mockImplementation(async () => Response.json({ articles: [] }));
+  vi.spyOn(Screen.prototype, 'log').mockImplementation(() => undefined);
+  vi.spyOn(Screen.prototype, 'logToStderr').mockImplementation(() => undefined);
+
+  await Screen.run(['--companies', '5269,5247', '--news-types', '2', '--json'], { root });
+  await expect(Screen.run(['--watchlists', 'w'], { root })).rejects.toMatchObject({
+    oclif: { exit: 1 },
+  });
+
+  expect(fetch).toHaveBeenCalledOnce();
+  const url = new URL(fetch.mock.calls[0]![0].toString());
+  expect(url.pathname).toBe('/_api/news-screener/results');
+  expect(Object.fromEntries(url.searchParams)).toEqual({ companies: '5269,5247', newsTypes: '2' });
+  expect(mocks.loadSession).toHaveBeenCalledOnce();
 });

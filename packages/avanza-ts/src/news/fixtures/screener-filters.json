@@ -1,0 +1,148 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/news-screener/filters"
+  },
+  "response": {
+    "body": {
+      "sectors": [
+        {
+          "id": "8",
+          "label": "Energi",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [
+            {
+              "id": "137",
+              "label": "Alternativa energikällor",
+              "value": false,
+              "accordionState": "collapsed",
+              "children": [
+                {
+                  "id": "136",
+                  "label": "Biobränsle",
+                  "value": false,
+                  "accordionState": "collapsed",
+                  "children": [],
+                  "metaData": []
+                }
+              ],
+              "metaData": []
+            }
+          ],
+          "metaData": []
+        },
+        {
+          "id": "65",
+          "label": "Fastigheter",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [
+            {
+              "id": "40",
+              "label": "Fastigheter & Utveckling",
+              "value": false,
+              "accordionState": "collapsed",
+              "children": [
+                {
+                  "id": "144",
+                  "label": "Bostäder",
+                  "value": false,
+                  "accordionState": "collapsed",
+                  "children": [],
+                  "metaData": []
+                }
+              ],
+              "metaData": []
+            }
+          ],
+          "metaData": []
+        }
+      ],
+      "marketplaces": [
+        {
+          "id": "SE",
+          "label": "Sverige",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [
+            {
+              "id": "SE/XSTO",
+              "label": "Stockholmsbörsen",
+              "value": false,
+              "accordionState": "collapsed",
+              "children": [
+                {
+                  "id": "SE/XSTO/LargeCap.SE",
+                  "label": "Large Cap Stockholm",
+                  "value": false,
+                  "accordionState": "collapsed",
+                  "children": [],
+                  "metaData": []
+                }
+              ],
+              "metaData": []
+            }
+          ],
+          "metaData": []
+        },
+        {
+          "id": "US",
+          "label": "USA",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [
+            {
+              "id": "US/XNAS",
+              "label": "NASDAQ",
+              "value": false,
+              "accordionState": "collapsed",
+              "children": [],
+              "metaData": []
+            }
+          ],
+          "metaData": []
+        }
+      ],
+      "newsTypes": [
+        {
+          "id": "2",
+          "label": "Analys",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [],
+          "metaData": []
+        },
+        {
+          "id": "5",
+          "label": "Extern Analys",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [],
+          "metaData": []
+        }
+      ],
+      "sources": [
+        {
+          "id": "48",
+          "label": "Placera",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [],
+          "metaData": []
+        },
+        {
+          "id": "13",
+          "label": "Finwire",
+          "value": false,
+          "accordionState": "collapsed",
+          "children": [],
+          "metaData": []
+        }
+      ],
+      "watchLists": [],
+      "accounts": []
+    },
+    "status": 200
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/stock-guide/forum/5269/social-stats"
+  },
+  "response": {
+    "body": {
+      "url": "https://forum.placera.se/bolag/volvo",
+      "newPosts": 42,
+      "newReplies": 121,
+      "newFollowers": 264,
+      "authorCount": 49,
+      "newOwners": 122,
+      "posts": [
+        {
+          "timestamp": 1790632800000,
+          "value": 1
+        },
+        {
+          "timestamp": 1790719200000,
+          "value": 5
+        }
+      ],
+      "memberTrend": {
+        "holdingsPercentage": 21.4168,
+        "trend": "BUY",
+        "period": "WEEK",
+        "points": [
+          {
+            "timestamp": 1791151200000,
+            "buy": 236,
+            "sell": 68
+          },
+          {
+            "timestamp": 1791756000000,
+            "buy": 136,
+            "sell": 47
+          }
+        ]
+      },
+      "topMemberTrend": {
+        "holdingsPercentage": 31.1373,
+        "trend": "BUY",
+        "period": "WEEK",
+        "points": [
+          {
+            "timestamp": 1791151200000,
+            "buy": 33,
+            "sell": 6
+          },
+          {
+            "timestamp": 1791756000000,
+            "buy": 17,
+            "sell": 4
+          }
+        ]
+      }
+    },
+    "status": 200
+  }
+}

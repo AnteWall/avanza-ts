@@ -705,6 +705,49 @@ export interface FilteredAnalysesResponse {
   readonly sortBy: { readonly field: string; readonly order: string };
 }
 
+export interface ForumPost {
+  readonly author: string;
+  readonly title: string;
+  readonly content: string;
+  readonly likes: number;
+  readonly replies: number;
+  readonly timestamp: number;
+  readonly url: string;
+}
+
+/** Latest Placera forum posts about the stock. */
+export interface ForumPostsResponse {
+  /** Forum thread URL. */
+  readonly url: string;
+  readonly posts: readonly ForumPost[];
+}
+
+export interface ForumMemberTrend {
+  readonly holdingsPercentage: number;
+  /** For example `BUY` or `SELL`. */
+  readonly trend: string;
+  /** For example `WEEK`. */
+  readonly period: string;
+  readonly points: readonly {
+    readonly timestamp: number;
+    readonly buy: number;
+    readonly sell: number;
+  }[];
+}
+
+/** Placera forum activity and how forum members trade the stock. */
+export interface ForumStatsResponse {
+  readonly url: string;
+  readonly newPosts: number;
+  readonly newReplies: number;
+  readonly newFollowers: number;
+  readonly authorCount: number;
+  readonly newOwners: number;
+  readonly posts: readonly { readonly timestamp: number; readonly value: number }[];
+  readonly memberTrend: ForumMemberTrend;
+  readonly topMemberTrend: ForumMemberTrend;
+}
+
 export interface NumberOfOwnersResponse {
   readonly ownersPoints: readonly { readonly timestamp: number; readonly numberOfOwners: number }[];
   readonly historySummary: {

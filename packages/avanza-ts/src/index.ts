@@ -158,6 +158,10 @@ export type {
   Exposures,
   FilteredAnalysesResponse,
   FilteredAnalysis,
+  ForumMemberTrend,
+  ForumPost,
+  ForumPostsResponse,
+  ForumStatsResponse,
   HeaderIndex,
   HeaderIndicesResponse,
   HistoricalClosingPrices,
@@ -221,6 +225,11 @@ export type {
   NewsFeedOptions,
   NewsFeedOrderbook,
   NewsFeedResponse,
+  NewsScreenArticle,
+  NewsScreenOptions,
+  NewsScreenResponse,
+  NewsScreenerFilter,
+  NewsScreenerFilters,
 } from './news/news-types.js';
 export type { OrdersClient } from './orders/orders-client.js';
 export type {

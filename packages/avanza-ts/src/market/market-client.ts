@@ -15,6 +15,8 @@ import type {
   EtfDetailsResponse,
   EtfResponse,
   FilteredAnalysesResponse,
+  ForumPostsResponse,
+  ForumStatsResponse,
   HeaderIndicesResponse,
   IndexConstituent,
   InsiderTradesResponse,
@@ -144,6 +146,16 @@ export class MarketClient {
 
   public shortSelling(orderbookId: string, signal?: AbortSignal): Promise<ShortSellingResponse> {
     return this.get(`/market-guide/short-selling${pathId(orderbookId)}`, signal);
+  }
+
+  /** Latest Placera forum posts about the stock. */
+  public forumPosts(orderbookId: string, signal?: AbortSignal): Promise<ForumPostsResponse> {
+    return this.get(`/stock-guide/forum${pathId(orderbookId)}/posts`, signal);
+  }
+
+  /** Placera forum activity and how forum members trade the stock. */
+  public forumStats(orderbookId: string, signal?: AbortSignal): Promise<ForumStatsResponse> {
+    return this.get(`/stock-guide/forum${pathId(orderbookId)}/social-stats`, signal);
   }
 
   /** Requires a session. */

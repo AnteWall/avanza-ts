@@ -136,6 +136,8 @@ avanza market price-chart --orderbook-id 5269 --from 2026-01-01 --to 2026-06-30
 avanza market company-events --orderbook-id 5269
 avanza market insider-transactions --orderbook-id 5269
 avanza market short-selling --orderbook-id 5269
+avanza market forum-posts --orderbook-id 5269
+avanza market forum-stats --orderbook-id 5269
 avanza market technical-analysis --orderbook-id 5269 --period one_month --points 20
 avanza market sector-analysis --orderbook-id 5269
 ```
@@ -186,16 +188,19 @@ avanza funds is-favourite --orderbook-id 41567
 
 ## News and events (read only)
 
-`news article` works without a session; `news feed`, `news calendar`, and `news offers` use the stored session. All send GET requests only:
+`news article`, `news screener-filters`, and `news screen` work without a session; `news feed`, `news calendar`, and `news offers` use the stored session, as does `news screen` with `--accounts` or `--watchlists`. All send GET requests only:
 
 ```sh
 avanza news feed --limit 5 --max-days 7
 avanza news article --url https://www.placera.se/telegram/avanza/<id>
 avanza news calendar
 avanza news offers
+avanza news screener-filters
+avanza news screen --companies 5269 --news-types 2
+avanza news screen --watchlists <id>
 ```
 
-`news article` takes the `url` of a `news feed` item.
+`news article` takes the `url` of a `news feed` item or the `path` of a `news screen` article. Filter IDs come from `news screener-filters`.
 
 ## Orders and trading status (read only)
 

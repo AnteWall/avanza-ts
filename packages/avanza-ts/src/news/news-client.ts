@@ -4,6 +4,9 @@ import type {
   NewsArticle,
   NewsFeedOptions,
   NewsFeedResponse,
+  NewsScreenOptions,
+  NewsScreenResponse,
+  NewsScreenerFilters,
 } from './news-types.js';
 
 export class NewsClient {
@@ -18,6 +21,44 @@ export class NewsClient {
       access: 'optional',
       method: 'GET',
       path: `/_api/news/article/${segments.map(encodeURIComponent).join('/')}`,
+      signal,
+    });
+  }
+
+  /** Filters for {@link screen}; account and watchlist filters need a session. */
+  public screenerFilters(signal?: AbortSignal): Promise<NewsScreenerFilters> {
+    return this.context.http.request<NewsScreenerFilters>({
+      access: 'optional',
+      method: 'GET',
+      path: '/_api/news-screener/filters',
+      signal,
+    });
+  }
+
+  /** Market news matching every given filter, newest first. */
+  public screen(
+    options: NewsScreenOptions = {},
+    signal?: AbortSignal,
+  ): Promise<NewsScreenResponse> {
+    const filters = {
+      companies: options.companies,
+      accounts: options.accounts,
+      watchLists: options.watchlists,
+      newsTypes: options.newsTypes,
+      sectors: options.sectors,
+      marketplaces: options.marketplaces,
+      sources: options.sources,
+    };
+    return this.context.http.request<NewsScreenResponse>({
+      access: 'optional',
+      method: 'GET',
+      path: '/_api/news-screener/results',
+      // The frontend sends comma-joined IDs, not repeated parameters.
+      query: Object.fromEntries(
+        Object.entries(filters)
+          .filter(([, ids]) => ids?.length)
+          .map(([name, ids]) => [name, ids!.join(',')]),
+      ),
       signal,
     });
   }

@@ -107,3 +107,58 @@ export interface CalendarMonth {
 }
 
 export type CalendarResponse = readonly CalendarMonth[];
+
+/** A news screener filter; `id` is what {@link NewsScreenOptions} takes. */
+export interface NewsScreenerFilter {
+  readonly id: string;
+  readonly label: string;
+  readonly value: boolean;
+  readonly accordionState: string;
+  readonly children: readonly NewsScreenerFilter[];
+  readonly metaData: readonly unknown[];
+}
+
+/** `watchLists` and `accounts` are empty without a session. */
+export interface NewsScreenerFilters {
+  readonly sectors: readonly NewsScreenerFilter[];
+  readonly marketplaces: readonly NewsScreenerFilter[];
+  readonly newsTypes: readonly NewsScreenerFilter[];
+  readonly sources: readonly NewsScreenerFilter[];
+  readonly watchLists: readonly NewsScreenerFilter[];
+  readonly accounts: readonly NewsScreenerFilter[];
+}
+
+/** Filter IDs from {@link NewsScreenerFilters}; `companies` takes orderbook IDs. */
+export interface NewsScreenOptions {
+  readonly companies?: readonly string[] | undefined;
+  /** Requires a session. */
+  readonly accounts?: readonly string[] | undefined;
+  /** Requires a session. */
+  readonly watchlists?: readonly string[] | undefined;
+  readonly newsTypes?: readonly string[] | undefined;
+  readonly sectors?: readonly string[] | undefined;
+  readonly marketplaces?: readonly string[] | undefined;
+  readonly sources?: readonly string[] | undefined;
+}
+
+export interface NewsScreenArticle {
+  readonly headline: string;
+  readonly vignette: string | null;
+  readonly teaser: string;
+  readonly ingress: string | null;
+  readonly source: string;
+  /** For example `NEWS`, `TELEGRAM`, `PRESS_RELEASE`, `ANALYSIS`, or `OTHER`. */
+  readonly category: string;
+  readonly publishTime: number;
+  /** Article path for `news.article()`. */
+  readonly path: string;
+  readonly orderbookIds: readonly string[];
+  readonly companyId: string | null;
+  readonly companyName: string | null;
+  readonly instrumentType: string | null;
+  readonly flagCode: string | null;
+}
+
+export interface NewsScreenResponse {
+  readonly articles: readonly NewsScreenArticle[];
+}

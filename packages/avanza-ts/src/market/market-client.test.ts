@@ -45,6 +45,8 @@ describe('MarketClient', () => {
       {},
     ],
     ['short selling', (m) => m.shortSelling('5269'), '/market-guide/short-selling/5269', {}],
+    ['forum posts', (m) => m.forumPosts('5269'), '/stock-guide/forum/5269/posts', {}],
+    ['forum stats', (m) => m.forumStats('5269'), '/stock-guide/forum/5269/social-stats', {}],
     ['stock', (m) => m.stock('5269'), '/market-guide/stock/5269', {}],
     ['stock analysis', (m) => m.stockAnalysis('5269'), '/market-guide/stock/5269/analysis', {}],
     [
@@ -256,6 +258,7 @@ it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
   ['recommendations', (c) => c.market.analystRecommendations('5269')],
   ['price-targets', (c) => c.market.priceTargets('5269')],
   ['sector-analysis', (c) => c.market.sectorAnalysis('5269')],
+  ['forum-stats', (c) => c.market.forumStats('5269')],
   ['stock', (c) => c.market.stock('5269')],
   ['certificate', (c) => c.market.instrument('certificate', '563966')],
 ])('replays a recorded %s response', (name, call) =>
