@@ -60,6 +60,16 @@ it.each<[string, (client: AvanzaClient) => Promise<unknown>]>([
   ['goal-performance', (c) => c.savings.goalPerformance('synthetic-22', 'ONE_WEEK')],
   ['pension-details', (c) => c.savings.pensionDetails('synthetic-23')],
   ['pension-distribution', (c) => c.savings.pensionDistribution('synthetic-23')],
+  ['interest-rates', (c) => c.savings.interestRates()],
 ])('replays an anonymized %s capture', (name, call) =>
   expectFixtureReplay(`savings/fixtures/${name}.json`, call),
 );
+
+it('reads interest rates without a session', async () => {
+  const fetch = vi
+    .fn<typeof globalThis.fetch>()
+    .mockResolvedValue(jsonResponse({ sparkontos: [] }));
+  const client = new AvanzaClient({ baseUrl: 'https://example.test', fetch });
+  await expect(client.savings.interestRates()).resolves.toEqual({ sparkontos: [] });
+  expect(new URL(fetch.mock.calls[0]![0].toString()).pathname).toBe('/_api/interest/interests/');
+});

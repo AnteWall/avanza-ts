@@ -1,0 +1,109 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/interest/interests/"
+  },
+  "response": {
+    "body": {
+      "superlans": [
+        {
+          "benefitLevel": "BRONS",
+          "superloanLevel": "REGULAR_CREDIT",
+          "loanInterestRate": {
+            "effectiveInterestRate": 6.89,
+            "nominalInterestRate": 6.68
+          },
+          "depositInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          },
+          "accountType": "AF"
+        },
+        {
+          "benefitLevel": "BRONS",
+          "superloanLevel": "SUPERLOAN_LEVEL_1",
+          "loanInterestRate": {
+            "effectiveInterestRate": 1.29,
+            "nominalInterestRate": 1.28
+          },
+          "depositInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          },
+          "accountType": "AF"
+        }
+      ],
+      "sparkontos": [
+        {
+          "benefitLevel": "PRO2",
+          "loanInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          },
+          "depositInterestRate": null
+        },
+        {
+          "benefitLevel": "PRO1",
+          "loanInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          },
+          "depositInterestRate": null
+        }
+      ],
+      "currencies": [
+        {
+          "benefitLevel": "BRONS",
+          "currencyCode": "NOK",
+          "loanInterestRate": {
+            "effectiveInterestRate": 6.51,
+            "nominalInterestRate": 6.32
+          },
+          "depositInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          },
+          "accountType": "AF"
+        },
+        {
+          "benefitLevel": "BRONS",
+          "currencyCode": "DKK",
+          "loanInterestRate": {
+            "effectiveInterestRate": 6.49,
+            "nominalInterestRate": 6.3
+          },
+          "depositInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          },
+          "accountType": "AF"
+        }
+      ],
+      "superbolans": [
+        {
+          "superbolanLevel": "SUPERMORTGAGE_LEVEL_7",
+          "loanInterestRate": {
+            "effectiveInterestRate": 1.92,
+            "nominalInterestRate": 1.9
+          },
+          "depositInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          }
+        },
+        {
+          "superbolanLevel": "SUPERMORTGAGE_LEVEL_4",
+          "loanInterestRate": {
+            "effectiveInterestRate": 2.38,
+            "nominalInterestRate": 2.35
+          },
+          "depositInterestRate": {
+            "effectiveInterestRate": 0,
+            "nominalInterestRate": 0
+          }
+        }
+      ]
+    },
+    "status": 200
+  }
+}

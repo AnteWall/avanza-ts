@@ -7,6 +7,7 @@ vi.mock('../../services/session/session-store.js', () => mocks);
 
 import TransactionsList from '../transactions/list.js';
 import Chart from './chart.js';
+import YearSummary from './year-summary.js';
 
 const root = resolve(import.meta.dirname, '../../..');
 
@@ -71,4 +72,16 @@ it('passes transaction filters as query parameters', async () => {
   expect(url.searchParams.get('from')).toBe('2025-01-01');
   expect(url.searchParams.getAll('transactionTypes')).toEqual(['BUY', 'SELL']);
   expect(fetch.mock.calls[0]![1]?.method).toBe('GET');
+});
+
+it('posts a yearly summary for the given year and accounts', async () => {
+  const fetch = mockFetch();
+  vi.spyOn(YearSummary.prototype, 'log').mockImplementation(() => undefined);
+
+  await YearSummary.run(['--year', '2025', '--account-ids', 'a,b', '--json'], { root });
+
+  const [url, init] = fetch.mock.calls[0]!;
+  expect(new URL(url.toString()).pathname).toBe('/_api/yearly-summary/development/performance');
+  expect(JSON.parse(String(init?.body))).toEqual({ scrambledAccountIds: ['a', 'b'], year: 2025 });
+  expect(new Headers(init?.headers).get('X-AuthenticationSession')).toBe('session');
 });

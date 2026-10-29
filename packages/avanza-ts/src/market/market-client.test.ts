@@ -205,6 +205,18 @@ describe('MarketClient', () => {
     });
   });
 
+  it('resolves a missing latest analysis to null', async () => {
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockResolvedValue(new Response(null, { status: 204 }));
+    const client = new AvanzaClient({
+      baseUrl: 'https://example.test',
+      fetch,
+      session: { authenticationSession: 'session', mode: 'totp', securityToken: 'token' },
+    });
+    await expect(client.market.latestAnalysis('placera', '5269')).resolves.toBeNull();
+  });
+
   it('posts an analysis filter with only the given filters', async () => {
     const { client, request } = setup({ analyses: [] }, true);
 

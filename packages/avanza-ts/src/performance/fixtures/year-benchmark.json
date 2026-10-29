@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/_api/yearly-summary/chart/benchmark/omx?year=2025"
+  },
+  "response": {
+    "body": {
+      "series": [
+        {
+          "value": 524.27,
+          "timestamp": 1735686000000
+        },
+        {
+          "value": 535.36,
+          "timestamp": 1738364400000
+        },
+        {
+          "value": 495.02,
+          "timestamp": 1740783600000
+        }
+      ]
+    },
+    "status": 200
+  }
+}

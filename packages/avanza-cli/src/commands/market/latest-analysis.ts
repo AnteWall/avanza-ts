@@ -15,8 +15,7 @@ export default class LatestAnalysis extends ApiRequestCommand {
     const { flags } = await this.parse(LatestAnalysis);
     await this.request(
       flags,
-      async (client) =>
-        (await client.market.latestAnalysis(flags.provider, flags['orderbook-id'])) ?? null,
+      (client) => client.market.latestAnalysis(flags.provider, flags['orderbook-id']),
       true,
     );
   }

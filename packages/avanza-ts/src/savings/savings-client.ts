@@ -5,6 +5,7 @@ import type {
   CreditAccountsResponse,
   CreditInfoResponse,
   CreditType,
+  InterestRatesResponse,
   PensionDetails,
   PensionDistribution,
   PeriodicSavingsResponse,
@@ -83,6 +84,16 @@ export class SavingsClient {
       signal,
     );
     return plan ?? null;
+  }
+
+  /** Avanza's published interest rates; no session needed. */
+  public interestRates(signal?: AbortSignal): Promise<InterestRatesResponse> {
+    return this.context.http.request<InterestRatesResponse>({
+      access: 'optional',
+      method: 'GET',
+      path: '/_api/interest/interests/',
+      signal,
+    });
   }
 
   private get<Response>(

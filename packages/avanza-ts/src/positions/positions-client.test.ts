@@ -48,6 +48,8 @@ describe('PositionsClient read-only endpoints', () => {
         () => client.positions.popularCategories('123'),
         '/_api/position-statistics/statistics/popular-categories/123',
       ],
+      [() => client.positions.stockKeyRatios(), '/_api/position-data/STOCK/keyratios'],
+      [() => client.positions.stockKeyRatios('a/b'), '/_api/position-data/STOCK/keyratios/a%2Fb'],
     ] as const;
     expect(await Promise.all(calls.map(([call]) => call()))).toEqual(calls.map(() => response));
     expect(

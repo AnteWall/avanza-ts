@@ -228,3 +228,142 @@ export interface InsightsReport {
     }[];
   };
 }
+
+export interface KeyRatiosOptions {
+  readonly accountIds?: readonly string[] | undefined;
+  readonly includeClosedAccounts?: boolean | undefined;
+}
+
+export interface KeyRatiosResponse {
+  readonly sharpeRatio: AccountAmount;
+  readonly standardDeviation: AccountAmount;
+  readonly compoundAnnualGrowthRate: AccountAmount;
+}
+
+export interface KeyRatioHistoryOptions extends KeyRatiosOptions {
+  /** History start (yyyy-MM-dd); defaults to the earliest available date. */
+  readonly fromDate?: string | undefined;
+}
+
+export interface TimestampValue {
+  readonly timestamp: number;
+  readonly value: number;
+}
+
+export interface KeyRatioHistoryResponse {
+  readonly sharpeRatios: readonly TimestampValue[];
+  readonly standardDeviations: readonly TimestampValue[];
+  readonly compoundAnnualGrowthRates: readonly TimestampValue[];
+  readonly earliestAvailableDate: string;
+}
+
+export interface RelativePerformancePoint {
+  readonly timestamp: number;
+  readonly performance: {
+    readonly value: number;
+    readonly unit: string;
+    readonly unitType: string;
+  };
+}
+
+/** Development of the average Avanza customer. */
+export interface AverageCustomerChartResponse {
+  readonly interval: PerformanceDateRange & { readonly timePeriod: string };
+  readonly absoluteSeries: readonly RelativePerformancePoint[];
+  readonly relativeSeries: readonly RelativePerformancePoint[];
+  readonly valueSeries: readonly RelativePerformancePoint[];
+  readonly earliestAvailableDate: string;
+}
+
+export interface OrderbookPerformanceChart {
+  readonly orderbookId: string;
+  readonly relativeSeries: readonly RelativePerformancePoint[];
+}
+
+export interface YearSecurity {
+  readonly orderbookId: string;
+  readonly instrumentName: string;
+  readonly development: number;
+  readonly flagCode: string;
+  readonly currentVolume: number;
+}
+
+export interface YearDay {
+  readonly day: string;
+  readonly performanceInCash: number;
+}
+
+export interface YearSummaryResponse {
+  readonly development: {
+    readonly currentValue: number;
+    readonly startValue: number;
+    readonly totalChange: number;
+    readonly totalDevelopment: number;
+    readonly totalDeposits: number;
+    readonly totalOtherFees: number;
+    readonly totalDividends: number;
+    readonly totalTjpDeposits: number;
+    readonly averageDepositsPerMonth: number;
+    readonly suggestedAdditionalSavingPerMonth: number;
+    readonly bestSecurities: readonly YearSecurity[];
+    readonly worstSecurities: readonly YearSecurity[];
+  };
+  readonly numberOfTransactionsView: {
+    readonly numberOfUniqueSecurities: number;
+    readonly numberOfTransactions: number;
+  };
+  readonly performanceDto: {
+    readonly bestDay: YearDay;
+    readonly nextBestDay: YearDay;
+    readonly thirdBestDay: YearDay;
+    readonly worstDay: YearDay;
+    readonly performanceForPeriod: number;
+    readonly performanceAllCustomers: number;
+    readonly performanceOMXS30: number;
+    readonly performanceDJUSA: number;
+    readonly monthlyPerformance: readonly {
+      readonly month: number;
+      readonly performanceInCash: number;
+    }[];
+  };
+}
+
+export interface YearLargestTransaction {
+  readonly orderbookId: number;
+  readonly instrumentType: string;
+  readonly countryCode: string;
+  readonly instrumentName: string;
+  readonly amountInSek: number;
+}
+
+export interface YearTransactionsResponse {
+  readonly transactionMonthlySummaryViews: readonly {
+    readonly month: number;
+    readonly buyTransactionAmountInSek: number;
+    readonly sellTransactionAmountInSek: number;
+  }[];
+  readonly buyTransactionAggregatedMax: YearLargestTransaction;
+  readonly sellTransactionAggregatedMax: YearLargestTransaction;
+  readonly totalBuyAmountInSek: number;
+  readonly totalSellAmountInSek: number;
+}
+
+/** `relative` is this year's return, `relative-from-start` the return since the first deposit. */
+export const yearChartSeries = ['relative', 'relative-from-start', 'value'] as const;
+
+export type YearChartSeries = (typeof yearChartSeries)[number];
+
+export interface YearChartResponse {
+  readonly interval: PerformanceDateRange;
+  readonly series: readonly TimestampValue[];
+  readonly earliestAvailableTimestamp: number;
+}
+
+/** `omx` is OMXS30 GI and `usa` Dow Jones US. */
+export const yearBenchmarkIndices = ['omx', 'usa'] as const;
+
+export type YearBenchmarkIndex = (typeof yearBenchmarkIndices)[number];
+
+export interface YearBenchmarkResponse {
+  readonly series: readonly TimestampValue[];
+}

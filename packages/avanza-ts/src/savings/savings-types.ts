@@ -141,3 +141,36 @@ export interface CreditInfo {
 export interface CreditInfoResponse {
   readonly creditInfos: readonly CreditInfo[];
 }
+
+export interface InterestRate {
+  readonly effectiveInterestRate: number;
+  readonly nominalInterestRate: number;
+}
+
+/** Avanza's published interest rates by customer benefit level (for example `BRONS` or `PRO2`). */
+export interface InterestRatesResponse {
+  readonly superlans: readonly {
+    readonly benefitLevel: string;
+    readonly superloanLevel: string;
+    readonly accountType: string;
+    readonly loanInterestRate: InterestRate;
+    readonly depositInterestRate: InterestRate;
+  }[];
+  readonly sparkontos: readonly {
+    readonly benefitLevel: string;
+    readonly loanInterestRate: InterestRate;
+    readonly depositInterestRate: InterestRate | null;
+  }[];
+  readonly currencies: readonly {
+    readonly benefitLevel: string;
+    readonly currencyCode: string;
+    readonly accountType: string;
+    readonly loanInterestRate: InterestRate;
+    readonly depositInterestRate: InterestRate;
+  }[];
+  readonly superbolans: readonly {
+    readonly superbolanLevel: string;
+    readonly loanInterestRate: InterestRate;
+    readonly depositInterestRate: InterestRate;
+  }[];
+}

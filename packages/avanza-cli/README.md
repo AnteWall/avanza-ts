@@ -71,6 +71,8 @@ avanza positions tools
 avanza positions orderbooks --orderbook-ids 123,456
 avanza positions statistics --orderbook-id 123
 avanza positions popular-statistics --orderbook-id 123
+avanza positions stock-key-ratios
+avanza positions fund-analysis --account-ids <id>,<id>
 ```
 
 `positions list` and `positions countries` also work without `--account-id`. `--fixture` includes raw personal account and holdings data; keep captures private and anonymize before tracking them.
@@ -84,6 +86,14 @@ avanza performance chart --period ONE_YEAR
 avanza performance chart --from 2025-01-01 --to 2025-06-30 --account-ids <id>,<id>
 avanza performance total-values
 avanza performance insights --period THREE_YEARS_ROLLING
+avanza performance key-ratios --include-closed
+avanza performance key-ratio-history --from 2025-01-01
+avanza performance average-customer --from 2025-01-01 --to 2025-12-31
+avanza performance compare-orderbooks --orderbook-ids 5269,5247 --from 2025-01-01 --to 2025-12-31
+avanza performance year-summary --year 2025
+avanza performance year-transactions --year 2025
+avanza performance year-chart --year 2025 --series relative-from-start
+avanza performance year-benchmark --year 2025 --index omx
 avanza transactions list --from 2025-01-01 --types BUY,SELL
 avanza transactions pending
 avanza transactions show --account-id <url-parameter-id> --transaction-id <id>
@@ -237,6 +247,7 @@ avanza savings pension --account-id <id>
 avanza savings pension-distribution --account-id <id>
 avanza savings payout-plans
 avanza savings payout-plan --account-id <id>
+avanza savings interest-rates
 ```
 
 `savings categories` lists category IDs and numeric account IDs. Pension details include personal names and customer IDs; keep `--fixture` captures private.

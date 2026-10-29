@@ -1,13 +1,16 @@
 import type { ClientContext } from '../internal/client-context.js';
 import type { HttpRequest } from '../internal/http-types.js';
 import { pathId } from '../internal/path-id.js';
+import { accountIdsOrAll } from '../performance/performance-client.js';
 import { positionListResponseSchema, type PositionListResponse } from './position-schemas.js';
 import type {
   ActivePositionToolsResponse,
+  FundAnalysisResponse,
   PositionCategoriesResponse,
   PositionCountriesResponse,
   PositionOrderbooksResponse,
   PositionPopularCategoriesResponse,
+  StockPositionKeyRatiosResponse,
 } from './position-types.js';
 
 export class PositionsClient {
@@ -55,6 +58,28 @@ export class PositionsClient {
       `/_api/position-statistics/statistics/popular-categories${pathId(orderbookId)}`,
       signal,
     );
+  }
+
+  /** Dividend and valuation ratios per stock position. */
+  public stockKeyRatios(
+    accountId?: string,
+    signal?: AbortSignal,
+  ): Promise<StockPositionKeyRatiosResponse> {
+    return this.get(`/_api/position-data/STOCK/keyratios${pathId(accountId)}`, signal);
+  }
+
+  /** Look-through of fund holdings: exposures, fees, risk, and ESG. Omitted `ids` include all accounts. */
+  public async fundAnalysis(
+    ids?: readonly string[],
+    signal?: AbortSignal,
+  ): Promise<FundAnalysisResponse> {
+    return this.context.http.request<FundAnalysisResponse>({
+      access: 'required',
+      method: 'POST',
+      path: '/_api/portfolio-analysis/analyze',
+      body: await accountIdsOrAll(this.context, ids, signal),
+      signal,
+    });
   }
 
   private get<Response>(

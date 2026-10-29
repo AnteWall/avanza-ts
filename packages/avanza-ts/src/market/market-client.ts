@@ -212,16 +212,17 @@ export class MarketClient {
     );
   }
 
-  /** Latest analysis of one stock, or `undefined` when there is none. Requires a session. */
-  public latestAnalysis(
+  /** Latest analysis of one stock, or `null` when there is none. Requires a session. */
+  public async latestAnalysis(
     provider: AnalysisProvider,
     orderbookId: string,
     signal?: AbortSignal,
-  ): Promise<AnalysisSummaryItem | undefined> {
-    return this.getAuthenticated(
+  ): Promise<AnalysisSummaryItem | null> {
+    const analysis = await this.getAuthenticated<AnalysisSummaryItem | undefined>(
       `/market-external-analysis/latest-analysis-summary${pathId(provider)}${pathId(orderbookId)}`,
       signal,
     );
+    return analysis ?? null;
   }
 
   /** Filters a provider's analyses, newest first. Requires a session. */

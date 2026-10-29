@@ -239,8 +239,14 @@ export type {
   TradingOrderbook,
 } from './orders/orders-types.js';
 export type { PerformanceClient } from './performance/performance-client.js';
-export { insightsPeriods, performancePeriods } from './performance/performance-types.js';
+export {
+  insightsPeriods,
+  performancePeriods,
+  yearBenchmarkIndices,
+  yearChartSeries,
+} from './performance/performance-types.js';
 export type {
+  AverageCustomerChartResponse,
   BuyingPower,
   CurrencyBalance,
   InsightsInstrumentGroup,
@@ -249,27 +255,48 @@ export type {
   InsightsPeriod,
   InsightsPosition,
   InsightsReport,
+  KeyRatioHistoryOptions,
+  KeyRatioHistoryResponse,
+  KeyRatiosOptions,
+  KeyRatiosResponse,
+  OrderbookPerformanceChart,
   PerformanceChartOptions,
   PerformanceChartResponse,
   PerformanceDateRange,
   PerformanceDevelopment,
   PerformancePeriod,
   PerformancePoint,
+  RelativePerformancePoint,
+  TimestampValue,
   TotalValue,
   TotalValuesAccount,
   TotalValuesResponse,
+  YearBenchmarkIndex,
+  YearBenchmarkResponse,
+  YearChartResponse,
+  YearChartSeries,
+  YearDay,
+  YearLargestTransaction,
+  YearSecurity,
+  YearSummaryResponse,
+  YearTransactionsResponse,
 } from './performance/performance-types.js';
 export type { PositionsClient } from './positions/positions-client.js';
 export type { PositionListResponse } from './positions/position-schemas.js';
 export type {
   ActivePositionTool,
   ActivePositionToolsResponse,
+  FundAnalysisResponse,
+  FundExposure,
+  FundView,
   PositionCategoriesResponse,
   PositionCountriesResponse,
   PositionCountryAllocation,
   PositionOrderbook,
   PositionOrderbooksResponse,
   PositionPopularCategoriesResponse,
+  StockPositionKeyRatios,
+  StockPositionKeyRatiosResponse,
 } from './positions/position-types.js';
 export type { SavingsClient } from './savings/savings-client.js';
 export { savingsGoalPeriods } from './savings/savings-types.js';
@@ -279,6 +306,8 @@ export type {
   CreditInfoResponse,
   CreditType,
   InsuranceParty,
+  InterestRate,
+  InterestRatesResponse,
   PensionDetails,
   PensionDistribution,
   PeriodicSavingsResponse,
