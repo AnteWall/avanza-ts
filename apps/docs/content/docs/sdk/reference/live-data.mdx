@@ -1,0 +1,138 @@
+---
+title: Live data
+description: Stream live quotes, order depth, trades, and your own orders from Avanza's push endpoints.
+---
+
+Avanza pushes live data as [Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html) (SSE) from endpoints under `/_push`. It does not use WebSockets. `client.push` wraps these endpoints. Every method returns an async iterator that yields parsed events, reconnects when the connection drops, and requires a signed-in session.
+
+```ts
+import { AvanzaClient } from 'avanza-ts';
+
+const client = new AvanzaClient({ session });
+const controller = new AbortController();
+
+for await (const quote of client.push.quotes(['5247', '5269'], { signal: controller.signal })) {
+  console.log(quote.orderbookId, quote.lastPrice);
+}
+```
+
+The [`avanza push`](/docs/cli/live-data) commands use the same client and print each event as one JSON line:
+
+```sh
+avanza push quotes --orderbook-ids 5247,5269
+```
+
+Stop a stream by aborting its `signal` or by leaving the `for await` loop. Both close the connection. The CLI aborts on Ctrl-C.
+
+## Streams
+
+Each method opens one stream. The single-orderbook methods use `GET`; the methods that take several orderbook IDs use `POST` with the IDs in the body.
+
+| Method                     | Event type         | Request                                                          | CLI command               |
+| -------------------------- | ------------------ | ---------------------------------------------------------------- | ------------------------- |
+| `quote(id)`                | `QUOTE`            | `GET /_push/quote-web-push/{id}`                                 |                           |
+| `quotes(ids)`              | `QUOTES`           | `POST /_push/quote-web-push/` with `{"orderbookIds":[…]}`        | `avanza push quotes`      |
+| `orderDepth(id)`           | `ORDER_DEPTH`      | `GET /_push/order-depth-web-push/{id}`                           | `avanza push order-depth` |
+| `orderDepths(ids)`         | `ORDER_DEPTHS`     | `POST /_push/order-depth-web-push/` with `{"orderbookIds":[…]}`  |                           |
+| `trades(id)`               | `TRADE`            | `GET /_push/trade-web-push/{id}`                                 | `avanza push trades`      |
+| `tradeState(id)`           | `TRADE_STATE`      | `GET /_push/trade-state-web-push/{id}`                           | `avanza push trade-state` |
+| `warrantLeverage(id)`      | `WARRANT_LEVERAGE` | `GET /_push/warrant-leverage-web-push/{id}`                      |                           |
+| `offhoursQuote(id)`        | `OFFHOURS_QUOTE`   | `GET /_push/market-offhours-price/{id}`                          |                           |
+| `offhoursQuotes(ids)`      | `OFFHOURS_QUOTES`  | `POST /_push/market-offhours-price/` with `{"orderbookIds":[…]}` |                           |
+| `orders({ orderbookId? })` | `ORDER`            | `GET /_push/trading/orders/`, optionally with `?orderbookId=`    | `avanza push orders`      |
+| `deals({ orderbookId? })`  | `DEAL`             | `GET /_push/trading/deals`, optionally with `?orderbookId=`      | `avanza push deals`       |
+| `stopLosses(…)`            | `STOPLOSS`         | `GET /_push/trading/stoploss/`, optionally with `?orderbookId=`  |                           |
+| `currencyDeals()`          | `CURRENCY_DEAL`    | `GET /_push/trading/currency-deals`                              |                           |
+| `currencyOrders()`         | `CURRENCY_ORDER`   | `GET /_push/trading/orders/currency-orders`                      |                           |
+
+The SDK sorts the IDs in a `POST` body, as Avanza's web app does. An empty ID list throws a `TypeError` before any request is made.
+
+## How a stream works
+
+These are the steps `client.push` takes for every stream, and therefore what each `avanza push` command does.
+
+### 1. Open the request over HTTP/2
+
+The request carries the session cookies and these headers:
+
+| Header                     | Value                                     |
+| -------------------------- | ----------------------------------------- |
+| `Accept`                   | `text/event-stream`                       |
+| `AZA-Do-Not-Touch-Session` | `true`, as Avanza's web app sends it      |
+| `X-SecurityToken`          | The session's security token              |
+| `Content-Type`             | `application/json` on `POST` requests     |
+| `Last-Event-ID`            | The last event ID seen, when reconnecting |
+
+**The request must use HTTP/2.** Avanza's load balancer answers `/_push` requests over HTTP/1.1 with `429 Too Many Requests` and an HTML page, whatever the headers say. Node.js 22's built-in `fetch` only speaks HTTP/1.1, so the SDK sends push streams through [undici](https://undici.nodejs.org/) 8, whose `fetch` negotiates HTTP/2. Every other request still uses the global `fetch`. See [custom fetch](#custom-fetch) if you replace the transport.
+
+### 2. Read the event stream
+
+A successful response is `200` with `Content-Type: text/event-stream`. Avanza first sends an `info` event, then heartbeats, then data events named after the stream type. This is a captured `GET /_push/quote-web-push/5247` outside trading hours:
+
+```text
+event:info
+data:connected
+id:AbCdEfGhIjKlMnOpQrStUvWxY
+retry:1000
+
+:heartbeat
+
+:heartbeat
+```
+
+The trading streams send their heartbeats as events (`event:heartbeat`) instead of comments, and their `info` data varies between `connected`, an ID and `{"status":"connected"}`. A quote update has this shape (values illustrative):
+
+```text
+id:…
+event:QUOTE
+data:{"orderbookId":"5247","lastPrice":271.4,…}
+```
+
+The SDK yields only events whose name matches the stream's event type, parsed as JSON. It drops the handshake, heartbeats and other events, and skips an event whose ID it has already yielded. If the JSON is malformed, the iterator throws a `SyntaxError`.
+
+### 3. Reconnect or stop
+
+| What happened                                      | What the SDK does                          |
+| -------------------------------------------------- | ------------------------------------------ |
+| The server closed the stream                       | Reconnects after 0.5 s                     |
+| `5xx` response                                     | Reconnects after 0.5 s                     |
+| The response is not an event stream                | Reconnects after 0.5 s                     |
+| Network error                                      | Reconnects after 3 s                       |
+| `4xx` response (for example `401`, `403` or `429`) | Throws `AvanzaHttpError`; no retry         |
+| No session                                         | Throws `AvanzaAuthenticationRequiredError` |
+| The `signal` aborted                               | Ends the iterator without an error         |
+
+These delays match Avanza's web app. On reconnect the SDK sends `Last-Event-ID` and keeps skipping events it has already yielded.
+
+## Custom fetch
+
+`AvanzaClientOptions.fetch` replaces the transport for **every** request, including push streams. Because Avanza only accepts push streams over HTTP/2, a custom `fetch` used for live data must support HTTP/2. Passing Node.js 22's global `fetch`, or a wrapper around it, makes every push stream fail with `429`.
+
+undici 8's `fetch` negotiates HTTP/2 by default, so wrap that one:
+
+```ts
+import { AvanzaClient } from 'avanza-ts';
+import { fetch as http2Fetch } from 'undici';
+
+const client = new AvanzaClient({
+  session,
+  fetch: (input, init) => {
+    console.log(init?.method ?? 'GET', input.toString());
+    return http2Fetch(input, init) as unknown as Promise<Response>;
+  },
+});
+```
+
+The cast is needed because undici declares its own `Response` type. With undici 6 or 7, pass `dispatcher: new Agent({ allowH2: true })` to enable HTTP/2. In tests, any `fetch` that returns a `Response` with a `text/event-stream` body works.
+
+## Event types
+
+`PushQuote`, `PushOrderDepth` and `PushTrade` list the fields that Avanza's web app reads from these events. The other streams yield `PushEvent`, a plain record, until their payloads have been captured.
+
+<AutoTypeTable path="../../packages/avanza-ts/src/push/push-types.ts" name="PushQuote" />
+
+<AutoTypeTable path="../../packages/avanza-ts/src/push/push-types.ts" name="PushOrderDepth" />
+
+## Push client
+
+<AutoTypeTable path="../../packages/avanza-ts/src/push/push-client.ts" name="PushClient" />

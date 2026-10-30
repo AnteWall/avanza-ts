@@ -10,9 +10,9 @@ import { NewsClient } from './news/news-client.js';
 import { OrdersClient } from './orders/orders-client.js';
 import { PerformanceClient } from './performance/performance-client.js';
 import { PositionsClient } from './positions/positions-client.js';
+import { PushClient } from './push/push-client.js';
 import { SavingsClient } from './savings/savings-client.js';
 import { TransactionsClient } from './transactions/transactions-client.js';
-import { WebSocketClient } from './websocket/websocket-client.js';
 
 export interface AvanzaClientOptions {
   readonly baseUrl?: string;
@@ -34,9 +34,9 @@ export class AvanzaClient {
   public readonly orders: OrdersClient;
   public readonly performance: PerformanceClient;
   public readonly positions: PositionsClient;
+  public readonly push: PushClient;
   public readonly savings: SavingsClient;
   public readonly transactions: TransactionsClient;
-  public readonly websocket: WebSocketClient;
 
   public constructor(options: AvanzaClientOptions = {}) {
     this.#session = options.session;
@@ -67,9 +67,9 @@ export class AvanzaClient {
     this.orders = new OrdersClient(context);
     this.performance = new PerformanceClient(context);
     this.positions = new PositionsClient(context);
+    this.push = new PushClient(context);
     this.savings = new SavingsClient(context);
     this.transactions = new TransactionsClient(context);
-    this.websocket = new WebSocketClient(context);
   }
 
   public get session(): AvanzaSession | undefined {

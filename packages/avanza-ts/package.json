@@ -34,9 +34,10 @@
   },
   "dependencies": {
     "tough-cookie": "^6.0.2",
+    "undici": "^8.12.3",
     "zod": "^4.6.5"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   }
 }

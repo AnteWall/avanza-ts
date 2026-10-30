@@ -1,0 +1,44 @@
+---
+title: Live data
+description: Stream live quotes, order depth, trades, and your own orders as JSON lines.
+---
+
+The `avanza push` commands keep a connection open to Avanza's live data and print each event as one JSON line (NDJSON) until you press Ctrl-C. They need a stored session: run `avanza auth bankid` or `avanza auth totp` first.
+
+```sh
+avanza push quotes --orderbook-ids 5247,5269
+avanza push order-depth --orderbook-id 5247
+avanza push trades --orderbook-id 5247
+avanza push trade-state --orderbook-id 5247
+avanza push orders
+avanza push deals --orderbook-id 5247
+```
+
+| Command                   | Streams                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| `avanza push quotes`      | Price updates for one or more orderbooks                |
+| `avanza push order-depth` | Order book levels for one orderbook                     |
+| `avanza push trades`      | Executed trades in one orderbook                        |
+| `avanza push trade-state` | Trading state changes, such as halts, for one orderbook |
+| `avanza push orders`      | Your own order updates, optionally for one orderbook    |
+| `avanza push deals`       | Your own deals, optionally for one orderbook            |
+
+Each line is the event exactly as Avanza sends it, so you can pipe it into other tools:
+
+```sh
+avanza push quotes --orderbook-ids 5247 | jq -c '{id: .orderbookId, last: .lastPrice}'
+```
+
+Nothing is printed while nothing changes, for example outside trading hours. The connection still stays open.
+
+## What a command does
+
+Each command subscribes through the SDK's [`client.push`](/docs/sdk/reference/live-data):
+
+1. It loads the stored session. Without one it exits with a sign-in message.
+2. It opens the matching `/_push` stream over HTTP/2. Avanza refuses these streams over HTTP/1.1 with `429`.
+3. It skips the `info` handshake and heartbeats, and prints each data event as soon as it arrives.
+4. It reconnects automatically after 0.5 s when the stream closes or Avanza returns `5xx`, and after 3 s on a network error.
+5. It stops on Ctrl-C, or on any `4xx` response. On `401` it deletes the stored session and asks you to sign in again.
+
+The [SDK live data page](/docs/sdk/reference/live-data) lists every endpoint, the headers sent and the raw event format. All flags are in the [`avanza push` reference](/docs/cli/reference/push).

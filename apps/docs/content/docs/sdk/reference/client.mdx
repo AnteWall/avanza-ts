@@ -18,7 +18,7 @@ const results = await client.market.search('volvo');
 
 ## Options
 
-Pass an existing session or replace the transport when needed. The SDK uses the Node.js global `fetch` and `https://www.avanza.se` by default.
+Pass an existing session or replace the transport when needed. The SDK uses the Node.js global `fetch` and `https://www.avanza.se` by default. Live data streams use undici's HTTP/2 `fetch` instead, and a custom `fetch` replaces both: see [custom fetch for live data](/docs/sdk/reference/live-data#custom-fetch).
 
 <AutoTypeTable path="../../packages/avanza-ts/src/client.ts" name="AvanzaClientOptions" />
 

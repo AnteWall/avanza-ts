@@ -26,4 +26,5 @@ export interface HttpResponse<Response> {
 
 export interface HttpTransport {
   request<Response>(request: HttpRequest): Promise<Response>;
+  stream(request: HttpRequest): Promise<Response>;
 }

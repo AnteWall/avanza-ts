@@ -1,3 +1,5 @@
+import { fetch as undiciFetch } from 'undici';
+
 import type { AvanzaCookie, AvanzaSession } from '../auth/session.js';
 import { AvanzaAuthenticationRequiredError, AvanzaHttpError } from '../errors.js';
 import { CookieStore } from './cookie-store.js';
@@ -28,6 +30,31 @@ export class HttpClient implements HttpTransport {
   }
 
   public async request<Response>(request: HttpRequest): Promise<Response> {
+    const { session, options } = this.#prepare(request);
+    const response = await this.#session.requestDetailed<Response>(request, options);
+    this.#absorbSession(session, options, response.cookiesChanged);
+    return response.body;
+  }
+
+  /** Returns the unread response so callers can consume a streaming body. */
+  public async stream(request: HttpRequest): Promise<Response> {
+    const { session, options } = this.#prepare(request);
+    const { response, cookiesChanged } = await this.#session.fetchChecked(request, {
+      ...options,
+      stream: true,
+    });
+    this.#absorbSession(session, options, cookiesChanged);
+    return response;
+  }
+
+  public createIsolatedSession(cookies: readonly AvanzaCookie[] = []): HttpSession {
+    return this.#session.fork(cookies);
+  }
+
+  #prepare(request: HttpRequest): {
+    options: HttpSessionRequestOptions;
+    session: AvanzaSession | undefined;
+  } {
     const session = this.#getSession();
 
     if (request.access === 'required' && session === undefined) {
@@ -40,13 +67,22 @@ export class HttpClient implements HttpTransport {
     }
 
     const includeCredentials = request.access !== 'anonymous' && session !== undefined;
-    const response = await this.#session.requestDetailed<Response>(request, {
-      captureCookies: includeCredentials && session.cookies !== undefined,
-      includeCookies: includeCredentials && session.cookies !== undefined,
-      ...(includeCredentials ? { session } : {}),
-    });
+    return {
+      options: {
+        captureCookies: includeCredentials && session.cookies !== undefined,
+        includeCookies: includeCredentials && session.cookies !== undefined,
+        ...(includeCredentials ? { session } : {}),
+      },
+      session,
+    };
+  }
 
-    if (response.cookiesChanged && session?.cookies !== undefined && includeCredentials) {
+  #absorbSession(
+    session: AvanzaSession | undefined,
+    options: HttpSessionRequestOptions,
+    cookiesChanged: boolean,
+  ): void {
+    if (cookiesChanged && session?.cookies !== undefined && options.includeCookies === true) {
       const updatedSession: AvanzaSession = {
         ...session,
         cookies: this.#session.cookies,
@@ -54,12 +90,6 @@ export class HttpClient implements HttpTransport {
       this.#loadedSession = updatedSession;
       this.#updateSession?.(updatedSession);
     }
-
-    return response.body;
-  }
-
-  public createIsolatedSession(cookies: readonly AvanzaCookie[] = []): HttpSession {
-    return this.#session.fork(cookies);
   }
 }
 
@@ -73,6 +103,8 @@ export interface HttpSessionRequestOptions {
   readonly captureCookies?: boolean;
   readonly includeCookies?: boolean;
   readonly session?: AvanzaSession;
+  /** Sends over HTTP/2 unless a custom `fetch` was given. */
+  readonly stream?: boolean;
 }
 
 export interface HttpSessionResponse<Response> extends HttpResponse<Response> {
@@ -83,11 +115,14 @@ export class HttpSession {
   readonly #baseUrl: URL;
   readonly #cookies: CookieStore;
   readonly #fetch: typeof globalThis.fetch;
+  readonly #streamFetch: typeof globalThis.fetch;
 
   public constructor(options: HttpSessionOptions = {}) {
     this.#baseUrl = normalizeBaseUrl(options.baseUrl ?? DEFAULT_BASE_URL);
     this.#cookies = new CookieStore(options.cookies);
     this.#fetch = options.fetch ?? globalThis.fetch;
+    // Avanza refuses /_push over HTTP/1.1; undici 8's fetch negotiates HTTP/2, Node 22's built-in one does not.
+    this.#streamFetch = options.fetch ?? (undiciFetch as unknown as typeof globalThis.fetch);
   }
 
   public get cookies(): readonly AvanzaCookie[] {
@@ -110,6 +145,23 @@ export class HttpSession {
     request: HttpRequest,
     options: HttpSessionRequestOptions = {},
   ): Promise<HttpSessionResponse<Response>> {
+    const { response, cookiesChanged } = await this.fetchChecked(request, options);
+    const body = await parseResponseBody(response);
+
+    return {
+      body: body as Response,
+      cookiesChanged,
+      headers: response.headers,
+      status: response.status,
+      statusText: response.statusText,
+    };
+  }
+
+  /** Sends the request and throws on a non-2xx status without reading a successful body. */
+  public async fetchChecked(
+    request: HttpRequest,
+    options: HttpSessionRequestOptions = {},
+  ): Promise<{ readonly cookiesChanged: boolean; readonly response: Response }> {
     const url = createUrl(this.#baseUrl, request);
     const headers = createHeaders(request, options.session);
 
@@ -143,27 +195,20 @@ export class HttpSession {
       init.redirect = request.redirect;
     }
 
-    const response = await this.#fetch(url, init);
+    const response = await (options.stream === true ? this.#streamFetch : this.#fetch)(url, init);
     const cookiesChanged =
       options.captureCookies === false ? false : this.#cookies.absorb(response.headers, url);
-    const body = await parseResponseBody(response);
 
     if (!response.ok) {
       throw new AvanzaHttpError({
-        body,
+        body: await parseResponseBody(response),
         headers: Object.fromEntries(response.headers.entries()),
         status: response.status,
         statusText: response.statusText,
       });
     }
 
-    return {
-      body: body as Response,
-      cookiesChanged,
-      headers: response.headers,
-      status: response.status,
-      statusText: response.statusText,
-    };
+    return { cookiesChanged, response };
   }
 }
 

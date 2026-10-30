@@ -307,6 +307,16 @@ export type {
   StockPositionKeyRatios,
   StockPositionKeyRatiosResponse,
 } from './positions/position-types.js';
+export type { PushClient } from './push/push-client.js';
+export type {
+  PushEvent,
+  PushOrderDepth,
+  PushOrderDepthLevel,
+  PushQuote,
+  PushSubscribeOptions,
+  PushTrade,
+  PushTradingOptions,
+} from './push/push-types.js';
 export type { SavingsClient } from './savings/savings-client.js';
 export { savingsGoalPeriods } from './savings/savings-types.js';
 export type {
@@ -343,4 +353,3 @@ export type {
   UpcomingDividend,
   UpcomingDividendsResponse,
 } from './transactions/transactions-types.js';
-export type { WebSocketClient } from './websocket/websocket-client.js';

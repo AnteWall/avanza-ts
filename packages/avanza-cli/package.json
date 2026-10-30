@@ -76,6 +76,9 @@
       "positions": {
         "description": "Read positions and statistics"
       },
+      "push": {
+        "description": "Stream live quotes, order depth, trades, and your orders and deals"
+      },
       "savings": {
         "description": "Read recurring savings, savings goals, credit, and pensions"
       },
@@ -85,6 +88,6 @@
     }
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   }
 }

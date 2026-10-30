@@ -7,7 +7,7 @@ import { AvanzaClient } from './client.js';
 import { InstrumentsClient } from './instruments/instruments-client.js';
 import { MarketClient } from './market/market-client.js';
 import { OrdersClient } from './orders/orders-client.js';
-import { WebSocketClient } from './websocket/websocket-client.js';
+import { PushClient } from './push/push-client.js';
 
 const session: AvanzaSession = {
   authenticationSession: 'authentication-session',
@@ -24,7 +24,7 @@ describe('AvanzaClient', () => {
     expect(client.instruments).toBeInstanceOf(InstrumentsClient);
     expect(client.market).toBeInstanceOf(MarketClient);
     expect(client.orders).toBeInstanceOf(OrdersClient);
-    expect(client.websocket).toBeInstanceOf(WebSocketClient);
+    expect(client.push).toBeInstanceOf(PushClient);
     expect(client.accounts).toBe(client.accounts);
   });
 

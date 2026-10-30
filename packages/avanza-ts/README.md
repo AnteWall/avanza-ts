@@ -29,11 +29,26 @@ client.auth;
 client.instruments;
 client.market;
 client.orders;
-client.websocket;
+client.push;
 ```
 
 The stock screener and authentication endpoints are available; other domain clients establish the
 SDK structure for future operations.
+
+## Live data
+
+`client.push` streams Avanza's Server-Sent Events under `/_push`. Every method returns an async
+iterator, reconnects on dropped connections and requires a signed-in session.
+Avanza refuses `/_push` over HTTP/1.1, so streams use undici's HTTP/2 `fetch`. A custom `fetch`
+passed to `AvanzaClient` replaces it and must also support HTTP/2. See the live data docs.
+
+```ts
+const controller = new AbortController();
+
+for await (const quote of client.push.quotes(['5247', '5269'], { signal: controller.signal })) {
+  console.log(quote.orderbookId, quote.lastPrice);
+}
+```
 
 ## Stock screener
 
