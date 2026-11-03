@@ -46,6 +46,7 @@ describe('FundsClient', () => {
       '/_api/fund-guide/top-ten?sortField=developmentOneYear&sortDirection=ASCENDING&fundInstrumentType=BOTH',
     ],
     ['guide', (f) => f.guide('41567'), '/_api/fund-guide/guide/41567'],
+    ['total fee', (f) => f.totalFee('5510'), '/_api/fund-guide/total-fee/5510'],
     ['description', (f) => f.description('41567'), '/_api/fund-guide/description/41567'],
     ['orderbook', (f) => f.orderbook('41567'), '/_api/fund-guide/fund-orderbook/41567'],
     ['details', (f) => f.details('41567'), '/_api/fund-guide/fund-orderbook/details/41567'],

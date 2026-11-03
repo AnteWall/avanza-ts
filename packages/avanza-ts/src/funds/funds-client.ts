@@ -69,6 +69,11 @@ export class FundsClient {
     return this.get(`/fund-guide/guide${pathId(orderbookId)}`, signal);
   }
 
+  /** Yearly total fee in percent units (0.11 = 0.11 %). Works for ETFs too. */
+  public totalFee(orderbookId: string, signal?: AbortSignal): Promise<number> {
+    return this.get(`/fund-guide/total-fee${pathId(orderbookId)}`, signal);
+  }
+
   public description(orderbookId: string, signal?: AbortSignal): Promise<FundDescription> {
     return this.get(`/fund-guide/description${pathId(orderbookId)}`, signal);
   }
