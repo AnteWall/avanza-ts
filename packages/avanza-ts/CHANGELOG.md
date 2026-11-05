@@ -1,5 +1,11 @@
 # avanza-ts
 
+## 1.3.0
+
+### Minor Changes
+
+- aa57570: Add `client.funds.totalFee(orderbookId)`, which returns a fund's or ETF's yearly total fee in percent units (0.11 means 0.11 %).
+
 ## 1.2.0
 
 ### Minor Changes
